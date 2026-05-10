@@ -17,6 +17,7 @@ const techStack = [
   { name: "Dart", icon: "dart", url: "https://dart.dev" },
   { name: "Python", icon: "python", url: "https://www.python.org" },
   { name: "PostgreSQL", icon: "postgresql", url: "https://www.postgresql.org" },
+  { name: "MongoDB", icon: "mongodb", url: "https://www.mongodb.com" },
   { name: "Redis", icon: "redis", url: "https://redis.io" },
   { name: "Supabase", icon: "supabase", url: "https://supabase.com" },
   { name: "Git", icon: "git", url: "https://git-scm.com" },
