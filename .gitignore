@@ -1,0 +1,45 @@
+# Dependencies
+node_modules/
+.pnpm-store/
+
+# Build Outputs
+dist/
+dist-tsc/
+build/
+
+# Environment Variables
+.env
+.env.*
+!.env.example
+
+# Logs & Diagnostic
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+*.log
+
+# TypeScript Cache
+*.tsbuildinfo
+
+# Coverage & Testing
+coverage/
+
+# Prisma
+*.db
+*.db-journal
+apps/api/prisma/migrations/
+
+# OS Metadata
+.DS_Store
+Thumbs.db
+
+# IDE / Editor
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+.idea/
+
+# Caches
+.eslintcache
+.stylelintcache
