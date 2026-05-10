@@ -1,6 +1,7 @@
 import ThemeToggle from './components/layout/ThemeToggle';
 import Hero from './components/sections/Hero';
 import About from './components/sections/About';
+import Skills from './components/sections/Skills';
 
 function App() {
   return (
@@ -16,9 +17,10 @@ function App() {
         </div>
       </header>
 
-      <main className="container mx-auto px-6 max-w-5xl">
+      <main className="container mx-auto px-6 max-w-5xl pb-20">
         <Hero />
         <About />
+        <Skills />
       </main>
     </div>
   );
