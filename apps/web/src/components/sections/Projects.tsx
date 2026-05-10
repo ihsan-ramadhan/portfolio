@@ -2,6 +2,7 @@ import { motion } from 'framer-motion';
 import { Terminal, Github, Code2, Rocket } from 'lucide-react';
 import SectionHeader from '../ui/SectionHeader';
 import Badge from '../ui/Badge';
+import AnimatedSection from '../ui/AnimatedSection';
 
 const projects = [
   {
@@ -33,11 +34,7 @@ const projects = [
 export default function Projects() {
   return (
     <section id="projects" className="py-20 w-full border-t border-[var(--color-border)]">
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-      >
+      <AnimatedSection>
         <SectionHeader 
           icon={Terminal} 
           title="ls ./projects" 
@@ -88,7 +85,7 @@ export default function Projects() {
             </motion.div>
           ))}
         </div>
-      </motion.div>
+      </AnimatedSection>
     </section>
   );
 }

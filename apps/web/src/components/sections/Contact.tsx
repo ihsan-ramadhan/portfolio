@@ -1,15 +1,11 @@
-import { motion } from 'framer-motion';
 import { Mail, Linkedin, Github, Send, Terminal, MessageSquare } from 'lucide-react';
 import SectionHeader from '../ui/SectionHeader';
+import AnimatedSection from '../ui/AnimatedSection';
 
 export default function Contact() {
   return (
     <section id="contact" className="py-20 w-full border-t border-[var(--color-border)]">
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-      >
+      <AnimatedSection>
         <SectionHeader icon={Terminal} title="contact.sh" />
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
@@ -106,7 +102,7 @@ export default function Contact() {
             </form>
           </div>
         </div>
-      </motion.div>
+      </AnimatedSection>
     </section>
   );
 }

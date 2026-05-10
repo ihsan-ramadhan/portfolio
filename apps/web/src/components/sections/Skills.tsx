@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import { Terminal } from 'lucide-react';
 import SectionHeader from '../ui/SectionHeader';
+import AnimatedSection from '../ui/AnimatedSection';
 
 const techStack = [
   { name: "Laravel", icon: "laravel", url: "https://laravel.com" },
@@ -31,13 +32,9 @@ export default function Skills() {
   return (
     <section id="skills" className="py-20 w-full border-t border-[var(--color-border)] overflow-hidden">
       <div className="container mx-auto px-6 max-w-5xl mb-12">
-        <motion.div
-          initial={{ opacity: 0, x: -20 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true }}
-        >
+        <AnimatedSection>
           <SectionHeader icon={Terminal} title="tech.stack" />
-        </motion.div>
+        </AnimatedSection>
       </div>
 
       <div className="relative w-full flex items-center">

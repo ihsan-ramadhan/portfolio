@@ -1,16 +1,11 @@
-import { motion } from 'framer-motion';
 import { MapPin, Terminal, Image as ImageIcon } from 'lucide-react';
 import SectionHeader from '../ui/SectionHeader';
+import AnimatedSection from '../ui/AnimatedSection';
 
 export default function About() {
   return (
     <section id="about" className="py-20 w-full border-t border-[var(--color-border)]">
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.5 }}
-      >
+      <AnimatedSection>
         <SectionHeader icon={Terminal} title="whoami" />
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-10 items-start">
@@ -45,7 +40,7 @@ export default function About() {
             </div>
           </div>
         </div>
-      </motion.div>
+      </AnimatedSection>
     </section>
   );
 }
