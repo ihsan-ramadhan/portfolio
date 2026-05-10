@@ -1,0 +1,32 @@
+import { Github, Linkedin, Mail } from 'lucide-react';
+
+export default function Footer() {
+  const currentYear = new Date().getFullYear();
+
+  return (
+    <footer className="w-full py-12 border-t border-[var(--color-border)] bg-[var(--color-bg)]">
+      <div className="container mx-auto px-6 max-w-5xl flex flex-col md:flex-row justify-between items-center gap-6">
+        <div className="flex flex-col items-center md:items-start gap-2">
+          <span className="font-mono font-bold text-lg tracking-tighter">
+            ihsan<span className="text-[var(--color-primary)]">.dev</span>
+          </span>
+          <p className="text-[var(--color-text-muted)] font-mono text-xs text-center md:text-left">
+            © {currentYear} — Built with React & Tailwind v4
+          </p>
+        </div>
+        
+        <div className="flex items-center gap-6 text-[var(--color-text-muted)]">
+          <a href="https://github.com/ihsan-ramadhan" target="_blank" className="hover:text-[var(--color-primary)] transition-colors">
+            <Github size={18} />
+          </a>
+          <a href="https://linkedin.com/in/m-ihsan-r" target="_blank" className="hover:text-[var(--color-primary)] transition-colors">
+            <Linkedin size={18} />
+          </a>
+          <a href="mailto:m.ihsan.r30@gmail.com" className="hover:text-[var(--color-primary)] transition-colors">
+            <Mail size={18} />
+          </a>
+        </div>
+      </div>
+    </footer>
+  );
+}

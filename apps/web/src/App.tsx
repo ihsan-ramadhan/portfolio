@@ -1,4 +1,5 @@
-import ThemeToggle from './components/layout/ThemeToggle';
+import Navbar from './components/layout/Navbar';
+import Footer from './components/layout/Footer';
 import Hero from './components/sections/Hero';
 import About from './components/sections/About';
 import Skills from './components/sections/Skills';
@@ -7,25 +8,18 @@ import Contact from './components/sections/Contact';
 
 function App() {
   return (
-    <div className="min-h-screen bg-[var(--color-bg)] text-[var(--color-text)] transition-colors duration-300">
-      <header className="sticky top-0 z-50 w-full border-b border-[var(--color-border)] bg-[var(--color-bg)]/80 backdrop-blur-md">
-        <div className="container mx-auto px-6 h-16 flex items-center justify-between max-w-5xl">
-          <span className="font-mono font-bold text-xl tracking-tighter">
-            ihsan<span className="text-[var(--color-primary)]">.dev</span>
-          </span>
-          <nav className="flex items-center gap-4">
-            <ThemeToggle />
-          </nav>
-        </div>
-      </header>
-
-      <main className="container mx-auto px-6 max-w-5xl pb-20">
+    <div className="min-h-screen bg-[var(--color-bg)] text-[var(--color-text)] selection:bg-[var(--color-primary)] selection:text-white transition-colors duration-300">
+      <Navbar />
+      
+      <main className="container mx-auto px-6 max-w-5xl">
         <Hero />
         <About />
         <Skills />
         <Projects />
         <Contact />
       </main>
+
+      <Footer />
     </div>
   );
 }
