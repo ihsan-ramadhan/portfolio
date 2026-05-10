@@ -1,1 +1,44 @@
 @import "tailwindcss";
+
+@theme {
+  --color-bg: var(--color-bg-theme);
+  --color-bg-subtle: var(--color-bg-subtle-theme);
+  --color-border: var(--color-border-theme);
+  --color-primary: var(--color-primary-theme);
+  --color-primary-dim: var(--color-primary-dim-theme);
+  --color-text: var(--color-text-theme);
+  --color-text-muted: var(--color-text-muted-theme);
+  --color-terminal: var(--color-terminal-theme);
+}
+
+:root {
+  --color-bg-theme:         #FFFFFF;
+  --color-bg-subtle-theme:  #F0F4FF;
+  --color-border-theme:     #C7D7F5;
+  --color-primary-theme:    #2563EB;
+  --color-primary-dim-theme:#3B82F6;
+  --color-text-theme:       #0F172A;
+  --color-text-muted-theme: #475569;
+  --color-terminal-theme:   #1E3A5F;
+}
+
+.dark {
+  --color-bg-theme:         #0A0F1E;
+  --color-bg-subtle-theme:  #111827;
+  --color-border-theme:     #1E3A5F;
+  --color-primary-theme:    #3B82F6;
+  --color-primary-dim-theme:#60A5FA;
+  --color-text-theme:       #E2E8F0;
+  --color-text-muted-theme: #64748B;
+  --color-terminal-theme:   #0D1B2A;
+}
+
+@layer base {
+  body {
+    background-color: var(--color-bg-theme);
+    color: var(--color-text-theme);
+    background-image: radial-gradient(var(--color-border-theme) 1px, transparent 1px);
+    background-size: 24px 24px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+}
