@@ -46,17 +46,17 @@ export default function Hero() {
             <div className="w-3 h-3 rounded-full bg-yellow-500/80"></div>
             <div className="w-3 h-3 rounded-full bg-green-500/80"></div>
           </div>
-          <div className="mx-auto flex items-center gap-2 text-xs text-[var(--color-text-muted)] font-mono">
+          <div className="mx-auto flex items-center gap-2 text-xs text-slate-400 font-mono">
             <Terminal size={14} /> guest@ihsan-portfolio:~
           </div>
         </div>
         
-        <div className="p-5 font-mono text-sm md:text-base text-green-400">
+        <div className="p-5 font-mono text-sm md:text-base">
           <motion.div
             initial={{ width: 0 }}
             animate={{ width: "100%" }}
             transition={{ duration: 1.5, delay: 0.8, ease: "linear" }}
-            className="overflow-hidden whitespace-nowrap border-r-2 border-green-400 pr-2"
+            className="overflow-hidden whitespace-nowrap border-r-2 border-green-400 pr-2 text-green-400"
           >
             $ pnpm run dev:portfolio
           </motion.div>
@@ -64,7 +64,7 @@ export default function Hero() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 2.5 }}
-            className="text-[var(--color-text)] mt-3 leading-loose"
+            className="text-slate-200 mt-3 leading-loose"
           >
             <span className="text-blue-400">{'>'}</span> Initializing stack... [OK]<br/>
             <span className="text-blue-400">{'>'}</span> Loading projects module... [OK]<br/>
