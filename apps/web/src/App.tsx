@@ -1,20 +1,23 @@
 import ThemeToggle from './components/layout/ThemeToggle';
+import Hero from './components/sections/Hero';
 
 function App() {
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center p-8">
-      <div className="max-w-md w-full bg-[var(--color-bg-subtle)] border border-[var(--color-border)] p-8 rounded-lg shadow-lg text-center space-y-6">
-        <h1 className="text-3xl font-bold text-[var(--color-primary)] font-mono">
-          System.out.println("Hello, Ihsan!");
-        </h1>
-        <p className="text-[var(--color-text-muted)]">
-          Portofolio Full-Stack dengan Vite, NestJS, dan Tailwind v4.
-        </p>
-        
-        <div className="flex justify-center pt-4">
-          <ThemeToggle />
+    <div className="min-h-screen bg-[var(--color-bg)] text-[var(--color-text)] transition-colors duration-300">
+      <header className="sticky top-0 z-50 w-full border-b border-[var(--color-border)] bg-[var(--color-bg)]/80 backdrop-blur-md">
+        <div className="container mx-auto px-6 h-16 flex items-center justify-between max-w-5xl">
+          <span className="font-mono font-bold text-xl tracking-tighter">
+            ihsan<span className="text-[var(--color-primary)]">.dev</span>
+          </span>
+          <nav className="flex items-center gap-4">
+            <ThemeToggle />
+          </nav>
         </div>
-      </div>
+      </header>
+
+      <main className="container mx-auto px-6 max-w-5xl">
+        <Hero />
+      </main>
     </div>
   );
 }
