@@ -1,5 +1,6 @@
 import ThemeToggle from './components/layout/ThemeToggle';
 import Hero from './components/sections/Hero';
+import About from './components/sections/About';
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
 
       <main className="container mx-auto px-6 max-w-5xl">
         <Hero />
+        <About />
       </main>
     </div>
   );
