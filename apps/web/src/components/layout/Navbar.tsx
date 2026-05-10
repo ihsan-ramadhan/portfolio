@@ -1,4 +1,6 @@
 import { useState, useEffect } from 'react';
+import { Menu, X } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 import ThemeToggle from './ThemeToggle';
 
 const navLinks = [
@@ -10,6 +12,7 @@ const navLinks = [
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20);
@@ -19,6 +22,8 @@ export default function Navbar() {
 
   const handleScrollClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     e.preventDefault();
+    setIsOpen(false);
+    
     const targetId = href.replace('#', '');
     const element = document.getElementById(targetId);
     
@@ -47,7 +52,7 @@ export default function Navbar() {
             e.preventDefault();
             window.scrollTo({ top: 0, behavior: 'smooth' });
           }}
-          className="font-mono font-bold text-xl tracking-tighter"
+          className="font-mono font-bold text-xl tracking-tighter z-50"
         >
           ihsan<span className="text-[var(--color-primary)]">.dev</span>
         </a>
@@ -66,10 +71,41 @@ export default function Navbar() {
           <ThemeToggle />
         </div>
 
-        <div className="md:hidden">
+        <div className="flex md:hidden items-center gap-4 z-50">
           <ThemeToggle />
+          <button 
+            onClick={() => setIsOpen(!isOpen)}
+            className="text-[var(--color-text)] p-1"
+          >
+            {isOpen ? <X size={24} /> : <Menu size={24} />}
+          </button>
         </div>
       </div>
+
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: '100vh' }}
+            exit={{ opacity: 0, height: 0 }}
+            className="fixed inset-0 bg-[var(--color-bg)] z-40 flex flex-col items-center justify-center gap-8 md:hidden"
+          >
+            {navLinks.map((link, idx) => (
+              <motion.a
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: idx * 0.1 }}
+                key={link.name}
+                href={link.href}
+                onClick={(e) => handleScrollClick(e, link.href)}
+                className="text-2xl font-mono font-bold hover:text-[var(--color-primary)]"
+              >
+                {link.name}
+              </motion.a>
+            ))}
+          </motion.div>
+        )}
+      </AnimatePresence>
     </nav>
   );
 }

@@ -11,7 +11,7 @@ export default function Footer() {
             ihsan<span className="text-[var(--color-primary)]">.dev</span>
           </span>
           <p className="text-[var(--color-text-muted)] font-mono text-xs text-center md:text-left">
-            © {currentYear} — Built with React & Tailwind v4
+            © {currentYear} - Muhammad Ihsan Ramadhan
           </p>
         </div>
         
