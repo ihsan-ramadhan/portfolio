@@ -15,7 +15,7 @@ function App() {
       <InteractiveMesh />
       <Navbar />
       
-      <main className="container mx-auto px-6 max-w-5xl pb-20">
+      <main className="w-full px-4 md:px-8 lg:px-16 pb-20">
         <Hero />
         <About />
         <Skills />

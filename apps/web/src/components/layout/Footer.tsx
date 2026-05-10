@@ -5,7 +5,7 @@ export default function Footer() {
 
   return (
     <footer className="w-full py-12 border-t border-[var(--color-border)] bg-[var(--color-bg)]">
-      <div className="container mx-auto px-6 max-w-5xl flex flex-col md:flex-row justify-between items-center gap-6">
+      <div className="w-full px-4 md:px-8 lg:px-16 flex flex-col md:flex-row justify-between items-center gap-6">
         <div className="flex flex-col items-center md:items-start gap-2">
           <span className="font-mono font-bold text-lg tracking-tighter">
             ihsan<span className="text-[var(--color-primary)]">.dev</span>

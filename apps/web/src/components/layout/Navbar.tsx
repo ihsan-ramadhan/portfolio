@@ -45,7 +45,7 @@ export default function Navbar() {
       ? "bg-[var(--color-bg)]/80 backdrop-blur-md border-[var(--color-border)] py-3" 
       : "bg-transparent border-transparent py-5"
     }`}>
-      <div className="container mx-auto px-6 max-w-5xl flex items-center justify-between">
+      <div className="w-full px-4 md:px-8 lg:px-16 flex items-center justify-between">
         <a 
           href="#" 
           onClick={(e) => {
