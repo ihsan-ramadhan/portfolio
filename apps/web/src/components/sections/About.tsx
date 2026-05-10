@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import { MapPin, Terminal, Image as ImageIcon } from 'lucide-react';
+import SectionHeader from '../ui/SectionHeader';
 
 export default function About() {
   return (
@@ -10,10 +11,7 @@ export default function About() {
         viewport={{ once: true }}
         transition={{ duration: 0.5 }}
       >
-        <div className="flex items-center gap-3 mb-8">
-          <Terminal className="text-[var(--color-primary)]" size={28} />
-          <h2 className="text-2xl md:text-3xl font-bold font-mono tracking-tight">whoami</h2>
-        </div>
+        <SectionHeader icon={Terminal} title="whoami" />
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-10 items-start">
           {/* Text Content */}

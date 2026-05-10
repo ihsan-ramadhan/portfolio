@@ -1,5 +1,7 @@
 import { motion } from 'framer-motion';
 import { Terminal, Github, Code2, Rocket } from 'lucide-react';
+import SectionHeader from '../ui/SectionHeader';
+import Badge from '../ui/Badge';
 
 const projects = [
   {
@@ -36,15 +38,11 @@ export default function Projects() {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
       >
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-12">
-          <div className="flex items-center gap-3">
-            <Terminal className="text-[var(--color-primary)]" size={28} />
-            <h2 className="text-2xl md:text-3xl font-bold font-mono tracking-tight">ls ./projects</h2>
-          </div>
-          <p className="text-[var(--color-text-muted)] font-mono text-sm">
-            Total items: {projects.length}
-          </p>
-        </div>
+        <SectionHeader 
+          icon={Terminal} 
+          title="ls ./projects" 
+          subtitle={`Total items: ${projects.length}`}
+        />
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {projects.map((project, idx) => (
@@ -63,9 +61,7 @@ export default function Projects() {
               <div className="p-6 flex-1 flex flex-col">
                 <div className="flex justify-between items-start mb-3">
                   <h3 className="text-xl font-bold font-mono text-[var(--color-text)]">{project.title}</h3>
-                  <span className="text-[10px] font-mono px-2 py-0.5 rounded border border-[var(--color-primary)] text-[var(--color-primary)] uppercase">
-                    {project.category}
-                  </span>
+                  <Badge>{project.category}</Badge>
                 </div>
                 
                 <p className="text-sm text-[var(--color-text-muted)] mb-6 line-clamp-3 leading-relaxed">
@@ -75,9 +71,7 @@ export default function Projects() {
                 <div className="mt-auto">
                   <div className="flex flex-wrap gap-2 mb-6">
                     {project.tags.map(tag => (
-                      <span key={tag} className="text-[10px] font-mono text-[var(--color-text-muted)]">
-                        #{tag}
-                      </span>
+                      <Badge key={tag} variant="ghost">#{tag}</Badge>
                     ))}
                   </div>
 

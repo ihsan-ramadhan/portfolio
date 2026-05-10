@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import { Terminal } from 'lucide-react';
+import SectionHeader from '../ui/SectionHeader';
 
 const techStack = [
   { name: "Laravel", icon: "laravel", url: "https://laravel.com" },
@@ -34,10 +35,8 @@ export default function Skills() {
           initial={{ opacity: 0, x: -20 }}
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true }}
-          className="flex items-center gap-3"
         >
-          <Terminal className="text-[var(--color-primary)]" size={28} />
-          <h2 className="text-2xl md:text-3xl font-bold font-mono tracking-tight">tech.stack</h2>
+          <SectionHeader icon={Terminal} title="tech.stack" />
         </motion.div>
       </div>
 

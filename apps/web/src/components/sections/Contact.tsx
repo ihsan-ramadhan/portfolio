@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import { Mail, Linkedin, Github, Send, Terminal, MessageSquare } from 'lucide-react';
+import SectionHeader from '../ui/SectionHeader';
 
 export default function Contact() {
   return (
@@ -9,10 +10,7 @@ export default function Contact() {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
       >
-        <div className="flex items-center gap-3 mb-12">
-          <Terminal className="text-[var(--color-primary)]" size={28} />
-          <h2 className="text-2xl md:text-3xl font-bold font-mono tracking-tight">contact.sh</h2>
-        </div>
+        <SectionHeader icon={Terminal} title="contact.sh" />
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
           <div className="space-y-8">
@@ -43,6 +41,7 @@ export default function Contact() {
               <a 
                 href="https://linkedin.com/in/m-ihsan-r" 
                 target="_blank" 
+                rel="noopener noreferrer"
                 className="flex items-center gap-4 p-4 rounded-xl bg-[var(--color-bg-subtle)] border border-[var(--color-border)] hover:border-[var(--color-primary)] transition-all group"
               >
                 <div className="p-3 rounded-lg bg-[var(--color-bg)] text-[var(--color-primary)] group-hover:bg-[var(--color-primary)] group-hover:text-white transition-colors">
@@ -57,6 +56,7 @@ export default function Contact() {
               <a 
                 href="https://github.com/ihsan-ramadhan" 
                 target="_blank" 
+                rel="noopener noreferrer"
                 className="flex items-center gap-4 p-4 rounded-xl bg-[var(--color-bg-subtle)] border border-[var(--color-border)] hover:border-[var(--color-primary)] transition-all group"
               >
                 <div className="p-3 rounded-lg bg-[var(--color-bg)] text-[var(--color-primary)] group-hover:bg-[var(--color-primary)] group-hover:text-white transition-colors">
