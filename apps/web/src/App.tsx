@@ -1,3 +1,5 @@
+import GlowBackground from './components/layout/GlowBackground';
+import InteractiveMesh from './components/layout/InteractiveMesh';
 import Navbar from './components/layout/Navbar';
 import Footer from './components/layout/Footer';
 import Hero from './components/sections/Hero';
@@ -8,10 +10,12 @@ import Contact from './components/sections/Contact';
 
 function App() {
   return (
-    <div className="min-h-screen bg-[var(--color-bg)] text-[var(--color-text)] selection:bg-[var(--color-primary)] selection:text-white transition-colors duration-300">
+    <div className="min-h-screen text-[var(--color-text)] selection:bg-[var(--color-primary)] selection:text-white">
+      <GlowBackground />
+      <InteractiveMesh />
       <Navbar />
       
-      <main className="container mx-auto px-6 max-w-5xl">
+      <main className="container mx-auto px-6 max-w-5xl pb-20">
         <Hero />
         <About />
         <Skills />
