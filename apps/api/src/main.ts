@@ -1,4 +1,5 @@
 import { NestFactory } from '@nestjs/core';
+import { ConfigService } from '@nestjs/config';
 import {
   FastifyAdapter,
   NestFastifyApplication,
@@ -11,9 +12,12 @@ async function bootstrap() {
     new FastifyAdapter(),
   );
 
+  const configService = app.get(ConfigService);
+  const port = configService.get<number>('PORT') || 3001;
+
   app.setGlobalPrefix('api/v1');
 
-  await app.listen(process.env.PORT ?? 3001, '0.0.0.0');
+  await app.listen(port, '0.0.0.0');
   console.log(`Application is running on: ${await app.getUrl()}`);
 }
 bootstrap();
