@@ -1,5 +1,6 @@
 generator client {
   provider = "prisma-client-js"
+  output   = "../src/generated/client"
 }
 
 datasource db {
@@ -22,18 +23,18 @@ model SiteSection {
 }
 
 model Skill {
-  id       String     @id @default(cuid())
-  name     String
-  level    SkillLevel
-  category String // "Frontend", "Backend", "DevOps", dll
-  order    Int
+  id          String        @id @default(cuid())
+  name        String
+  category    SkillCategory
+  proficiency Int           @default(0)
+  icon        String?
 }
 
-enum SkillLevel {
-  BEGINNER
-  INTERMEDIATE
-  ADVANCED
-  EXPERT
+enum SkillCategory {
+  FRONTEND
+  BACKEND
+  TOOLS
+  OTHERS
 }
 
 model Profile {
