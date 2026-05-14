@@ -12,6 +12,7 @@ import { SkillsModule } from './skills/skills.module';
 import { ProjectsModule } from './projects/projects.module';
 import { GitHubModule } from './modules/github/github.module';
 import { SyncModule } from './modules/sync/sync.module';
+import { StorageModule } from './modules/storage/storage.module';
 
 @Module({
   imports: [
@@ -48,6 +49,7 @@ import { SyncModule } from './modules/sync/sync.module';
     ProjectsModule,
     GitHubModule,
     SyncModule,
+    StorageModule,
   ],
   controllers: [AppController],
   providers: [AppService],

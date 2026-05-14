@@ -9,12 +9,15 @@ import helmet from '@fastify/helmet';
 import { AppModule } from './app.module';
 import { TransformInterceptor } from './common/interceptors/transform.interceptor';
 import { HttpExceptionFilter } from './common/filters/http-exception.filter';
+import multipart from '@fastify/multipart';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestFastifyApplication>(
     AppModule,
     new FastifyAdapter(),
   );
+
+  await app.register(multipart);
 
   const configService = app.get(ConfigService);
   const port = configService.get<number>('PORT') || 3001;
