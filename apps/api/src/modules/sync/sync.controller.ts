@@ -9,7 +9,7 @@ import {
 import { SyncService } from './sync.service';
 import { JwtAuthGuard } from '../../auth/guards/jwt-auth.guard';
 
-@Controller('api/v1/admin/sync')
+@Controller('admin/sync')
 export class SyncController {
   constructor(private readonly syncService: SyncService) {}
 

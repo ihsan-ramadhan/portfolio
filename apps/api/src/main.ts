@@ -22,8 +22,19 @@ async function bootstrap() {
   app.setGlobalPrefix('api/v1');
 
   await app.register(helmet);
+
+  const frontendUrl = configService.get<string>('FRONTEND_URL');
+  let corsOrigin: string | string[] | boolean = false;
+
+  if (frontendUrl) {
+    corsOrigin = frontendUrl.includes(',')
+      ? frontendUrl.split(',')
+      : frontendUrl;
+  }
+
   app.enableCors({
-    origin: configService.get<string>('FRONTEND_URL'),
+    origin: corsOrigin,
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     credentials: true,
   });
 

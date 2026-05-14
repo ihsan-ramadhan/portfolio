@@ -7,7 +7,7 @@ import {
   Max,
   Min,
 } from 'class-validator';
-import { SkillCategory } from '../../generated/client';
+import { SkillCategory } from '@prisma/client';
 
 export class CreateSkillDto {
   @IsString()
