@@ -1,8 +1,9 @@
 import { motion } from 'framer-motion';
 import { Terminal } from 'lucide-react';
 import TechCloud from '../ui/TechCloud';
+import type { Profile } from '../../types';
 
-export default function Hero() {
+export default function Hero({ profile }: { profile: Profile | null }) {
   return (
     <section className="min-h-[85vh] flex flex-col justify-center items-start w-full py-12">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center w-full">
@@ -35,7 +36,7 @@ export default function Hero() {
             transition={{ delay: 0.2 }}
             className="text-xl md:text-2xl text-[var(--color-text-muted)] mb-10 max-w-2xl leading-relaxed"
           >
-            Full Stack Developer crafting scalable digital experiences with clean code and modern architecture.
+            {profile?.headline || 'Full Stack Developer crafting digital experiences.'}
           </motion.h2>
 
           <motion.div

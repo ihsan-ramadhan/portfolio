@@ -36,43 +36,91 @@ export class GitHubService {
 
   async fetchPublicRepositories(): Promise<GitHubRepository[]> {
     try {
-      this.logger.log(`Fetching repositories for user: ${this.username}`);
+      this.logger.log(
+        `Fetching pinned repositories for user: ${this.username} via GraphQL`,
+      );
 
-      const { data: repositories } = await this.octokit.repos.listForUser({
+      const query = `
+        query($username: String!) {
+          user(login: $username) {
+            pinnedItems(first: 6, types: REPOSITORY) {
+              nodes {
+                ... on Repository {
+                  databaseId
+                  name
+                  description
+                  url
+                  stargazerCount
+                  primaryLanguage {
+                    name
+                  }
+                }
+              }
+            }
+          }
+        }
+      `;
+
+      interface PinnedReposResponse {
+        user: {
+          pinnedItems: {
+            nodes: Array<{
+              databaseId: number;
+              name: string;
+              description: string | null;
+              url: string;
+              stargazerCount: number;
+              primaryLanguage: {
+                name: string;
+              } | null;
+            }>;
+          };
+        };
+      }
+
+      const response = await this.octokit.graphql<PinnedReposResponse>(query, {
         username: this.username,
-        type: 'owner',
-        per_page: 100,
-        sort: 'updated',
       });
 
-      this.logger.log(`Found ${repositories.length} public repositories`);
+      const pinnedRepos = response.user.pinnedItems.nodes;
 
-      return repositories.map((repo) => ({
-        id: repo.id,
+      this.logger.log(`Found ${pinnedRepos.length} pinned repositories`);
+
+      return pinnedRepos.map((repo) => ({
+        id: repo.databaseId,
         name: repo.name,
         description: repo.description ?? null,
-        url: repo.html_url,
-        language: repo.language ?? null,
-        stargazers_count: repo.stargazers_count ?? 0,
-        pinned: false,
+        url: repo.url,
+        language: repo.primaryLanguage?.name ?? null,
+        stargazers_count: repo.stargazerCount ?? 0,
+        pinned: true,
       }));
     } catch (error) {
-      this.logger.error('Error fetching repositories from GitHub', error);
-      throw error;
+      this.logger.error(
+        'Error fetching pinned repositories from GitHub',
+        error,
+      );
+      return this.fetchOwnedRepositories();
     }
   }
 
-  fetchPinnedRepositories(): GitHubRepository[] {
-    try {
-      this.logger.log(
-        `Fetching pinned repositories for user: ${this.username}`,
-      );
+  private async fetchOwnedRepositories(): Promise<GitHubRepository[]> {
+    const { data: repositories } = await this.octokit.repos.listForUser({
+      username: this.username,
+      type: 'owner',
+      per_page: 10,
+      sort: 'updated',
+    });
 
-      return [];
-    } catch (error) {
-      this.logger.error('Error fetching pinned repositories', error);
-      return [];
-    }
+    return repositories.map((repo) => ({
+      id: repo.id,
+      name: repo.name,
+      description: repo.description ?? null,
+      url: repo.html_url,
+      language: repo.language ?? null,
+      stargazers_count: repo.stargazers_count ?? 0,
+      pinned: false,
+    }));
   }
 
   async getRepositoryDetails(owner: string, repo: string) {

@@ -1,30 +1,24 @@
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import GlowBackground from './components/layout/GlowBackground';
 import InteractiveMesh from './components/layout/InteractiveMesh';
-import Navbar from './components/layout/Navbar';
-import Footer from './components/layout/Footer';
-import Hero from './components/sections/Hero';
-import About from './components/sections/About';
-import Skills from './components/sections/Skills';
-import Projects from './components/sections/Projects';
-import Contact from './components/sections/Contact';
+import Home from './pages/Home';
+import Login from './pages/Login';
+import Admin from './pages/Admin';
 
 function App() {
   return (
-    <div className="min-h-screen text-[var(--color-text)] selection:bg-[var(--color-primary)] selection:text-white">
-      <GlowBackground />
-      <InteractiveMesh />
-      <Navbar />
-      
-      <main className="w-full px-4 md:px-8 lg:px-16 pb-20">
-        <Hero />
-        <About />
-        <Skills />
-        <Projects />
-        <Contact />
-      </main>
-
-      <Footer />
-    </div>
+    <Router>
+      <div className="min-h-screen text-[var(--color-text)] selection:bg-[var(--color-primary)] selection:text-white">
+        <GlowBackground />
+        <InteractiveMesh />
+        
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/admin" element={<Admin />} />
+        </Routes>
+      </div>
+    </Router>
   );
 }
 

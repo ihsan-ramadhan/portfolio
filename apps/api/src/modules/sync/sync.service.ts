@@ -28,6 +28,11 @@ export class SyncService {
         `Fetched ${repositories.length} repositories from GitHub`,
       );
 
+      await this.prisma.project.deleteMany({
+        where: { githubId: { not: null } },
+      });
+      this.logger.log('Cleared existing GitHub projects');
+
       let successCount = 0;
       let errorCount = 0;
 
