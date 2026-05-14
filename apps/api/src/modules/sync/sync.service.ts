@@ -52,6 +52,7 @@ export class SyncService {
               stars: repo.stargazers_count,
               lastSyncedAt: new Date(),
               isVisible: true,
+              profileId: 'default-profile',
             },
           });
 

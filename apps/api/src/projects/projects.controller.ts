@@ -23,7 +23,7 @@ export class ProjectsController {
 
   @Get('featured')
   async getFeatured() {
-    return this.projectsService.findFeatured();
+    return this.projectsService.findPinned();
   }
 
   @Post()

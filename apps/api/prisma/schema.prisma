@@ -47,6 +47,7 @@ model Profile {
 
   experiences Experience[]
   educations  Education[]
+  projects    Project[]
 }
 
 model Experience {
@@ -74,7 +75,7 @@ model Education {
 
 model Project {
   id           String   @id @default(cuid())
-  githubId     Int      @unique
+  githubId     Int?     @unique
   name         String
   description  String?
   customDesc   String? // Override dari admin
@@ -84,7 +85,9 @@ model Project {
   tags         String[] // Custom tags dari admin
   isPinned     Boolean  @default(false)
   isVisible    Boolean  @default(true)
-  lastSyncedAt DateTime
+  lastSyncedAt DateTime?
+  profileId    String
+  profile      Profile  @relation(fields: [profileId], references: [id])
 }
 
 model ContactMessage {

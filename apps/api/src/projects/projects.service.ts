@@ -8,13 +8,15 @@ export class ProjectsService {
 
   async findAll() {
     return this.prisma.project.findMany({
-      orderBy: { createdAt: 'desc' },
+      where: { isVisible: true },
+      orderBy: { stars: 'desc' },
     });
   }
 
-  async findFeatured() {
+  async findPinned() {
     return this.prisma.project.findMany({
-      where: { isFeatured: true },
+      where: { isPinned: true, isVisible: true },
+      orderBy: { stars: 'desc' },
     });
   }
 
@@ -22,7 +24,7 @@ export class ProjectsService {
     return this.prisma.project.create({
       data: {
         ...createProjectDto,
-        profileId: 'default-profile', // Hardcoded as per single user logic
+        profileId: 'default-profile', // Tetap dikaitkan ke profil utama
       },
     });
   }
@@ -33,7 +35,7 @@ export class ProjectsService {
         where: { id },
         data: updateProjectDto,
       });
-    } catch (error) {
+    } catch {
       throw new NotFoundException('Proyek tidak ditemukan');
     }
   }
@@ -43,7 +45,7 @@ export class ProjectsService {
       return await this.prisma.project.delete({
         where: { id },
       });
-    } catch (error) {
+    } catch {
       throw new NotFoundException('Proyek tidak ditemukan');
     }
   }

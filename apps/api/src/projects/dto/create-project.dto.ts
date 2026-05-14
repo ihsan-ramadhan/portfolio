@@ -9,31 +9,34 @@ import {
 
 export class CreateProjectDto {
   @IsString()
-  @IsNotEmpty({ message: 'Judul proyek tidak boleh kosong' })
-  title: string;
+  @IsNotEmpty({ message: 'Nama proyek tidak boleh kosong' })
+  name: string;
 
   @IsString()
-  @IsNotEmpty({ message: 'Deskripsi tidak boleh kosong' })
-  description: string;
-
-  @IsUrl({}, { message: 'Format URL gambar tidak valid' })
   @IsOptional()
-  imageUrl?: string;
+  description?: string;
 
-  @IsUrl({}, { message: 'Format URL repo tidak valid' })
+  @IsString()
   @IsOptional()
-  repoUrl?: string;
+  customDesc?: string;
 
-  @IsUrl({}, { message: 'Format URL live tidak valid' })
+  @IsUrl({}, { message: 'Format URL tidak valid' })
+  url: string;
+
+  @IsString()
   @IsOptional()
-  liveUrl?: string;
+  language?: string;
 
   @IsArray()
   @IsString({ each: true })
   @IsOptional()
-  technologies?: string[];
+  tags?: string[];
 
   @IsBoolean()
   @IsOptional()
-  isFeatured?: boolean;
+  isPinned?: boolean;
+
+  @IsBoolean()
+  @IsOptional()
+  isVisible?: boolean;
 }
