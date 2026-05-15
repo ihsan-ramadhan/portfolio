@@ -52,6 +52,8 @@ export default function InteractiveMesh() {
     const mouse = { x: -9999, y: -9999 };
     const smooth = { x: -9999, y: -9999 };
 
+    const isMobile = window.innerWidth < 768;
+
     const resize = () => {
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
@@ -60,12 +62,13 @@ export default function InteractiveMesh() {
 
     const initPoints = () => {
       points = [];
+      const baseCount = isMobile ? 35 : 180;
       const count = Math.min(
-        200,
-        Math.floor((canvas.width * canvas.height) / 10000)
+        baseCount,
+        Math.floor((canvas.width * canvas.height) / (isMobile ? 15000 : 10000))
       );
       for (let i = 0; i < count; i++) {
-        const speed = 0.15 + Math.random() * 0.35;
+        const speed = isMobile ? 0.1 : 0.15 + Math.random() * 0.35;
         const angle = Math.random() * Math.PI * 2;
         const bvx = Math.cos(angle) * speed;
         const bvy = Math.sin(angle) * speed;
@@ -76,8 +79,8 @@ export default function InteractiveMesh() {
           vy: bvy,
           baseVx: bvx,
           baseVy: bvy,
-          size: 0.8 + Math.random() * 1.6,
-          opacity: 0.4 + Math.random() * 0.4,
+          size: isMobile ? 0.6 + Math.random() * 1 : 0.8 + Math.random() * 1.6,
+          opacity: isMobile ? 0.2 + Math.random() * 0.3 : 0.4 + Math.random() * 0.4,
         });
       }
     };
@@ -90,7 +93,8 @@ export default function InteractiveMesh() {
 
       const [r, g, b] = getPrimaryColor();
 
-      if (mouse.x > -1000) {
+      // Only draw mouse glow on non-mobile (performance)
+      if (!isMobile && mouse.x > -1000) {
         const grad = ctx.createRadialGradient(
           smooth.x, smooth.y, 0,
           smooth.x, smooth.y, MOUSE_REPEL_DIST * 1.2
@@ -104,23 +108,26 @@ export default function InteractiveMesh() {
       }
 
       points.forEach((p, i) => {
-        const dx = p.x - smooth.x;
-        const dy = p.y - smooth.y;
-        const dist = Math.hypot(dx, dy);
+        // Mouse interaction (disabled or simplified on mobile)
+        if (!isMobile) {
+          const dx = p.x - smooth.x;
+          const dy = p.y - smooth.y;
+          const dist = Math.hypot(dx, dy);
 
-        if (dist < MOUSE_REPEL_DIST && dist > 0) {
-          const force = (1 - dist / MOUSE_REPEL_DIST) * MOUSE_FORCE;
-          p.vx += (dx / dist) * force;
-          p.vy += (dy / dist) * force;
-        }
+          if (dist < MOUSE_REPEL_DIST && dist > 0) {
+            const force = (1 - dist / MOUSE_REPEL_DIST) * MOUSE_FORCE;
+            p.vx += (dx / dist) * force;
+            p.vy += (dy / dist) * force;
+          }
 
-        p.vx += (p.baseVx - p.vx) * 0.04;
-        p.vy += (p.baseVy - p.vy) * 0.04;
+          p.vx += (p.baseVx - p.vx) * 0.04;
+          p.vy += (p.baseVy - p.vy) * 0.04;
 
-        const spd = Math.hypot(p.vx, p.vy);
-        if (spd > MAX_SPEED) {
-          p.vx = (p.vx / spd) * MAX_SPEED;
-          p.vy = (p.vy / spd) * MAX_SPEED;
+          const spd = Math.hypot(p.vx, p.vy);
+          if (spd > MAX_SPEED) {
+            p.vx = (p.vx / spd) * MAX_SPEED;
+            p.vy = (p.vy / spd) * MAX_SPEED;
+          }
         }
 
         p.x += p.vx;
@@ -134,30 +141,34 @@ export default function InteractiveMesh() {
         ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
         ctx.fill();
 
-        for (let j = i + 1; j < points.length; j++) {
-          const q = points[j];
-          const d = Math.hypot(p.x - q.x, p.y - q.y);
-          if (d < CONNECT_DIST) {
-            const alpha = (1 - d / CONNECT_DIST) * 0.25;
+        // Lines connection - DISABLE ON MOBILE for performance
+        if (!isMobile) {
+          for (let j = i + 1; j < points.length; j++) {
+            const q = points[j];
+            const d = Math.hypot(p.x - q.x, p.y - q.y);
+            if (d < CONNECT_DIST) {
+              const alpha = (1 - d / CONNECT_DIST) * 0.25;
+              ctx.globalAlpha = alpha;
+              ctx.strokeStyle = `rgb(${r},${g},${b})`;
+              ctx.lineWidth = 0.6;
+              ctx.beginPath();
+              ctx.moveTo(p.x, p.y);
+              ctx.lineTo(q.x, q.y);
+              ctx.stroke();
+            }
+          }
+
+          const dist = Math.hypot(p.x - smooth.x, p.y - smooth.y);
+          if (dist < MOUSE_REPEL_DIST && mouse.x > -1000) {
+            const alpha = (1 - dist / MOUSE_REPEL_DIST) * 0.5;
             ctx.globalAlpha = alpha;
             ctx.strokeStyle = `rgb(${r},${g},${b})`;
-            ctx.lineWidth = 0.6;
+            ctx.lineWidth = 1;
             ctx.beginPath();
             ctx.moveTo(p.x, p.y);
-            ctx.lineTo(q.x, q.y);
+            ctx.lineTo(smooth.x, smooth.y);
             ctx.stroke();
           }
-        }
-
-        if (dist < MOUSE_REPEL_DIST && mouse.x > -1000) {
-          const alpha = (1 - dist / MOUSE_REPEL_DIST) * 0.5;
-          ctx.globalAlpha = alpha;
-          ctx.strokeStyle = `rgb(${r},${g},${b})`;
-          ctx.lineWidth = 1;
-          ctx.beginPath();
-          ctx.moveTo(p.x, p.y);
-          ctx.lineTo(smooth.x, smooth.y);
-          ctx.stroke();
         }
       });
 
