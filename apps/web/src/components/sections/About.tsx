@@ -13,17 +13,13 @@ export default function About({ profile }: { profile: Profile | null }) {
           {/* Text Content */}
           <div className="md:col-span-2 space-y-6 text-[var(--color-text-muted)] leading-relaxed">
             <div className="whitespace-pre-wrap">
-              {profile?.bio || (
-                <>
-                  Halo! Saya <span className="text-[var(--color-text)] font-semibold">Ihsan</span>, mahasiswa Teknik Informatika di Politeknik Negeri Bandung...
-                </>
-              )}
+              {profile?.bio}
             </div>
             
             <div className="flex flex-wrap gap-6 pt-2">
               <div className="flex items-center gap-2 text-[var(--color-text)] font-mono text-sm">
                 <MapPin size={16} className="text-[var(--color-primary)]" />
-                <span>{profile?.location || 'Bandung, Indonesia'}</span>
+                <span>{profile?.location}</span>
               </div>
             </div>
           </div>

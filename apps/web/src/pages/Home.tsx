@@ -17,8 +17,14 @@ export default function Home() {
   useEffect(() => {
     fetch(`${import.meta.env.VITE_API_URL}/profile`)
       .then(res => res.json())
-      .then(data => setProfile(data.data))
-      .catch(err => console.error('Error fetching profile:', err));
+      .then(data => {
+        if (data && data.data) {
+          setProfile(data.data);
+        }
+      })
+      .catch(err => {
+        console.error('Error fetching profile:', err);
+      });
   }, []);
 
   return (
