@@ -7,7 +7,7 @@ import { AppModule } from '../src/app.module';
 import { ValidationPipe } from '@nestjs/common';
 import { TransformInterceptor } from '../src/common/interceptors/transform.interceptor';
 import { HttpExceptionFilter } from '../src/common/filters/http-exception.filter';
-import { contentParser } from '@fastify/multipart';
+import { fastifyMultipart } from '@fastify/multipart';
 
 export default async function handler(req: any, res: any) {
   const app = await NestFactory.create<NestFastifyApplication>(
@@ -19,8 +19,8 @@ export default async function handler(req: any, res: any) {
   app.useGlobalPipes(new ValidationPipe({ transform: true, whitelist: true }));
   app.useGlobalInterceptors(new TransformInterceptor());
   app.useGlobalFilters(new HttpExceptionFilter());
-  await app.register(contentParser);
-  
+  await app.register(fastifyMultipart);
+
   app.enableCors({
     origin: process.env.FRONTEND_URL || '*',
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',

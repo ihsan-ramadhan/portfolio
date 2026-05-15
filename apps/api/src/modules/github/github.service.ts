@@ -86,15 +86,17 @@ export class GitHubService {
 
       this.logger.log(`Found ${pinnedRepos.length} pinned repositories`);
 
-      return pinnedRepos.map((repo) => ({
-        id: repo.databaseId,
-        name: repo.name,
-        description: repo.description ?? null,
-        url: repo.url,
-        language: repo.primaryLanguage?.name ?? null,
-        stargazers_count: repo.stargazerCount ?? 0,
-        pinned: true,
-      }));
+      return pinnedRepos.map(
+        (repo: PinnedReposResponse['user']['pinnedItems']['nodes'][0]) => ({
+          id: repo.databaseId,
+          name: repo.name,
+          description: repo.description ?? null,
+          url: repo.url,
+          language: repo.primaryLanguage?.name ?? null,
+          stargazers_count: repo.stargazerCount ?? 0,
+          pinned: true,
+        }),
+      );
     } catch (error) {
       this.logger.error(
         'Error fetching pinned repositories from GitHub',
@@ -112,15 +114,24 @@ export class GitHubService {
       sort: 'updated',
     });
 
-    return repositories.map((repo) => ({
-      id: repo.id,
-      name: repo.name,
-      description: repo.description ?? null,
-      url: repo.html_url,
-      language: repo.language ?? null,
-      stargazers_count: repo.stargazers_count ?? 0,
-      pinned: false,
-    }));
+    return (repositories as any[]).map(
+      (repo: {
+        id: number;
+        name: string;
+        description: string | null;
+        html_url: string;
+        language: string | null;
+        stargazers_count: number;
+      }) => ({
+        id: repo.id,
+        name: repo.name,
+        description: repo.description ?? null,
+        url: repo.html_url,
+        language: repo.language ?? null,
+        stargazers_count: repo.stargazers_count ?? 0,
+        pinned: false,
+      }),
+    );
   }
 
   async getRepositoryDetails(owner: string, repo: string) {

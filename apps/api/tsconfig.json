@@ -14,9 +14,7 @@
     "sourceMap": true,
     "outDir": "./dist",
     "baseUrl": "./",
-    "paths": {
-      "@prisma/client": ["./src/generated/client"]
-    },
+    "paths": {},
     "incremental": true,
     "skipLibCheck": true,
     "strictNullChecks": true,
