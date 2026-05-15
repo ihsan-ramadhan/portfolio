@@ -7,7 +7,12 @@ import {
   Max,
   Min,
 } from 'class-validator';
-import { SkillCategory } from '@prisma/client';
+export enum SkillCategory {
+  FRONTEND = 'FRONTEND',
+  BACKEND = 'BACKEND',
+  TOOLS = 'TOOLS',
+  OTHERS = 'OTHERS',
+}
 
 export class CreateSkillDto {
   @IsString()
