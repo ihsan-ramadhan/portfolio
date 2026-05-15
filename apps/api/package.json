@@ -9,6 +9,7 @@
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "nest start",
+    "postinstall": "prisma generate",
     "start:dev": "nest start --watch --exec \"node -r tsconfig-paths/register dist/src/main\"",
     "start:debug": "nest start --debug --watch",
     "start:prod": "node dist/main",
