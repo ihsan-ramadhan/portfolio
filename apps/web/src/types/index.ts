@@ -7,12 +7,15 @@ export interface Profile {
 
 export interface Project {
   id: string;
+  githubId?: number;
   name: string;
-  description: string;
-  image?: string;
-  tags: string[];
-  language?: string;
+  description?: string;
+  customDesc?: string;
   url: string;
-  demoUrl?: string;
-  category?: string;
+  language?: string;
+  stars: number;
+  tags: string[];
+  isPinned: boolean;
+  isVisible: boolean;
+  lastSyncedAt?: string;
 }

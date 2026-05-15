@@ -1,21 +1,23 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Github, Terminal, Globe } from 'lucide-react';
+import { Github, Terminal} from 'lucide-react';
 import SectionHeader from '../ui/SectionHeader';
 import AnimatedSection from '../ui/AnimatedSection';
-import Badge from '../ui/Badge';
 
 import type { Project } from '../../types';
+import { FALLBACK_PROJECTS } from '../../constants';
 
 export default function Projects() {
-  const [projects, setProjects] = useState<Project[]>([]);
+  const [projects, setProjects] = useState<Project[]>(FALLBACK_PROJECTS);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     fetch(`${import.meta.env.VITE_API_URL}/projects`)
       .then(res => res.json())
       .then(data => {
-        setProjects(data.data);
+        if (data && Array.isArray(data.data) && data.data.length > 0) {
+          setProjects(data.data);
+        }
         setLoading(false);
       })
       .catch(err => {
@@ -48,25 +50,12 @@ export default function Projects() {
                 transition={{ delay: index * 0.1 }}
                 className="group relative flex flex-col bg-[var(--color-bg-subtle)] border border-[var(--color-border)] rounded-xl overflow-hidden hover:border-[var(--color-primary)] transition-all duration-300"
               >
-                {/* Project Image */}
+                {/* Project Placeholder Icon */}
                 <div className="relative aspect-video overflow-hidden bg-[var(--color-bg)] flex items-center justify-center border-b border-[var(--color-border)]">
-                  {project.image ? (
-                    <img
-                      src={project.image}
-                      alt={project.name}
-                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                    />
-                  ) : (
-                    <div className="flex flex-col items-center gap-3 opacity-20 group-hover:opacity-40 transition-opacity">
-                      <Terminal size={48} className="text-[var(--color-primary)]" />
-                      <span className="font-mono text-xs uppercase tracking-widest">{project.language || 'Repository'}</span>
-                    </div>
-                  )}
-                  {project.category && (
-                    <div className="absolute top-4 left-4">
-                      <Badge variant="primary">{project.category}</Badge>
-                    </div>
-                  )}
+                  <div className="flex flex-col items-center gap-3 opacity-20 group-hover:opacity-40 transition-opacity">
+                    <Terminal size={48} className="text-[var(--color-primary)]" />
+                    <span className="font-mono text-xs uppercase tracking-widest">{project.language || 'Repository'}</span>
+                  </div>
                 </div>
 
                 {/* Project Info */}
@@ -99,16 +88,6 @@ export default function Projects() {
                     >
                       <Github size={18} /> View Code
                     </a>
-                    {project.demoUrl && (
-                      <a
-                        href={project.demoUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-[var(--color-text-muted)] hover:text-[var(--color-text)] transition-colors flex items-center gap-2 text-xs font-mono"
-                      >
-                        <Globe size={18} /> Live Demo
-                      </a>
-                    )}
                   </div>
                 </div>
               </motion.div>

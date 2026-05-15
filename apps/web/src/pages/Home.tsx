@@ -9,8 +9,10 @@ import Contact from '../components/sections/Contact';
 
 import type { Profile } from '../types';
 
+import { DEFAULT_PROFILE } from '../constants';
+
 export default function Home() {
-  const [profile, setProfile] = useState<Profile | null>(null);
+  const [profile, setProfile] = useState<Profile | null>(DEFAULT_PROFILE);
 
   useEffect(() => {
     fetch(`${import.meta.env.VITE_API_URL}/profile`)
