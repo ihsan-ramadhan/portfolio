@@ -24,7 +24,7 @@ export class ProjectsService {
     return this.prisma.project.create({
       data: {
         ...createProjectDto,
-        profileId: 'default-profile', // Tetap dikaitkan ke profil utama
+        profileId: 'default-profile',
       },
     });
   }

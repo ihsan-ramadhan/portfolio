@@ -36,10 +36,7 @@ export class SyncService {
         `Fetched ${repositories.length} repositories from GitHub`,
       );
 
-      await this.prisma.project.deleteMany({
-        where: { githubId: { not: null } },
-      });
-      this.logger.log('Cleared existing GitHub projects');
+      const activeGithubIds = repositories.map((repo) => repo.id);
 
       let successCount = 0;
       let errorCount = 0;
@@ -54,6 +51,7 @@ export class SyncService {
               url: repo.url,
               language: repo.language,
               stars: repo.stargazers_count,
+              isPinned: repo.pinned,
               lastSyncedAt: new Date(),
             },
             create: {
@@ -63,6 +61,7 @@ export class SyncService {
               url: repo.url,
               language: repo.language,
               stars: repo.stargazers_count,
+              isPinned: repo.pinned,
               lastSyncedAt: new Date(),
               isVisible: true,
               profileId: 'default-profile',
@@ -76,14 +75,18 @@ export class SyncService {
         }
       }
 
-      const message = `Synced ${successCount} repositories successfully, ${errorCount} failed`;
+      const { count: hiddenCount } = await this.prisma.project.updateMany({
+        where: {
+          githubId: { not: null, notIn: activeGithubIds },
+          isVisible: true,
+        },
+        data: { isVisible: false },
+      });
+
+      const message = `Synced ${successCount} repos, ${errorCount} failed, ${hiddenCount} hidden`;
       this.logger.log(message);
 
-      await this.logSync(
-        SyncSource.GITHUB,
-        SyncStatus.SUCCESS,
-        `Synced ${successCount} repos, ${errorCount} errors`,
-      );
+      await this.logSync(SyncSource.GITHUB, SyncStatus.SUCCESS, message);
     } catch (error) {
       this.logger.error('Fatal error during GitHub sync:', error);
 
