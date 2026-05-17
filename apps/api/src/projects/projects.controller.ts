@@ -8,6 +8,7 @@ import {
   Post,
   UseGuards,
 } from '@nestjs/common';
+import { SkipThrottle } from '@nestjs/throttler';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { CreateProjectDto } from './dto/create-project.dto';
 import { ProjectsService } from './projects.service';
@@ -17,11 +18,13 @@ export class ProjectsController {
   constructor(private readonly projectsService: ProjectsService) {}
 
   @Get()
+  @SkipThrottle()
   async getProjects() {
     return this.projectsService.findAll();
   }
 
   @Get('featured')
+  @SkipThrottle()
   async getFeatured() {
     return this.projectsService.findPinned();
   }

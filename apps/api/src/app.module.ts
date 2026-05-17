@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
+import { APP_GUARD } from '@nestjs/core';
 import { ConfigModule } from '@nestjs/config';
-import { ThrottlerModule } from '@nestjs/throttler';
+import { ThrottlerModule, ThrottlerGuard } from '@nestjs/throttler';
 import { ScheduleModule } from '@nestjs/schedule';
 import * as Joi from 'joi';
 import { AppController } from './app.controller';
@@ -40,8 +41,14 @@ import { ContactModule } from './modules/contact/contact.module';
     }),
     ThrottlerModule.forRoot([
       {
-        ttl: 60000,
+        name: 'short',
+        ttl: 1000,
         limit: 10,
+      },
+      {
+        name: 'medium',
+        ttl: 60000,
+        limit: 100,
       },
     ]),
     AuthModule,
@@ -54,6 +61,12 @@ import { ContactModule } from './modules/contact/contact.module';
     ContactModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [
+    AppService,
+    {
+      provide: APP_GUARD,
+      useClass: ThrottlerGuard,
+    },
+  ],
 })
 export class AppModule {}

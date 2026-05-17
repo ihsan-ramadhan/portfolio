@@ -8,6 +8,7 @@ import {
   Post,
   UseGuards,
 } from '@nestjs/common';
+import { SkipThrottle } from '@nestjs/throttler';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { CreateSkillDto } from './dto/create-skill.dto';
 import { SkillsService } from './skills.service';
@@ -17,6 +18,7 @@ export class SkillsController {
   constructor(private readonly skillsService: SkillsService) {}
 
   @Get()
+  @SkipThrottle()
   async getSkills() {
     return this.skillsService.findAll();
   }

@@ -8,6 +8,7 @@ import {
   UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
+import { SkipThrottle } from '@nestjs/throttler';
 import { FileInterceptor } from '@nest-lab/fastify-multer';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { UpdateProfileDto } from './dto/update-profile.dto';
@@ -22,6 +23,7 @@ export class ProfileController {
   ) {}
 
   @Get()
+  @SkipThrottle()
   async getProfile() {
     return this.profileService.findOne();
   }
