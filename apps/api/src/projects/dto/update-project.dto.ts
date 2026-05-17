@@ -1,16 +1,15 @@
 import {
   IsArray,
   IsBoolean,
-  IsNotEmpty,
   IsOptional,
   IsString,
   IsUrl,
 } from 'class-validator';
 
-export class CreateProjectDto {
+export class UpdateProjectDto {
   @IsString()
-  @IsNotEmpty({ message: 'Nama proyek tidak boleh kosong' })
-  name: string;
+  @IsOptional()
+  name?: string;
 
   @IsString()
   @IsOptional()
@@ -25,7 +24,8 @@ export class CreateProjectDto {
   imageUrl?: string;
 
   @IsUrl({}, { message: 'Format URL tidak valid' })
-  url: string;
+  @IsOptional()
+  url?: string;
 
   @IsString()
   @IsOptional()

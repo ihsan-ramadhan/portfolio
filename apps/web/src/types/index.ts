@@ -11,6 +11,7 @@ export interface Project {
   name: string;
   description?: string;
   customDesc?: string;
+  imageUrl?: string;
   url: string;
   language?: string;
   stars: number;

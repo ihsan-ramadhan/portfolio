@@ -1,6 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { CreateProjectDto } from './dto/create-project.dto';
+import { UpdateProjectDto } from './dto/update-project.dto';
 
 @Injectable()
 export class ProjectsService {
@@ -9,6 +10,12 @@ export class ProjectsService {
   async findAll() {
     return this.prisma.project.findMany({
       where: { isVisible: true },
+      orderBy: { stars: 'desc' },
+    });
+  }
+
+  async findAllForAdmin() {
+    return this.prisma.project.findMany({
       orderBy: { stars: 'desc' },
     });
   }
@@ -29,13 +36,14 @@ export class ProjectsService {
     });
   }
 
-  async update(id: string, updateProjectDto: Partial<CreateProjectDto>) {
+  async update(id: string, updateProjectDto: UpdateProjectDto) {
     try {
       return await this.prisma.project.update({
         where: { id },
         data: updateProjectDto,
       });
-    } catch {
+    } catch (error) {
+      console.error(`Prisma update error for project ${id}:`, error);
       throw new NotFoundException('Proyek tidak ditemukan');
     }
   }

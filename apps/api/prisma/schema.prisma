@@ -78,6 +78,7 @@ model Project {
   name         String
   description  String?
   customDesc   String? // Override dari admin
+  imageUrl     String? // URL gambar preview proyek
   url          String
   language     String?
   stars        Int      @default(0)

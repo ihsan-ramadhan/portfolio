@@ -34,12 +34,20 @@ export default function Projects() {
                 transition={{ delay: index * 0.1 }}
                 className="group relative flex flex-col bg-[var(--color-bg-subtle)] border border-[var(--color-border)] rounded-xl overflow-hidden hover:border-[var(--color-primary)] transition-all duration-300"
               >
-                {/* Project Placeholder Icon */}
-                <div className="relative aspect-video overflow-hidden bg-[var(--color-bg)] flex items-center justify-center border-b border-[var(--color-border)]">
-                  <div className="flex flex-col items-center gap-3 opacity-20 group-hover:opacity-40 transition-opacity">
-                    <Terminal size={48} className="text-[var(--color-primary)]" />
-                    <span className="font-mono text-xs uppercase tracking-widest">{project.language || 'Repository'}</span>
-                  </div>
+                {/* Project Image / Placeholder Icon */}
+                <div className="relative aspect-video overflow-hidden bg-[var(--color-bg)] flex items-center justify-center border-b border-[var(--color-border)] group">
+                  {project.imageUrl ? (
+                    <img
+                      src={project.imageUrl}
+                      alt={project.name}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                    />
+                  ) : (
+                    <div className="flex flex-col items-center gap-3 opacity-20 group-hover:opacity-40 transition-opacity">
+                      <Terminal size={48} className="text-[var(--color-primary)]" />
+                      <span className="font-mono text-xs uppercase tracking-widest">{project.language || 'Repository'}</span>
+                    </div>
+                  )}
                 </div>
 
                 {/* Project Info */}
@@ -47,8 +55,8 @@ export default function Projects() {
                   <h3 className="text-xl font-bold mb-3 group-hover:text-[var(--color-primary)] transition-colors font-mono">
                     {project.name}
                   </h3>
-                  <p className="text-sm text-[var(--color-text-muted)] mb-6 line-clamp-3 leading-relaxed">
-                    {project.description || 'No description provided.'}
+                  <p className="text-sm text-[var(--color-text-muted)] mb-6 line-clamp-3 leading-relaxed font-mono">
+                    {project.customDesc || project.description || 'No description provided.'}
                   </p>
 
                   <div className="flex flex-wrap gap-2 mb-6 mt-auto">

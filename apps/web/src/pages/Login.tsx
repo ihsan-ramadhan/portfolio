@@ -43,9 +43,9 @@ export default function Login() {
         animate={{ opacity: 1, y: 0 }}
         className="w-full max-w-md bg-[var(--color-bg-subtle)] border border-[var(--color-border)] rounded-xl overflow-hidden shadow-2xl"
       >
-        <div className="bg-[var(--color-terminal)] p-4 border-b border-[var(--color-border)] flex items-center gap-2">
-          <Terminal size={18} className="text-[var(--color-primary)]" />
-          <span className="font-mono text-sm text-[var(--color-text-muted)]">sudo auth login</span>
+        <div className="bg-[var(--color-bg)] p-6 border-b border-[var(--color-border)] flex items-center gap-2">
+          <Terminal size={18} className="text-[var(--color-primary)] animate-pulse" />
+          <span className="font-mono text-sm text-[var(--color-text)] font-bold tracking-wide">sudo auth login</span>
         </div>
 
         <form onSubmit={handleSubmit} className="p-8 space-y-6">
@@ -64,7 +64,7 @@ export default function Login() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
-                className="w-full bg-[var(--color-bg)] border border-[var(--color-border)] rounded-lg py-3 pl-10 pr-4 focus:outline-none focus:border-[var(--color-primary)] transition-colors font-mono text-sm"
+                className="w-full bg-[var(--color-bg)] border border-[var(--color-border)] rounded-lg py-3 pl-10 pr-4 focus:outline-none focus:border-[var(--color-primary)] transition-colors font-mono text-sm text-[var(--color-text)]"
                 placeholder="admin@example.com"
               />
             </div>
@@ -79,7 +79,7 @@ export default function Login() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
-                className="w-full bg-[var(--color-bg)] border border-[var(--color-border)] rounded-lg py-3 pl-10 pr-4 focus:outline-none focus:border-[var(--color-primary)] transition-colors font-mono text-sm"
+                className="w-full bg-[var(--color-bg)] border border-[var(--color-border)] rounded-lg py-3 pl-10 pr-4 focus:outline-none focus:border-[var(--color-primary)] transition-colors font-mono text-sm text-[var(--color-text)]"
                 placeholder="••••••••"
               />
             </div>
@@ -88,15 +88,15 @@ export default function Login() {
           <button 
             type="submit" 
             disabled={loading}
-            className="w-full bg-[var(--color-primary)] hover:bg-[var(--color-primary-hover)] text-white font-mono py-4 rounded-lg flex items-center justify-center gap-2 transition-all active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-full bg-[var(--color-primary)] hover:bg-[var(--color-primary-dim)] text-white font-mono font-bold py-4 rounded-lg flex items-center justify-center gap-2 transition-all active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer shadow-lg"
           >
             {loading ? 'Authenticating...' : 'Access Granted'}
             {!loading && <ArrowRight size={18} />}
           </button>
         </form>
 
-        <div className="p-4 bg-[var(--color-terminal)] border-t border-[var(--color-border)] text-center">
-          <a href="/" className="text-xs font-mono text-[var(--color-text-muted)] hover:text-[var(--color-text)] transition-colors">
+        <div className="p-6 bg-[var(--color-bg)] border-t border-[var(--color-border)] text-center">
+          <a href="/" className="text-xs font-mono text-[var(--color-text-muted)] hover:text-[var(--color-primary)] transition-colors inline-flex items-center gap-2 font-bold tracking-wide">
             &larr; Back to Portfolio
           </a>
         </div>

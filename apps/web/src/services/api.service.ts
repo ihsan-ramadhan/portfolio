@@ -20,6 +20,26 @@ export const projectsApi = {
     const response = await apiClient.get<ApiResponse<Project[]>>('/projects');
     return response.data.data;
   },
+  getAdminProjects: async (token: string): Promise<Project[]> => {
+    const response = await apiClient.get<ApiResponse<Project[]>>('/admin/projects', {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    return response.data.data;
+  },
+  updateProject: async ({ id, data, token }: { id: string; data: Partial<Project>; token: string }): Promise<Project> => {
+    const response = await apiClient.patch<ApiResponse<Project>>(`/admin/projects/${id}`, data, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    return response.data.data;
+  },
+  uploadProjectImage: async ({ file, token }: { file: File; token: string }): Promise<string> => {
+    const formData = new FormData();
+    formData.append('file', file);
+    const response = await apiClient.post<ApiResponse<{ imageUrl: string }>>('/admin/projects/upload-image', formData, {
+      headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'multipart/form-data' },
+    });
+    return response.data.data.imageUrl;
+  },
 };
 
 export const skillsApi = {
