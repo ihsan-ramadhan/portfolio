@@ -5,6 +5,7 @@ import {
   Param,
   Patch,
   Post,
+  Delete,
   UseGuards,
 } from '@nestjs/common';
 import { SkipThrottle } from '@nestjs/throttler';
@@ -32,5 +33,11 @@ export class ContactController {
   @UseGuards(JwtAuthGuard)
   markAsRead(@Param('id') id: string) {
     return this.contactService.markAsRead(id);
+  }
+
+  @Delete('admin/messages/:id')
+  @UseGuards(JwtAuthGuard)
+  remove(@Param('id') id: string) {
+    return this.contactService.remove(id);
   }
 }

@@ -56,7 +56,7 @@ export default function Projects() {
                     {[project.language, ...(project.tags || [])].filter(Boolean).map((tag) => (
                       <span
                         key={tag}
-                        className="px-2 py-1 text-[10px] font-mono bg-[var(--color-terminal)] text-[var(--color-text-muted)] border border-[var(--color-border)] rounded uppercase tracking-wider"
+                        className="px-2.5 py-1 text-[10px] font-mono font-bold bg-[var(--color-bg)] text-[var(--color-primary)] border border-[var(--color-border)] rounded-md uppercase tracking-wider shadow-sm"
                       >
                         {tag}
                       </span>

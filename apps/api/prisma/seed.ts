@@ -71,7 +71,7 @@ async function main() {
     },
     {
       name: 'CSS3',
-      icon: 'css3',
+      icon: 'css',
       category: 'FRONTEND' as const,
       proficiency: 90,
     },

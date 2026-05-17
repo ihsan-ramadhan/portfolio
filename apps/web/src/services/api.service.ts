@@ -1,5 +1,5 @@
 import axios from 'axios';
-import type { Profile, Project, Skill, ApiResponse } from '../types';
+import type { Profile, Project, Skill, ContactMessage, ApiResponse } from '../types';
 
 const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001/api/v1';
 
@@ -45,3 +45,24 @@ export const skillsApi = {
     });
   },
 };
+
+export const messagesApi = {
+  getMessages: async (token: string): Promise<ContactMessage[]> => {
+    const response = await apiClient.get<ApiResponse<ContactMessage[]>>('/admin/messages', {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    return response.data.data;
+  },
+  markAsRead: async ({ id, token }: { id: string; token: string }): Promise<ContactMessage> => {
+    const response = await apiClient.patch<ApiResponse<ContactMessage>>(`/admin/messages/${id}/read`, {}, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    return response.data.data;
+  },
+  deleteMessage: async ({ id, token }: { id: string; token: string }): Promise<void> => {
+    await apiClient.delete(`/admin/messages/${id}`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+  },
+};
+
