@@ -13,6 +13,7 @@ import { ProjectsModule } from './projects/projects.module';
 import { GitHubModule } from './modules/github/github.module';
 import { SyncModule } from './modules/sync/sync.module';
 import { StorageModule } from './modules/storage/storage.module';
+import { ContactModule } from './modules/contact/contact.module';
 
 @Module({
   imports: [
@@ -50,6 +51,7 @@ import { StorageModule } from './modules/storage/storage.module';
     GitHubModule,
     SyncModule,
     StorageModule,
+    ContactModule,
   ],
   controllers: [AppController],
   providers: [AppService],

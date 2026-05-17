@@ -1,4 +1,3 @@
-import { useState, useEffect } from 'react';
 import Navbar from '../components/layout/Navbar';
 import Footer from '../components/layout/Footer';
 import Hero from '../components/sections/Hero';
@@ -7,25 +6,10 @@ import Skills from '../components/sections/Skills';
 import Projects from '../components/sections/Projects';
 import Contact from '../components/sections/Contact';
 
-import type { Profile } from '../types';
-
-import { DEFAULT_PROFILE } from '../constants';
+import { useProfile } from '../hooks/use-profile';
 
 export default function Home() {
-  const [profile, setProfile] = useState<Profile | null>(DEFAULT_PROFILE);
-
-  useEffect(() => {
-    fetch(`${import.meta.env.VITE_API_URL}/profile`)
-      .then(res => res.json())
-      .then(data => {
-        if (data && data.data) {
-          setProfile(data.data);
-        }
-      })
-      .catch(err => {
-        console.error('Error fetching profile:', err);
-      });
-  }, []);
+  const { data: profile } = useProfile();
 
   return (
     <>

@@ -1,30 +1,14 @@
-import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Github, Terminal} from 'lucide-react';
 import SectionHeader from '../ui/SectionHeader';
 import AnimatedSection from '../ui/AnimatedSection';
 
-import type { Project } from '../../types';
+import { useProjects } from '../../hooks/use-projects';
 import { FALLBACK_PROJECTS } from '../../constants';
 
 export default function Projects() {
-  const [projects, setProjects] = useState<Project[]>(FALLBACK_PROJECTS);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    fetch(`${import.meta.env.VITE_API_URL}/projects`)
-      .then(res => res.json())
-      .then(data => {
-        if (data && Array.isArray(data.data) && data.data.length > 0) {
-          setProjects(data.data);
-        }
-        setLoading(false);
-      })
-      .catch(err => {
-        console.error('Error fetching projects:', err);
-        setLoading(false);
-      });
-  }, []);
+  const { data: projects = FALLBACK_PROJECTS, isLoading: loading } =
+    useProjects();
 
   return (
     <section id="projects" className="py-20 w-full border-t border-[var(--color-border)]">

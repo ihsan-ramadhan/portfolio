@@ -19,3 +19,9 @@ export interface Project {
   isVisible: boolean;
   lastSyncedAt?: string;
 }
+
+export interface ApiResponse<T> {
+  data: T;
+  message: string;
+  statusCode: number;
+}

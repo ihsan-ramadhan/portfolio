@@ -131,6 +131,18 @@ export default function Admin() {
     </div>
   );
 
+  if (!profile) return (
+    <div className="min-h-screen flex flex-col items-center justify-center font-mono gap-4 text-[var(--color-text-muted)]">
+      <div className="text-red-500 font-bold">[ERROR]: Failed to load profile data</div>
+      <button 
+        onClick={fetchProfile}
+        className="px-4 py-2 bg-[var(--color-terminal)] border border-[var(--color-border)] rounded-lg text-xs hover:border-[var(--color-primary)] transition-colors cursor-pointer"
+      >
+        RETRY_FETCH
+      </button>
+    </div>
+  );
+
   return (
     <div className="min-h-screen p-4 md:p-8 max-w-6xl mx-auto space-y-8">
       {/* Header */}
