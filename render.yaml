@@ -5,7 +5,7 @@ services:
     region: singapore
     plan: free
     buildCommand: pnpm install --frozen-lockfile=false && pnpm --filter api run build
-    startCommand: node apps/api/dist/main.js
+    startCommand: node apps/api/dist/src/main.js
     healthCheckPath: /api/v1
     envVars:
       - key: NODE_ENV
