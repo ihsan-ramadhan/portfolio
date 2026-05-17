@@ -4,9 +4,8 @@ services:
     runtime: node
     region: singapore
     plan: free
-    rootDir: apps/api
-    buildCommand: corepack enable && pnpm install --frozen-lockfile=false && pnpm run build
-    startCommand: node dist/main.js
+    buildCommand: pnpm install --frozen-lockfile=false && pnpm --filter api run build
+    startCommand: node apps/api/dist/main.js
     healthCheckPath: /api/v1
     envVars:
       - key: NODE_ENV
