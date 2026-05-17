@@ -1,4 +1,3 @@
-import React from 'react';
 import { Mail, CheckCheck, Trash2 } from 'lucide-react';
 import { useMessages, useMarkAsRead, useDeleteMessage } from '../../hooks/use-messages';
 
