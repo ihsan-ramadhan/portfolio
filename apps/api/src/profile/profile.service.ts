@@ -7,31 +7,20 @@ export class ProfileService {
   constructor(private prisma: PrismaService) {}
 
   async findOne() {
-    let profile = await this.prisma.profile.findUnique({
+    return this.prisma.profile.upsert({
       where: { id: 'default-profile' },
+      update: {},
+      create: {
+        id: 'default-profile',
+        headline: 'Full Stack Developer',
+        bio: 'I love coding and building things.',
+      },
       include: {
         experiences: { orderBy: { order: 'asc' } },
         educations: { orderBy: { order: 'asc' } },
         projects: { orderBy: { lastSyncedAt: 'desc' } },
       },
     });
-
-    if (!profile) {
-      profile = await this.prisma.profile.create({
-        data: {
-          id: 'default-profile',
-          headline: 'Full Stack Developer',
-          bio: 'I love coding and building things.',
-        },
-        include: {
-          experiences: true,
-          educations: true,
-          projects: true,
-        },
-      });
-    }
-
-    return profile;
   }
 
   async update(updateProfileDto: UpdateProfileDto) {

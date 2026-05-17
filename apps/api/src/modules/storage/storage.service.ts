@@ -1,4 +1,9 @@
-import { Injectable, Logger, OnModuleInit } from '@nestjs/common';
+import {
+  Injectable,
+  Logger,
+  OnModuleInit,
+  InternalServerErrorException,
+} from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { createClient, SupabaseClient } from '@supabase/supabase-js';
 
@@ -36,7 +41,7 @@ export class StorageService implements OnModuleInit {
 
     if (error) {
       this.logger.error(`Upload failed: ${error.message}`);
-      throw new Error(`Upload failed: ${error.message}`);
+      throw new InternalServerErrorException(`Upload failed: ${error.message}`);
     }
 
     const {
