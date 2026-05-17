@@ -127,8 +127,10 @@ export default function Contact() {
                   </div>
                 )}
                 <div>
-                  <label className="block text-xs font-mono text-[var(--color-text-muted)] mb-2 uppercase tracking-widest">Name</label>
+                  <label htmlFor="name" className="block text-xs font-mono text-[var(--color-text-muted)] mb-2 uppercase tracking-widest">Name</label>
                   <input 
+                    id="name"
+                    name="name"
                     type="text" 
                     value={name}
                     onChange={(e) => setName(e.target.value)}
@@ -138,8 +140,10 @@ export default function Contact() {
                   />
                 </div>
                 <div>
-                  <label className="block text-xs font-mono text-[var(--color-text-muted)] mb-2 uppercase tracking-widest">Email</label>
+                  <label htmlFor="email" className="block text-xs font-mono text-[var(--color-text-muted)] mb-2 uppercase tracking-widest">Email</label>
                   <input 
+                    id="email"
+                    name="email"
                     type="email" 
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
@@ -149,8 +153,10 @@ export default function Contact() {
                   />
                 </div>
                 <div>
-                  <label className="block text-xs font-mono text-[var(--color-text-muted)] mb-2 uppercase tracking-widest">Message</label>
+                  <label htmlFor="message" className="block text-xs font-mono text-[var(--color-text-muted)] mb-2 uppercase tracking-widest">Message</label>
                   <textarea 
+                    id="message"
+                    name="message"
                     rows={4}
                     value={message}
                     onChange={(e) => setMessage(e.target.value)}
