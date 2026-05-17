@@ -31,4 +31,8 @@ export class CreateSkillDto {
   @IsString()
   @IsOptional()
   icon?: string;
+
+  @IsString()
+  @IsOptional()
+  url?: string;
 }

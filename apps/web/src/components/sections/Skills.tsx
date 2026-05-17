@@ -8,11 +8,14 @@ import { FALLBACK_SKILLS } from '../../constants';
 export default function Skills() {
   const { data: skills = [], isLoading } = useSkills();
 
-  const displaySkills = skills.length > 0 ? skills.map(s => ({
-    name: s.name,
-    icon: s.icon || s.name.toLowerCase().replace(/[^a-z0-9]/g, ''),
-    url: `https://google.com/search?q=${encodeURIComponent(s.name)}`
-  })) : FALLBACK_SKILLS;
+  const displaySkills = skills.length > 0 ? skills.map(s => {
+    const fallbackMatch = FALLBACK_SKILLS.find(f => f.name.toLowerCase() === s.name.toLowerCase());
+    return {
+      name: s.name,
+      icon: s.icon || fallbackMatch?.icon || s.name.toLowerCase().replace(/[^a-z0-9]/g, ''),
+      url: s.url || fallbackMatch?.url || `https://google.com/search?q=${encodeURIComponent(s.name)}`
+    };
+  }) : FALLBACK_SKILLS;
 
   const duplicatedStack = [...displaySkills, ...displaySkills];
 

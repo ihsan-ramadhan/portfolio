@@ -27,6 +27,7 @@ model Skill {
   category    SkillCategory
   proficiency Int           @default(0)
   icon        String?
+  url         String?
 }
 
 enum SkillCategory {

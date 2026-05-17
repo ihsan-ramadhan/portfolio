@@ -17,6 +17,7 @@ export function SkillsTab({ token, setMessage }: Readonly<SkillsTabProps>) {
     category: 'FRONTEND' as Skill['category'],
     proficiency: 80,
     icon: '',
+    url: '',
   });
 
   const { data: skills = [], isLoading: skillsLoading } = useSkills();
@@ -27,7 +28,7 @@ export function SkillsTab({ token, setMessage }: Readonly<SkillsTabProps>) {
 
   const handleOpenAddSkill = () => {
     setEditingSkill(null);
-    setSkillForm({ name: '', category: 'FRONTEND', proficiency: 80, icon: '' });
+    setSkillForm({ name: '', category: 'FRONTEND', proficiency: 80, icon: '', url: '' });
     setIsSkillModalOpen(true);
   };
 
@@ -38,6 +39,7 @@ export function SkillsTab({ token, setMessage }: Readonly<SkillsTabProps>) {
       category: skill.category,
       proficiency: skill.proficiency,
       icon: skill.icon || '',
+      url: skill.url || '',
     });
     setIsSkillModalOpen(true);
   };
@@ -252,6 +254,19 @@ export function SkillsTab({ token, setMessage }: Readonly<SkillsTabProps>) {
                 <p className="text-[10px] font-mono text-[var(--color-text-muted)]">
                   Check available icon slugs at <a href="https://simpleicons.org" target="_blank" rel="noreferrer" className="text-[var(--color-primary)] underline hover:text-[var(--color-primary-dim)]">simpleicons.org</a>
                 </p>
+              </div>
+
+              <div className="space-y-2">
+                <label className="text-xs font-mono text-[var(--color-text-muted)] uppercase tracking-wider">
+                  Official Website URL (Optional)
+                </label>
+                <input
+                  type="url"
+                  value={skillForm.url}
+                  onChange={(e) => setSkillForm({ ...skillForm, url: e.target.value })}
+                  placeholder="e.g. https://react.dev, https://nestjs.com"
+                  className="w-full bg-[var(--color-bg)] border border-[var(--color-border)] rounded-lg p-3 focus:outline-none focus:border-[var(--color-primary)] transition-colors font-mono text-sm"
+                />
               </div>
 
               <div className="flex justify-end gap-3 pt-4 border-t border-[var(--color-border)]">

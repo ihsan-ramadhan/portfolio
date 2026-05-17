@@ -33,6 +33,7 @@ export interface Skill {
   category: 'FRONTEND' | 'BACKEND' | 'TOOLS' | 'OTHERS';
   proficiency: number;
   icon?: string;
+  url?: string;
 }
 
 export interface ContactMessage {

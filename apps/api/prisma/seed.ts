@@ -66,12 +66,14 @@ async function main() {
     {
       name: 'HTML5',
       icon: 'html5',
+      url: 'https://developer.mozilla.org/en-US/docs/Web/HTML',
       category: 'FRONTEND' as const,
       proficiency: 90,
     },
     {
       name: 'CSS3',
       icon: 'css',
+      url: 'https://developer.mozilla.org/en-US/docs/Web/CSS',
       category: 'FRONTEND' as const,
       proficiency: 90,
     },
@@ -86,6 +88,7 @@ async function main() {
         data: {
           name: skill.name,
           icon: skill.icon,
+          url: skill.url,
           category: skill.category,
           proficiency: skill.proficiency,
         },
