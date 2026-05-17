@@ -5,7 +5,7 @@ services:
     region: singapore
     plan: free
     rootDir: apps/api
-    buildCommand: npm install -g pnpm && pnpm install --frozen-lockfile=false && pnpm run build
+    buildCommand: corepack enable && pnpm install --frozen-lockfile=false && pnpm run build
     startCommand: node dist/main.js
     healthCheckPath: /api/v1
     envVars:
