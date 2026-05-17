@@ -62,6 +62,37 @@ async function main() {
     },
   });
 
+  const skills = [
+    {
+      name: 'HTML5',
+      icon: 'html5',
+      category: 'FRONTEND' as const,
+      proficiency: 90,
+    },
+    {
+      name: 'CSS3',
+      icon: 'css3',
+      category: 'FRONTEND' as const,
+      proficiency: 90,
+    },
+  ];
+
+  for (const skill of skills) {
+    const existing = await prisma.skill.findFirst({
+      where: { name: skill.name },
+    });
+    if (!existing) {
+      await prisma.skill.create({
+        data: {
+          name: skill.name,
+          icon: skill.icon,
+          category: skill.category,
+          proficiency: skill.proficiency,
+        },
+      });
+    }
+  }
+
   console.log('Seeding finished.');
 }
 

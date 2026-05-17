@@ -25,3 +25,11 @@ export interface ApiResponse<T> {
   message: string;
   statusCode: number;
 }
+
+export interface Skill {
+  id: string;
+  name: string;
+  category: 'FRONTEND' | 'BACKEND' | 'TOOLS' | 'OTHERS';
+  proficiency: number;
+  icon?: string;
+}

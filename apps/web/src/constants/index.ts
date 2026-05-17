@@ -79,3 +79,29 @@ export const FALLBACK_PROJECTS: Project[] = [
     isPinned: true
   }
 ];
+
+export const FALLBACK_SKILLS = [
+  { name: "Laravel", icon: "laravel", url: "https://laravel.com" },
+  { name: "NestJS", icon: "nestjs", url: "https://nestjs.com" },
+  { name: "Next.js", icon: "nextdotjs", url: "https://nextjs.org" },
+  { name: "React", icon: "react", url: "https://react.dev" },
+  { name: "Vue.js", icon: "vuedotjs", url: "https://vuejs.org" },
+  { name: "HTML5", icon: "html5", url: "https://html.com" },  
+  { name: "CSS3", icon: "css", url: "https://css3.com" },
+  { name: "Flutter", icon: "flutter", url: "https://flutter.dev" },
+  { name: "TypeScript", icon: "typescript", url: "https://www.typescriptlang.org" },
+  { name: "JavaScript", icon: "javascript", url: "https://www.javascript.com" },
+  { name: "PHP", icon: "php", url: "https://www.php.net" },
+  { name: "Java", icon: "openjdk", url: "https://www.java.com" },
+  { name: "Dart", icon: "dart", url: "https://dart.dev" },
+  { name: "Python", icon: "python", url: "https://www.python.org" },
+  { name: "PostgreSQL", icon: "postgresql", url: "https://www.postgresql.org" },
+  { name: "MongoDB", icon: "mongodb", url: "https://www.mongodb.com" },
+  { name: "Redis", icon: "redis", url: "https://redis.io" },
+  { name: "Supabase", icon: "supabase", url: "https://supabase.com" },
+  { name: "Git", icon: "git", url: "https://git-scm.com" },
+  { name: "Postman", icon: "postman", url: "https://www.postman.com" },
+  { name: "Tailwind CSS", icon: "tailwindcss", url: "https://tailwindcss.com" },
+  { name: "Bootstrap", icon: "bootstrap", url: "https://getbootstrap.com" },
+  { name: "Docker", icon: "docker", url: "https://www.docker.com" },
+];
