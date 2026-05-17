@@ -15,7 +15,7 @@ export interface GitHubRepository {
 @Injectable()
 export class GitHubService {
   private readonly logger = new Logger(GitHubService.name);
-  private octokit: Octokit;
+  private octokit: Octokit | null = null;
   private readonly username: string;
 
   constructor(private configService: ConfigService) {
@@ -23,8 +23,12 @@ export class GitHubService {
     const githubUsername = this.configService.get<string>('GITHUB_USERNAME');
 
     if (!githubToken || !githubUsername) {
-      this.logger.error('GitHub token or username not configured');
-      throw new Error('GitHub credentials not configured');
+      this.logger.warn(
+        'GitHub token or username not configured — sync will be disabled',
+      );
+      this.octokit = null;
+      this.username = '';
+      return;
     }
 
     this.octokit = new Octokit({
@@ -35,6 +39,11 @@ export class GitHubService {
   }
 
   async fetchPublicRepositories(): Promise<GitHubRepository[]> {
+    if (!this.octokit) {
+      this.logger.warn('GitHub not configured, returning empty array');
+      return [];
+    }
+
     try {
       this.logger.log(
         `Fetching pinned repositories for user: ${this.username} via GraphQL`,
@@ -107,6 +116,11 @@ export class GitHubService {
   }
 
   private async fetchOwnedRepositories(): Promise<GitHubRepository[]> {
+    if (!this.octokit) {
+      this.logger.warn('GitHub not configured, returning empty array');
+      return [];
+    }
+
     const { data: repositories } = await this.octokit.repos.listForUser({
       username: this.username,
       type: 'owner',
@@ -135,6 +149,11 @@ export class GitHubService {
   }
 
   async getRepositoryDetails(owner: string, repo: string) {
+    if (!this.octokit) {
+      this.logger.warn('GitHub not configured, cannot fetch repo details');
+      throw new Error('GitHub credentials not configured');
+    }
+
     try {
       const { data: repository } = await this.octokit.repos.get({
         owner,

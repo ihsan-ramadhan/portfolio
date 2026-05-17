@@ -16,7 +16,7 @@ export default function Contact() {
                 Let's Connect
               </h3>
               <p className="text-[var(--color-text-muted)] leading-relaxed">
-                Ada ide proyek seru, mau ajak kolaborasi, atau sekadar ingin diskusi santai? Boleh banget, hubungi saya lewat kontak di bawah ini!
+                Got an exciting project idea, want to collaborate, or just looking for a casual chat? Feel free to reach out through the contact details below!
               </p>
             </div>
 
