@@ -54,6 +54,16 @@ export default function InteractiveMesh() {
 
     const isMobile = window.innerWidth < 768;
 
+    let cachedColor: [number, number, number] | null = null;
+
+    const observer = new MutationObserver(() => {
+      cachedColor = null;
+    });
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ['class'],
+    });
+
     const resize = () => {
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
@@ -91,7 +101,8 @@ export default function InteractiveMesh() {
       smooth.x = lerp(smooth.x, mouse.x, LERP_SPEED);
       smooth.y = lerp(smooth.y, mouse.y, LERP_SPEED);
 
-      const [r, g, b] = getPrimaryColor();
+      if (!cachedColor) cachedColor = getPrimaryColor();
+      const [r, g, b] = cachedColor;
 
       // Only draw mouse glow on non-mobile (performance)
       if (!isMobile && mouse.x > -1000) {
@@ -197,6 +208,7 @@ export default function InteractiveMesh() {
       window.removeEventListener('mousemove', onMouseMove);
       document.removeEventListener('mouseleave', onMouseLeave);
       cancelAnimationFrame(animationFrameId);
+      observer.disconnect();
     };
   }, []);
 
