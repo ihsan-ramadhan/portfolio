@@ -10,20 +10,20 @@ export class ProjectsService {
   async findAll() {
     return this.prisma.project.findMany({
       where: { isVisible: true },
-      orderBy: { stars: 'desc' },
+      orderBy: [{ isPinned: 'desc' }, { pinnedAt: 'desc' }, { stars: 'desc' }],
     });
   }
 
   async findAllForAdmin() {
     return this.prisma.project.findMany({
-      orderBy: { stars: 'desc' },
+      orderBy: [{ isPinned: 'desc' }, { pinnedAt: 'desc' }, { stars: 'desc' }],
     });
   }
 
   async findPinned() {
     return this.prisma.project.findMany({
       where: { isPinned: true, isVisible: true },
-      orderBy: { stars: 'desc' },
+      orderBy: [{ pinnedAt: 'desc' }, { stars: 'desc' }],
     });
   }
 
@@ -38,9 +38,16 @@ export class ProjectsService {
 
   async update(id: string, updateProjectDto: UpdateProjectDto) {
     try {
+      const dataToUpdate: any = { ...updateProjectDto };
+      if (updateProjectDto.isPinned === true) {
+        dataToUpdate.pinnedAt = new Date();
+      } else if (updateProjectDto.isPinned === false) {
+        dataToUpdate.pinnedAt = null;
+      }
+
       return await this.prisma.project.update({
         where: { id },
-        data: updateProjectDto,
+        data: dataToUpdate,
       });
     } catch (error) {
       console.error(`Prisma update error for project ${id}:`, error);

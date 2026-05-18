@@ -17,6 +17,7 @@ export interface Project {
   stars: number;
   tags: string[];
   isPinned: boolean;
+  pinnedAt?: string;
   isVisible: boolean;
   lastSyncedAt?: string;
 }

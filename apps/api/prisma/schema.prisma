@@ -84,11 +84,12 @@ model Project {
   language     String?
   stars        Int      @default(0)
   tags         String[] // Custom tags dari admin
-  isPinned     Boolean  @default(false)
-  isVisible    Boolean  @default(true)
+  isPinned     Boolean   @default(false)
+  pinnedAt     DateTime?
+  isVisible    Boolean   @default(true)
   lastSyncedAt DateTime?
   profileId    String
-  profile      Profile  @relation(fields: [profileId], references: [id])
+  profile      Profile   @relation(fields: [profileId], references: [id])
 }
 
 model ContactMessage {
