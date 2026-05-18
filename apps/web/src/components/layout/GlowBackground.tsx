@@ -1,10 +1,18 @@
 import { motion } from 'framer-motion';
+import { useEffect, useState } from 'react';
 
 export default function GlowBackground() {
   const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+  const [themeTick, setThemeTick] = useState(0);
+
+  useEffect(() => {
+    const handler = () => setThemeTick(t => t + 1);
+    window.addEventListener('theme-changed', handler);
+    return () => window.removeEventListener('theme-changed', handler);
+  }, []);
 
   return (
-    <div className="fixed inset-0 -z-10 overflow-hidden pointer-events-none">
+    <div key={themeTick} className="fixed inset-0 -z-10 overflow-hidden pointer-events-none">
       <div className="bg-grid-pattern absolute inset-0 opacity-[0.35]" />
 
       <motion.div
