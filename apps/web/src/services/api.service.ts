@@ -8,6 +8,17 @@ export const apiClient = axios.create({
   timeout: 10_000,
 });
 
+apiClient.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    if (error.response?.status === 401) {
+      localStorage.removeItem('token');
+      window.location.href = '/login';
+    }
+    return Promise.reject(error);
+  }
+);
+
 export const profileApi = {
   getProfile: async (): Promise<Profile> => {
     const response = await apiClient.get<ApiResponse<Profile>>('/profile');

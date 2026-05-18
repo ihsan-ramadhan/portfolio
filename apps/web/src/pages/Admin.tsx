@@ -81,6 +81,11 @@ export default function Admin() {
         })
       });
 
+      if (response.status === 401) {
+        localStorage.removeItem('token');
+        window.location.href = '/login';
+        return;
+      }
       if (response.ok) {
         setMessage({ text: 'Profile updated successfully!', type: 'success' });
       }
@@ -98,6 +103,11 @@ export default function Admin() {
         method: 'POST',
         headers: { 'Authorization': `Bearer ${token}` }
       });
+      if (response.status === 401) {
+        localStorage.removeItem('token');
+        window.location.href = '/login';
+        return;
+      }
       if (response.ok) {
         queryClient.invalidateQueries({ queryKey: ['adminProjects'] });
         queryClient.invalidateQueries({ queryKey: ['projects'] });
@@ -124,6 +134,11 @@ export default function Admin() {
         headers: { 'Authorization': `Bearer ${token}` },
         body: formData
       });
+      if (response.status === 401) {
+        localStorage.removeItem('token');
+        window.location.href = '/login';
+        return;
+      }
       const data = await response.json();
       if (response.ok) {
         setProfile({ ...profile, photoUrl: data.data.photoUrl });
