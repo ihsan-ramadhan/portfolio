@@ -32,6 +32,9 @@ export default function About({ profile }: { profile: Profile | null }) {
                  <img 
                    src={profile.photoUrl} 
                    alt="Ihsan" 
+                   loading="lazy"
+                   decoding="async"
+                   fetchPriority="low"
                    className="w-full h-full object-cover rounded-lg"
                  />
                ) : (
@@ -46,4 +49,4 @@ export default function About({ profile }: { profile: Profile | null }) {
       </AnimatedSection>
     </section>
   );
-}
+}

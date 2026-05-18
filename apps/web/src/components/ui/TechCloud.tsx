@@ -45,6 +45,7 @@ export default function TechCloud() {
             zIndex: 10,
             transition: { duration: 0.2 } 
           }}
+          style={{ willChange: 'transform' }}
           transition={{
             x: {
               duration: item.duration,
@@ -66,6 +67,8 @@ export default function TechCloud() {
           <img
             src={`https://cdn.simpleicons.org/${item.icon}/3b82f6`}
             alt={item.name}
+            loading="lazy"
+            decoding="async"
             className="w-8 h-8 object-contain transition-transform group-hover:rotate-12"
           />
           <span className="absolute -bottom-6 left-1/2 -translate-x-1/2 text-[10px] font-mono text-[var(--color-primary)] opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
