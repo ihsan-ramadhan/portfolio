@@ -11,7 +11,7 @@ interface Point {
   opacity: number;
 }
 
-const CONNECT_DIST = 130;
+const CONNECT_DIST = 150;
 const MOUSE_REPEL_DIST = 160;
 const MOUSE_FORCE = 1.2;
 const MAX_SPEED = 3.5;
@@ -72,7 +72,7 @@ export default function InteractiveMesh() {
 
     const initPoints = () => {
       points = [];
-      const baseCount = isMobile ? 35 : 180;
+      const baseCount = isMobile ? 35 : 80;
       const count = Math.min(
         baseCount,
         Math.floor((canvas.width * canvas.height) / (isMobile ? 15000 : 10000))
