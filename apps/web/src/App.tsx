@@ -6,6 +6,7 @@ import CommandPalette from './components/layout/CommandPalette';
 import Home from './pages/Home';
 import Login from './pages/Login';
 import Admin from './pages/Admin';
+import NotFound from './pages/NotFound';
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/admin" element={<Admin />} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
         <SpeedInsights />
         <Toaster 
