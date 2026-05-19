@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Mail, Linkedin, Github, Send, Terminal, MessageSquare, CheckCircle, AlertCircle } from 'lucide-react';
+import { Mail, Linkedin, Github, Send, Terminal, MessageSquare, CheckCircle } from 'lucide-react';
 import SectionHeader from '../ui/SectionHeader';
 import AnimatedSection from '../ui/AnimatedSection';
 import { useMutation } from '@tanstack/react-query';
@@ -189,4 +189,4 @@ export default function Contact() {
       </AnimatedSection>
     </section>
   );
-}
+}
