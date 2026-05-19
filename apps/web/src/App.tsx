@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { SpeedInsights } from '@vercel/speed-insights/react';
+import { Toaster } from 'sonner';
 import InteractiveMesh from './components/layout/InteractiveMesh';
 import Home from './pages/Home';
 import Login from './pages/Login';
@@ -17,6 +18,17 @@ function App() {
           <Route path="/admin" element={<Admin />} />
         </Routes>
         <SpeedInsights />
+        <Toaster 
+          position="bottom-right"
+          toastOptions={{
+            style: {
+              background: 'var(--color-bg-subtle)',
+              color: 'var(--color-text)',
+              border: '1px solid var(--color-border)',
+            },
+            className: 'font-mono text-sm'
+          }}
+        />
       </div>
     </Router>
   );

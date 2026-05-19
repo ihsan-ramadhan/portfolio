@@ -3,6 +3,7 @@ import { Mail, Linkedin, Github, Send, Terminal, MessageSquare, CheckCircle, Ale
 import SectionHeader from '../ui/SectionHeader';
 import AnimatedSection from '../ui/AnimatedSection';
 import { useMutation } from '@tanstack/react-query';
+import { toast } from 'sonner';
 import { apiClient } from '../../services/api.service';
 
 interface ContactFormData {
@@ -16,7 +17,6 @@ export default function Contact() {
   const [email, setEmail] = useState('');
   const [message, setMessage] = useState('');
   const [submitted, setSubmitted] = useState(false);
-  const [error, setError] = useState<string | null>(null);
 
   const mutation = useMutation({
     mutationFn: (data: ContactFormData) => apiClient.post('/contact', data),
@@ -25,18 +25,32 @@ export default function Contact() {
       setName('');
       setEmail('');
       setMessage('');
-      setError(null);
+      toast.success('Message sent successfully!');
     },
-    onError: () => setError('Failed to send message. Please try again later.'),
+    onError: () => {
+      toast.error('Failed to send message.');
+    },
   });
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!name || !email || !message) {
-      setError('Please fill in all fields.');
+      toast.warning('Please fill in all fields.');
       return;
     }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      toast.warning('Please enter a valid email address.');
+      return;
+    }
+
     mutation.mutate({ name, email, message });
+  };
+
+  const handleCopyEmail = () => {
+    navigator.clipboard.writeText('m.ihsan.r30@gmail.com');
+    toast.success('Email copied to clipboard!');
   };
 
   return (
@@ -57,9 +71,9 @@ export default function Contact() {
             </div>
 
             <div className="space-y-4">
-              <a 
-                href="mailto:m.ihsan.r30@gmail.com" 
-                className="flex items-center gap-4 p-4 rounded-xl bg-[var(--color-bg-subtle)] border border-[var(--color-border)] hover:border-[var(--color-primary)] transition-all group"
+              <button 
+                onClick={handleCopyEmail}
+                className="w-full text-left flex items-center gap-4 p-4 rounded-xl bg-[var(--color-bg-subtle)] border border-[var(--color-border)] hover:border-[var(--color-primary)] transition-all group cursor-pointer"
               >
                 <div className="p-3 rounded-lg bg-[var(--color-bg)] text-[var(--color-primary)] group-hover:bg-[var(--color-primary)] group-hover:text-white transition-colors">
                   <Mail size={20} />
@@ -68,7 +82,7 @@ export default function Contact() {
                   <p className="text-xs font-mono text-[var(--color-text-muted)]">Email</p>
                   <p className="font-mono text-sm">m.ihsan.r30@gmail.com</p>
                 </div>
-              </a>
+              </button>
 
               <a 
                 href="https://linkedin.com/in/m-ihsan-r" 
@@ -120,12 +134,7 @@ export default function Contact() {
                 </button>
               </div>
             ) : (
-              <form className="space-y-4 relative z-10" onSubmit={handleSubmit}>
-                {error && (
-                  <div className="p-3 rounded-lg bg-red-500/10 border border-red-500 text-red-500 text-xs font-mono flex items-center gap-2">
-                    <AlertCircle size={16} /> {error}
-                  </div>
-                )}
+              <form className="space-y-4 relative z-10" onSubmit={handleSubmit} noValidate>
                 <div>
                   <label htmlFor="name" className="block text-xs font-mono text-[var(--color-text-muted)] mb-2 uppercase tracking-widest">Name</label>
                   <input 
