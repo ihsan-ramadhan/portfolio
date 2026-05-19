@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { SpeedInsights } from '@vercel/speed-insights/react';
 import { Toaster } from 'sonner';
 import InteractiveMesh from './components/layout/InteractiveMesh';
+import CommandPalette from './components/layout/CommandPalette';
 import Home from './pages/Home';
 import Login from './pages/Login';
 import Admin from './pages/Admin';
@@ -11,6 +12,7 @@ function App() {
     <Router>
       <div className="relative z-0 min-h-screen bg-[var(--color-bg)] text-[var(--color-text)] transition-colors duration-300 ease-in-out selection:bg-[var(--color-primary)] selection:text-white">
         <InteractiveMesh />
+        <CommandPalette />
         
         <Routes>
           <Route path="/" element={<Home />} />
