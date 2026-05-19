@@ -1,4 +1,5 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { SpeedInsights } from '@vercel/speed-insights/react';
 import InteractiveMesh from './components/layout/InteractiveMesh';
 import Home from './pages/Home';
 import Login from './pages/Login';
@@ -15,6 +16,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/admin" element={<Admin />} />
         </Routes>
+        <SpeedInsights />
       </div>
     </Router>
   );
