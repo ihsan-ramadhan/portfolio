@@ -21,7 +21,6 @@ export default function ThemeToggle() {
       document.documentElement.classList.remove('dark');
       localStorage.setItem('portfolio-theme', 'light');
     }
-    window.dispatchEvent(new Event('theme-changed'));
   }, [isDark]);
 
   const toggleTheme = () => {

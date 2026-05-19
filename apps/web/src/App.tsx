@@ -1,5 +1,4 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import GlowBackground from './components/layout/GlowBackground';
 import InteractiveMesh from './components/layout/InteractiveMesh';
 import Home from './pages/Home';
 import Login from './pages/Login';
@@ -9,7 +8,6 @@ function App() {
   return (
     <Router>
       <div className="min-h-screen text-[var(--color-text)] selection:bg-[var(--color-primary)] selection:text-white">
-        <GlowBackground />
         <InteractiveMesh />
         
         <Routes>

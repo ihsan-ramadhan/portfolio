@@ -9,9 +9,10 @@ const Contact = React.lazy(() => import('../components/sections/Contact'));
 const Footer = React.lazy(() => import('../components/layout/Footer'));
 
 import { useProfile } from '../hooks/use-profile';
+import { DEFAULT_PROFILE } from '../constants';
 
 export default function Home() {
-  const { data: profile } = useProfile();
+  const { data: profile = DEFAULT_PROFILE } = useProfile();
 
   return (
     <>

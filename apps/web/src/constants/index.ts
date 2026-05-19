@@ -36,17 +36,6 @@ export const FALLBACK_PROJECTS: Project[] = [
   },
   {
     id: 'fallback-3',
-    name: 'portfolio',
-    description: 'My own portfolio website built with NestJS, React, and Supabase.',
-    url: 'https://github.com/ihsan-ramadhan/portfolio',
-    language: 'TypeScript',
-    stars: 0,
-    tags: [],
-    isVisible: true,
-    isPinned: true
-  },
-  {
-    id: 'fallback-4',
     name: 'ReksaTani-App',
     description: "A system for managing transactions and acquiring agricultural commodities.",
     url: 'https://github.com/Umeem26/ReksaTani-App',
@@ -57,7 +46,7 @@ export const FALLBACK_PROJECTS: Project[] = [
     isPinned: true
   },
   {
-    id: 'fallback-5',
+    id: 'fallback-4',
     name: 'Photobooth-Studio',
     description: 'A modern Desktop Photobooth application with Cloud Integration, QR Code generation, and Clean Architecture implementation.',
     url: 'https://github.com/Umeem26/Photobooth-Studio',
@@ -68,7 +57,7 @@ export const FALLBACK_PROJECTS: Project[] = [
     isPinned: true
   },
   {
-    id: 'fallback-6',
+    id: 'fallback-5',
     name: 'Proyek2-C3',
     description: 'Space invaders 2D arcade game built with C and SDL3.',
     url: 'https://github.com/rahmaattayat/Proyek2-C3',

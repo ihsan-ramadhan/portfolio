@@ -36,7 +36,7 @@ export default function Hero({ profile }: { profile: Profile | null }) {
             transition={{ delay: 0.2 }}
             className="text-xl md:text-2xl text-[var(--color-text-muted)] mb-10 max-w-2xl leading-relaxed"
           >
-            {profile?.headline || 'Full Stack Developer crafting digital experiences.'}
+            {profile?.headline || 'Full Stack Developer'}
           </motion.h2>
 
           <motion.div

@@ -54,10 +54,6 @@
   }
 }
 
-.bg-grid-pattern {
-  background-image: radial-gradient(var(--color-border-theme) 1px, transparent 1px);
-  background-size: 28px 28px;
-}
 
 html {
   scroll-behavior: smooth;

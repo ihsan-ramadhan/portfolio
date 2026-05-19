@@ -1,20 +1,6 @@
 import { useEffect, useRef } from 'react';
 
-interface Point {
-  x: number;
-  y: number;
-  vx: number;
-  vy: number;
-  baseVx: number;
-  baseVy: number;
-  size: number;
-  opacity: number;
-}
-
-const CONNECT_DIST = 150;
 const MOUSE_REPEL_DIST = 160;
-const MOUSE_FORCE = 1.2;
-const MAX_SPEED = 3.5;
 const LERP_SPEED = 0.07;
 
 function lerp(a: number, b: number, t: number) {
@@ -46,7 +32,6 @@ export default function InteractiveMesh() {
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
-    let points: Point[] = [];
     let animationFrameId: number;
 
     const mouse = { x: -9999, y: -9999 };
@@ -67,32 +52,6 @@ export default function InteractiveMesh() {
     const resize = () => {
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
-      initPoints();
-    };
-
-    const initPoints = () => {
-      points = [];
-      const baseCount = isMobile ? 35 : 80;
-      const count = Math.min(
-        baseCount,
-        Math.floor((canvas.width * canvas.height) / (isMobile ? 15000 : 10000))
-      );
-      for (let i = 0; i < count; i++) {
-        const speed = isMobile ? 0.1 : 0.15 + Math.random() * 0.35;
-        const angle = Math.random() * Math.PI * 2;
-        const bvx = Math.cos(angle) * speed;
-        const bvy = Math.sin(angle) * speed;
-        points.push({
-          x: Math.random() * canvas.width,
-          y: Math.random() * canvas.height,
-          vx: bvx,
-          vy: bvy,
-          baseVx: bvx,
-          baseVy: bvy,
-          size: isMobile ? 0.6 + Math.random() * 1 : 0.8 + Math.random() * 1.6,
-          opacity: isMobile ? 0.2 + Math.random() * 0.3 : 0.4 + Math.random() * 0.4,
-        });
-      }
     };
 
     const draw = () => {
@@ -104,7 +63,6 @@ export default function InteractiveMesh() {
       if (!cachedColor) cachedColor = getPrimaryColor();
       const [r, g, b] = cachedColor;
 
-      // Only draw mouse glow on non-mobile (performance)
       if (!isMobile && mouse.x > -1000) {
         const grad = ctx.createRadialGradient(
           smooth.x, smooth.y, 0,
@@ -118,72 +76,6 @@ export default function InteractiveMesh() {
         ctx.fill();
       }
 
-      points.forEach((p, i) => {
-        // Mouse interaction (disabled or simplified on mobile)
-        if (!isMobile) {
-          const dx = p.x - smooth.x;
-          const dy = p.y - smooth.y;
-          const dist = Math.hypot(dx, dy);
-
-          if (dist < MOUSE_REPEL_DIST && dist > 0) {
-            const force = (1 - dist / MOUSE_REPEL_DIST) * MOUSE_FORCE;
-            p.vx += (dx / dist) * force;
-            p.vy += (dy / dist) * force;
-          }
-
-          p.vx += (p.baseVx - p.vx) * 0.04;
-          p.vy += (p.baseVy - p.vy) * 0.04;
-
-          const spd = Math.hypot(p.vx, p.vy);
-          if (spd > MAX_SPEED) {
-            p.vx = (p.vx / spd) * MAX_SPEED;
-            p.vy = (p.vy / spd) * MAX_SPEED;
-          }
-        }
-
-        p.x += p.vx;
-        p.y += p.vy;
-        if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
-        if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
-
-        ctx.globalAlpha = p.opacity;
-        ctx.fillStyle = `rgb(${r},${g},${b})`;
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-        ctx.fill();
-
-        // Lines connection - DISABLE ON MOBILE for performance
-        if (!isMobile) {
-          for (let j = i + 1; j < points.length; j++) {
-            const q = points[j];
-            const d = Math.hypot(p.x - q.x, p.y - q.y);
-            if (d < CONNECT_DIST) {
-              const alpha = (1 - d / CONNECT_DIST) * 0.25;
-              ctx.globalAlpha = alpha;
-              ctx.strokeStyle = `rgb(${r},${g},${b})`;
-              ctx.lineWidth = 0.6;
-              ctx.beginPath();
-              ctx.moveTo(p.x, p.y);
-              ctx.lineTo(q.x, q.y);
-              ctx.stroke();
-            }
-          }
-
-          const dist = Math.hypot(p.x - smooth.x, p.y - smooth.y);
-          if (dist < MOUSE_REPEL_DIST && mouse.x > -1000) {
-            const alpha = (1 - dist / MOUSE_REPEL_DIST) * 0.5;
-            ctx.globalAlpha = alpha;
-            ctx.strokeStyle = `rgb(${r},${g},${b})`;
-            ctx.lineWidth = 1;
-            ctx.beginPath();
-            ctx.moveTo(p.x, p.y);
-            ctx.lineTo(smooth.x, smooth.y);
-            ctx.stroke();
-          }
-        }
-      });
-
-      ctx.globalAlpha = 1;
       animationFrameId = requestAnimationFrame(draw);
     };
 
