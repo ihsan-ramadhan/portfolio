@@ -1,5 +1,4 @@
 import { Injectable, Logger } from '@nestjs/common';
-import { Cron, CronExpression } from '@nestjs/schedule';
 import { SyncSource, SyncStatus } from '@prisma/client';
 import { PrismaService } from '../../prisma/prisma.service';
 import { GitHubService } from '../github/github.service';
@@ -12,12 +11,6 @@ export class SyncService {
     private readonly prisma: PrismaService,
     private readonly githubService: GitHubService,
   ) {}
-
-  @Cron(CronExpression.EVERY_DAY_AT_MIDNIGHT)
-  async handleCronSync() {
-    this.logger.log('Executing automated GitHub sync...');
-    await this.syncGitHubRepositories();
-  }
 
   async syncGitHubRepositories(): Promise<void> {
     try {
