@@ -8,8 +8,6 @@ Personal portfolio site with an admin dashboard for self-managing content.
 
 ## Stack
 
-pnpm monorepo with two apps and one shared package.
-
 ```
 portfolio/
 ├── apps/
@@ -54,6 +52,10 @@ pnpm install
 
 cp apps/api/.env.example apps/api/.env
 cp apps/web/.env.example apps/web/.env
+
+pnpm --filter api prisma generate
+pnpm --filter api prisma migrate dev
+pnpm --filter api prisma db seed
 ```
 
 ### Running
@@ -105,8 +107,6 @@ Base URL: `/api/v1`
 ---
 
 ## Deployment
-
-Web auto-deploys on push to `main`. API is hosted on Render as a long-running Node.js service.
 
 | App | Platform | Domain |
 |---|---|---|
