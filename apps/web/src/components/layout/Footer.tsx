@@ -16,13 +16,13 @@ export default function Footer() {
         </div>
         
         <div className="flex items-center gap-6 text-[var(--color-text-muted)]">
-          <a href="https://github.com/ihsan-ramadhan" target="_blank" className="hover:text-[var(--color-primary)] transition-colors">
+          <a href="https://github.com/ihsan-ramadhan" target="_blank" rel="noopener noreferrer" aria-label="GitHub Profile" className="hover:text-[var(--color-primary)] transition-colors">
             <Github size={18} />
           </a>
-          <a href="https://linkedin.com/in/m-ihsan-r" target="_blank" className="hover:text-[var(--color-primary)] transition-colors">
+          <a href="https://linkedin.com/in/m-ihsan-r" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn Profile" className="hover:text-[var(--color-primary)] transition-colors">
             <Linkedin size={18} />
           </a>
-          <a href="mailto:m.ihsan.r30@gmail.com" className="hover:text-[var(--color-primary)] transition-colors">
+          <a href="mailto:m.ihsan.r30@gmail.com" aria-label="Email Me" className="hover:text-[var(--color-primary)] transition-colors">
             <Mail size={18} />
           </a>
         </div>
