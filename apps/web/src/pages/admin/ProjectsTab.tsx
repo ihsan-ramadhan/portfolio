@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import type { Project } from '../../types';
 import { projectsApi } from '../../services/api.service';
+import { ImageUploadModal } from '../../components/ui/ImageUploadModal';
 
 interface ProjectsTabProps {
   token: string | null;
@@ -14,7 +15,12 @@ export function ProjectsTab({ token, setMessage }: Readonly<ProjectsTabProps>) {
   const queryClient = useQueryClient();
 
   const [isProjectModalOpen, setIsProjectModalOpen] = useState(false);
+  const [isImageModalOpen, setIsImageModalOpen] = useState(false);
+  const [showCloseConfirm, setShowCloseConfirm] = useState(false);
   const [editingProject, setEditingProject] = useState<Project | null>(null);
+  const [pendingImageFile, setPendingImageFile] = useState<File | null>(null);
+  const [previewUrlForPending, setPreviewUrlForPending] = useState<string | null>(null);
+  const [shouldDeleteExistingImage, setShouldDeleteExistingImage] = useState(false);
   const [projectForm, setProjectForm] = useState<{
     name: string;
     customDesc: string;
@@ -39,24 +45,13 @@ export function ProjectsTab({ token, setMessage }: Readonly<ProjectsTabProps>) {
     enabled: !!token,
   });
 
-  const uploadProjectImageMut = useMutation({
-    mutationFn: projectsApi.uploadProjectImage,
-    onSuccess: (url) => {
-      setProjectForm((prev) => ({ ...prev, imageUrl: url }));
-      setMessage({ text: 'Project image uploaded successfully!', type: 'success' });
-    },
-    onError: () => {
-      setMessage({ text: 'Failed to upload project image', type: 'error' });
-    },
-  });
-
   const updateProjectMut = useMutation({
     mutationFn: projectsApi.updateProject,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['adminProjects'] });
       queryClient.invalidateQueries({ queryKey: ['projects'] });
       setMessage({ text: 'Project updated successfully!', type: 'success' });
-      setIsProjectModalOpen(false);
+      handleClose();
     },
     onError: () => {
       setMessage({ text: 'Failed to update project', type: 'error' });
@@ -64,7 +59,68 @@ export function ProjectsTab({ token, setMessage }: Readonly<ProjectsTabProps>) {
   });
   const isPending = updateProjectMut.isPending;
 
+  const cleanupPreviewUrl = () => {
+    if (previewUrlForPending) {
+      URL.revokeObjectURL(previewUrlForPending);
+      setPreviewUrlForPending(null);
+    }
+  };
+
+  const handleLocalImageUpload = (file: File) => {
+    cleanupPreviewUrl();
+    const objectUrl = URL.createObjectURL(file);
+    setPendingImageFile(file);
+    setPreviewUrlForPending(objectUrl);
+    setProjectForm((prev) => ({ ...prev, imageUrl: objectUrl }));
+    setShouldDeleteExistingImage(false);
+  };
+
+  const handleLocalImageDelete = () => {
+    setPendingImageFile(null);
+    cleanupPreviewUrl();
+    setProjectForm((prev) => ({ ...prev, imageUrl: '' }));
+    if (editingProject?.imageUrl) {
+      setShouldDeleteExistingImage(true);
+    }
+  };
+
+  const hasUnsavedChanges = () => {
+    if (!editingProject) return false;
+    return (
+      projectForm.name !== editingProject.name ||
+      projectForm.customDesc !== (editingProject.customDesc || '') ||
+      pendingImageFile !== null ||
+      shouldDeleteExistingImage ||
+      projectForm.imageUrl !== (editingProject.imageUrl || '') ||
+      projectForm.language !== (editingProject.language || '') ||
+      JSON.stringify(projectForm.tags) !== JSON.stringify(editingProject.tags || []) ||
+      projectForm.isPinned !== editingProject.isPinned ||
+      projectForm.isVisible !== editingProject.isVisible
+    );
+  };
+
+  const handleClose = () => {
+    cleanupPreviewUrl();
+    setPendingImageFile(null);
+    setPreviewUrlForPending(null);
+    setShouldDeleteExistingImage(false);
+    setIsProjectModalOpen(false);
+    setShowCloseConfirm(false);
+  };
+
+  const handleCloseAttempt = () => {
+    if (hasUnsavedChanges()) {
+      setShowCloseConfirm(true);
+    } else {
+      handleClose();
+    }
+  };
+
   const handleOpenEditProject = (project: Project) => {
+    setShowCloseConfirm(false);
+    setPendingImageFile(null);
+    setPreviewUrlForPending(null);
+    setShouldDeleteExistingImage(false);
     setEditingProject(project);
     setProjectForm({
       name: project.name,
@@ -83,12 +139,31 @@ export function ProjectsTab({ token, setMessage }: Readonly<ProjectsTabProps>) {
     if (!token || !editingProject) return;
 
     try {
+      let finalImageUrl = projectForm.imageUrl;
+
+      // 1. If we have a pending local image file, upload it now
+      if (pendingImageFile) {
+        const uploadedUrl = await projectsApi.uploadProjectImage({
+          file: pendingImageFile,
+          oldImageUrl: editingProject.imageUrl || undefined,
+          token,
+        });
+        finalImageUrl = uploadedUrl;
+      } else if (shouldDeleteExistingImage && editingProject.imageUrl) {
+        // 2. If the user explicitly deleted the existing image, delete it from storage
+        await projectsApi.deleteProjectImage({
+          imageUrl: editingProject.imageUrl,
+          token,
+        });
+        finalImageUrl = '';
+      }
+
       await updateProjectMut.mutateAsync({
         id: editingProject.id,
         data: {
           name: projectForm.name,
           customDesc: projectForm.customDesc,
-          imageUrl: projectForm.imageUrl,
+          imageUrl: finalImageUrl,
           language: projectForm.language,
           tags: projectForm.tags,
           isPinned: projectForm.isPinned,
@@ -97,7 +172,8 @@ export function ProjectsTab({ token, setMessage }: Readonly<ProjectsTabProps>) {
         token,
       });
     } catch {
-      // Error handled in mutation onError
+      // Error handled in mutation/catch block
+      setMessage({ text: 'Failed to save customizations', type: 'error' });
     }
   };
 
@@ -267,7 +343,7 @@ export function ProjectsTab({ token, setMessage }: Readonly<ProjectsTabProps>) {
                 Customize Project
               </h3>
               <button
-                onClick={() => setIsProjectModalOpen(false)}
+                onClick={handleCloseAttempt}
                 className="text-[var(--color-text-muted)] hover:text-[var(--color-text)] transition-colors cursor-pointer"
               >
                 <X size={20} />
@@ -300,26 +376,26 @@ export function ProjectsTab({ token, setMessage }: Readonly<ProjectsTabProps>) {
                     placeholder="https://... or choose local file"
                     className="w-full bg-[var(--color-bg)] border border-[var(--color-border)] rounded-lg p-3 focus:outline-none focus:border-[var(--color-primary)] transition-colors font-mono text-sm text-[var(--color-text)]"
                   />
-                  <label className="flex items-center gap-2 bg-[var(--color-bg-subtle)] border border-[var(--color-border)] hover:border-[var(--color-primary)] px-4 py-2 rounded-lg text-xs font-mono text-[var(--color-text)] cursor-pointer transition-all flex-shrink-0">
+                  <button
+                    type="button"
+                    onClick={() => setIsImageModalOpen(true)}
+                    className="flex items-center gap-2 bg-[var(--color-bg-subtle)] border border-[var(--color-border)] hover:border-[var(--color-primary)] px-4 py-2 rounded-lg text-xs font-mono text-[var(--color-text)] cursor-pointer transition-all flex-shrink-0"
+                  >
                     <Camera size={16} className="text-[var(--color-primary)]" />
-                    <span>{uploadProjectImageMut.isPending ? 'Uploading...' : 'Upload'}</span>
-                    <input
-                      type="file"
-                      className="hidden"
-                      accept="image/*"
-                      disabled={uploadProjectImageMut.isPending}
-                      onChange={(e) => {
-                        const file = e.target.files?.[0];
-                        if (file && token) {
-                          uploadProjectImageMut.mutate({ file, token });
-                        }
-                      }}
-                    />
-                  </label>
+                    <span>Upload Image</span>
+                  </button>
                 </div>
                 {projectForm.imageUrl && (
-                  <div className="mt-2 relative w-32 h-20 rounded-lg overflow-hidden border border-[var(--color-border)]">
+                  <div className="mt-2 relative w-32 h-20 rounded-lg overflow-hidden border border-[var(--color-border)] group">
                     <img src={projectForm.imageUrl} alt="Preview" className="w-full h-full object-cover" />
+                    <button
+                      type="button"
+                      onClick={handleLocalImageDelete}
+                      className="absolute top-1 right-1 bg-black/75 hover:bg-red-600 text-white rounded-full p-1 transition-all cursor-pointer shadow-md"
+                      title="Delete Image"
+                    >
+                      <X size={12} />
+                    </button>
                   </div>
                 )}
               </div>
@@ -387,7 +463,7 @@ export function ProjectsTab({ token, setMessage }: Readonly<ProjectsTabProps>) {
               <div className="flex justify-end gap-3 pt-4 border-t border-[var(--color-border)]">
                 <button
                   type="button"
-                  onClick={() => setIsProjectModalOpen(false)}
+                  onClick={handleCloseAttempt}
                   className="px-4 py-2 bg-[var(--color-bg)] border border-[var(--color-border)] rounded-lg font-mono text-sm text-[var(--color-text)] hover:bg-[var(--color-bg-subtle)] hover:border-[var(--color-text-muted)] transition-all cursor-pointer"
                 >
                   Cancel
@@ -404,6 +480,51 @@ export function ProjectsTab({ token, setMessage }: Readonly<ProjectsTabProps>) {
           </motion.div>
         </div>
       )}
+
+      {showCloseConfirm && (
+        <div className="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            className="bg-[var(--color-bg-subtle)] border border-[var(--color-border)] rounded-2xl p-6 w-full max-w-sm space-y-4 shadow-2xl relative text-center"
+          >
+            <h4 className="font-mono font-bold text-base text-[var(--color-text)]">
+              Discard Changes?
+            </h4>
+            <p className="font-mono text-xs text-[var(--color-text-muted)] leading-relaxed">
+              You have unsaved changes. If you close now, your customizations will be discarded.
+            </p>
+            <div className="flex justify-center gap-3 pt-2">
+              <button
+                type="button"
+                onClick={() => setShowCloseConfirm(false)}
+                className="px-4 py-2 bg-[var(--color-bg)] border border-[var(--color-border)] rounded-lg font-mono text-xs text-[var(--color-text)] hover:bg-[var(--color-bg-subtle)] hover:border-[var(--color-text-muted)] transition-all cursor-pointer"
+              >
+                Keep Editing
+              </button>
+              <button
+                type="button"
+                onClick={handleClose}
+                className="px-4 py-2 bg-red-600 text-white rounded-lg font-mono text-xs hover:bg-red-500 transition-all cursor-pointer shadow-md"
+              >
+                Discard Changes
+              </button>
+            </div>
+          </motion.div>
+        </div>
+      )}
+      <ImageUploadModal
+        isOpen={isImageModalOpen}
+        onClose={() => setIsImageModalOpen(false)}
+        onUpload={async (file) => {
+          handleLocalImageUpload(file);
+        }}
+        onDelete={async () => {
+          handleLocalImageDelete();
+        }}
+        currentImageUrl={projectForm.imageUrl}
+        title="Project Preview Image"
+      />
     </div>
   );
 }

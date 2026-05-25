@@ -100,9 +100,26 @@ export class ProjectsController {
   @ApiBearerAuth()
   @ApiOperation({ summary: 'Upload project preview image' })
   @ApiConsumes('multipart/form-data')
-  async uploadProjectImage(@UploadedFile() file: Express.Multer.File) {
+  async uploadProjectImage(
+    @UploadedFile() file: Express.Multer.File,
+    @Body('oldImageUrl') oldImageUrl?: string,
+  ) {
+    if (oldImageUrl) {
+      await this.storageService.deleteFile(oldImageUrl);
+    }
     const fileName = `project-image-${Date.now()}`;
     const url = await this.storageService.uploadFile(file, fileName);
     return { imageUrl: url };
+  }
+
+  @Delete('admin/projects/image')
+  @UseGuards(JwtAuthGuard)
+  @ApiBearerAuth()
+  @ApiOperation({ summary: 'Delete a project preview image from storage' })
+  async deleteProjectImage(@Body('imageUrl') imageUrl: string) {
+    if (imageUrl) {
+      await this.storageService.deleteFile(imageUrl);
+    }
+    return { message: 'Image deleted successfully' };
   }
 }

@@ -50,4 +50,33 @@ export class StorageService implements OnModuleInit {
 
     return publicUrl;
   }
+
+  async deleteFile(url: string, bucket = 'portfolio'): Promise<void> {
+    try {
+      const urlParts = url.split('/');
+      const filename = urlParts[urlParts.length - 1];
+
+      if (!filename) {
+        this.logger.warn(`Could not extract filename from URL: ${url}`);
+        return;
+      }
+
+      const { error } = await this.supabase.storage
+        .from(bucket)
+        .remove([filename]);
+
+      if (error) {
+        this.logger.error(`Delete failed: ${error.message}`);
+        throw new InternalServerErrorException(
+          `Delete failed: ${error.message}`,
+        );
+      }
+
+      this.logger.log(`Successfully deleted file: ${filename}`);
+    } catch (error) {
+      this.logger.error(
+        `Error deleting file: ${error instanceof Error ? error.message : 'Unknown'}`,
+      );
+    }
+  }
 }

@@ -4,6 +4,7 @@ import {
   Get,
   Patch,
   Post,
+  Delete,
   UploadedFile,
   UseGuards,
   UseInterceptors,
@@ -51,8 +52,25 @@ export class ProfileController {
   @ApiOperation({ summary: 'Upload profile photo' })
   @ApiConsumes('multipart/form-data')
   async uploadPhoto(@UploadedFile() file: Express.Multer.File) {
+    const profile = await this.profileService.findOne();
+    if (profile?.photoUrl) {
+      await this.storageService.deleteFile(profile.photoUrl);
+    }
+
     const fileName = `profile-photo-${Date.now()}`;
     const url = await this.storageService.uploadFile(file, fileName);
     return this.profileService.update({ photoUrl: url });
+  }
+
+  @Delete('photo')
+  @UseGuards(JwtAuthGuard)
+  @ApiBearerAuth()
+  @ApiOperation({ summary: 'Delete profile photo' })
+  async deletePhoto() {
+    const profile = await this.profileService.findOne();
+    if (profile?.photoUrl) {
+      await this.storageService.deleteFile(profile.photoUrl);
+    }
+    return this.profileService.update({ photoUrl: '' });
   }
 }
