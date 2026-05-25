@@ -16,6 +16,7 @@ import { useQueryClient } from '@tanstack/react-query';
 
 import type { Profile } from '../types';
 import { useMessages } from '../hooks/use-messages';
+import { optimizeImage } from '../utils/ImageOptimizer';
 
 import { ProfileTab } from './admin/ProfileTab';
 import { SkillsTab } from './admin/SkillsTab';
@@ -124,11 +125,13 @@ export default function Admin() {
     const file = e.target.files?.[0];
     if (!file) return;
 
-    const formData = new FormData();
-    formData.append('file', file);
-
     setSaving(true);
     try {
+      const optimized = await optimizeImage(file);
+
+      const formData = new FormData();
+      formData.append('file', optimized);
+
       const response = await fetch(`${import.meta.env.VITE_API_URL}/profile/photo`, {
         method: 'POST',
         headers: { 'Authorization': `Bearer ${token}` },

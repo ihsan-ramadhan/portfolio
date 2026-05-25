@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import type { Project } from '../../types';
 import { projectsApi } from '../../services/api.service';
+import { optimizeImage } from '../../utils/ImageOptimizer';
 
 interface ProjectsTabProps {
   token: string | null;
@@ -308,10 +309,16 @@ export function ProjectsTab({ token, setMessage }: Readonly<ProjectsTabProps>) {
                       className="hidden"
                       accept="image/*"
                       disabled={uploadProjectImageMut.isPending}
-                      onChange={(e) => {
+                      onChange={async (e) => {
                         const file = e.target.files?.[0];
                         if (file && token) {
-                          uploadProjectImageMut.mutate({ file, token });
+                          try {
+                            const optimized = await optimizeImage(file);
+                            uploadProjectImageMut.mutate({ file: optimized, token });
+                          } catch {
+                            setMessage({ text: 'Failed to optimize image', type: 'error' });
+                            uploadProjectImageMut.mutate({ file, token });
+                          }
                         }
                       }}
                     />
