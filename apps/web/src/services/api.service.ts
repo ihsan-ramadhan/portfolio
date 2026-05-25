@@ -43,13 +43,20 @@ export const projectsApi = {
     });
     return response.data.data;
   },
-  uploadProjectImage: async ({ file, token }: { file: File; token: string }): Promise<string> => {
+  uploadProjectImage: async ({ file, oldImageUrl, token }: { file: File; oldImageUrl?: string; token: string }): Promise<string> => {
     const formData = new FormData();
     formData.append('file', file);
+    if (oldImageUrl) formData.append('oldImageUrl', oldImageUrl);
     const response = await apiClient.post<ApiResponse<{ imageUrl: string }>>('/admin/projects/upload-image', formData, {
       headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'multipart/form-data' },
     });
     return response.data.data.imageUrl;
+  },
+  deleteProjectImage: async ({ imageUrl, token }: { imageUrl: string; token: string }): Promise<void> => {
+    await apiClient.delete('/admin/projects/image', {
+      headers: { Authorization: `Bearer ${token}` },
+      data: { imageUrl },
+    });
   },
 };
 

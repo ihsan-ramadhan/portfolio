@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import type { Project } from '../../types';
 import { projectsApi } from '../../services/api.service';
-import { optimizeImage } from '../../utils/ImageOptimizer';
+import { ImageUploadModal } from '../../components/ui/ImageUploadModal';
 
 interface ProjectsTabProps {
   token: string | null;
@@ -15,6 +15,7 @@ export function ProjectsTab({ token, setMessage }: Readonly<ProjectsTabProps>) {
   const queryClient = useQueryClient();
 
   const [isProjectModalOpen, setIsProjectModalOpen] = useState(false);
+  const [isImageModalOpen, setIsImageModalOpen] = useState(false);
   const [editingProject, setEditingProject] = useState<Project | null>(null);
   const [projectForm, setProjectForm] = useState<{
     name: string;
@@ -64,6 +65,18 @@ export function ProjectsTab({ token, setMessage }: Readonly<ProjectsTabProps>) {
     },
   });
   const isPending = updateProjectMut.isPending;
+
+  const handleDeleteImage = async () => {
+    if (token && projectForm.imageUrl) {
+      try {
+        await projectsApi.deleteProjectImage({ imageUrl: projectForm.imageUrl, token });
+        setProjectForm(prev => ({ ...prev, imageUrl: '' }));
+        setMessage({ text: 'Image deleted successfully', type: 'success' });
+      } catch {
+        setMessage({ text: 'Failed to delete image', type: 'error' });
+      }
+    }
+  };
 
   const handleOpenEditProject = (project: Project) => {
     setEditingProject(project);
@@ -301,32 +314,26 @@ export function ProjectsTab({ token, setMessage }: Readonly<ProjectsTabProps>) {
                     placeholder="https://... or choose local file"
                     className="w-full bg-[var(--color-bg)] border border-[var(--color-border)] rounded-lg p-3 focus:outline-none focus:border-[var(--color-primary)] transition-colors font-mono text-sm text-[var(--color-text)]"
                   />
-                  <label className="flex items-center gap-2 bg-[var(--color-bg-subtle)] border border-[var(--color-border)] hover:border-[var(--color-primary)] px-4 py-2 rounded-lg text-xs font-mono text-[var(--color-text)] cursor-pointer transition-all flex-shrink-0">
+                  <button
+                    type="button"
+                    onClick={() => setIsImageModalOpen(true)}
+                    className="flex items-center gap-2 bg-[var(--color-bg-subtle)] border border-[var(--color-border)] hover:border-[var(--color-primary)] px-4 py-2 rounded-lg text-xs font-mono text-[var(--color-text)] cursor-pointer transition-all flex-shrink-0"
+                  >
                     <Camera size={16} className="text-[var(--color-primary)]" />
-                    <span>{uploadProjectImageMut.isPending ? 'Uploading...' : 'Upload'}</span>
-                    <input
-                      type="file"
-                      className="hidden"
-                      accept="image/*"
-                      disabled={uploadProjectImageMut.isPending}
-                      onChange={async (e) => {
-                        const file = e.target.files?.[0];
-                        if (file && token) {
-                          try {
-                            const optimized = await optimizeImage(file);
-                            uploadProjectImageMut.mutate({ file: optimized, token });
-                          } catch {
-                            setMessage({ text: 'Failed to optimize image', type: 'error' });
-                            uploadProjectImageMut.mutate({ file, token });
-                          }
-                        }
-                      }}
-                    />
-                  </label>
+                    <span>Upload Image</span>
+                  </button>
                 </div>
                 {projectForm.imageUrl && (
-                  <div className="mt-2 relative w-32 h-20 rounded-lg overflow-hidden border border-[var(--color-border)]">
+                  <div className="mt-2 relative w-32 h-20 rounded-lg overflow-hidden border border-[var(--color-border)] group">
                     <img src={projectForm.imageUrl} alt="Preview" className="w-full h-full object-cover" />
+                    <button
+                      type="button"
+                      onClick={handleDeleteImage}
+                      className="absolute top-1 right-1 bg-black/75 hover:bg-red-600 text-white rounded-full p-1 transition-all cursor-pointer shadow-md"
+                      title="Delete Image"
+                    >
+                      <X size={12} />
+                    </button>
                   </div>
                 )}
               </div>
@@ -411,6 +418,23 @@ export function ProjectsTab({ token, setMessage }: Readonly<ProjectsTabProps>) {
           </motion.div>
         </div>
       )}
+      <ImageUploadModal
+        isOpen={isImageModalOpen}
+        onClose={() => setIsImageModalOpen(false)}
+        onUpload={async (file) => {
+          if (token) {
+            await uploadProjectImageMut.mutateAsync({ 
+              file, 
+              oldImageUrl: projectForm.imageUrl, 
+              token 
+            });
+          }
+        }}
+        onDelete={handleDeleteImage}
+        currentImageUrl={projectForm.imageUrl}
+        title="Project Preview Image"
+        isPending={uploadProjectImageMut.isPending}
+      />
     </div>
   );
 }

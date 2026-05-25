@@ -1,4 +1,6 @@
 export async function optimizeImage(file: File): Promise<File> {
+  if (file.type === 'image/gif') return file;
+  
   return new Promise((resolve) => {
     const canvas = document.createElement('canvas')
     const ctx = canvas.getContext('2d')!

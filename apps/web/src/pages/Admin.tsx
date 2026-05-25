@@ -16,7 +16,7 @@ import { useQueryClient } from '@tanstack/react-query';
 
 import type { Profile } from '../types';
 import { useMessages } from '../hooks/use-messages';
-import { optimizeImage } from '../utils/ImageOptimizer';
+import { ImageUploadModal } from '../components/ui/ImageUploadModal';
 
 import { ProfileTab } from './admin/ProfileTab';
 import { SkillsTab } from './admin/SkillsTab';
@@ -29,6 +29,7 @@ export default function Admin() {
   const [saving, setSaving] = useState(false);
   const [syncing, setSyncing] = useState(false);
   const [message, setMessage] = useState({ text: '', type: '' });
+  const [isPhotoModalOpen, setIsPhotoModalOpen] = useState(false);
   const navigate = useNavigate();
   const queryClient = useQueryClient();
 
@@ -121,16 +122,11 @@ export default function Admin() {
     }
   };
 
-  const handlePhotoUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-
+  const handlePhotoUpload = async (file: File) => {
     setSaving(true);
     try {
-      const optimized = await optimizeImage(file);
-
       const formData = new FormData();
-      formData.append('file', optimized);
+      formData.append('file', file);
 
       const response = await fetch(`${import.meta.env.VITE_API_URL}/profile/photo`, {
         method: 'POST',
@@ -144,11 +140,34 @@ export default function Admin() {
       }
       const data = await response.json();
       if (response.ok) {
-        setProfile({ ...profile, photoUrl: data.data.photoUrl });
+        if (profile) setProfile({ ...profile, photoUrl: data.data.photoUrl });
         setMessage({ text: 'Photo uploaded successfully!', type: 'success' });
       }
     } catch {
       setMessage({ text: 'Failed to upload photo', type: 'error' });
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  const handlePhotoDelete = async () => {
+    setSaving(true);
+    try {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/profile/photo`, {
+        method: 'DELETE',
+        headers: { 'Authorization': `Bearer ${token}` },
+      });
+      if (response.status === 401) {
+        localStorage.removeItem('token');
+        window.location.href = '/login';
+        return;
+      }
+      if (response.ok) {
+        if (profile) setProfile({ ...profile, photoUrl: '' });
+        setMessage({ text: 'Photo deleted successfully!', type: 'success' });
+      }
+    } catch {
+      setMessage({ text: 'Failed to delete photo', type: 'error' });
     } finally {
       setSaving(false);
     }
@@ -298,10 +317,13 @@ export default function Admin() {
                 alt={profile.headline}
                 className="w-24 h-24 rounded-full object-cover border-2 border-[var(--color-primary)] shadow-lg group-hover:scale-105 transition-transform"
               />
-              <label className="absolute bottom-0 right-0 p-2 bg-[var(--color-primary)] rounded-full text-white cursor-pointer hover:scale-110 transition-transform shadow-lg">
+              <button 
+                type="button"
+                onClick={() => setIsPhotoModalOpen(true)}
+                className="absolute bottom-0 right-0 p-2 bg-[var(--color-primary)] rounded-full text-white cursor-pointer hover:scale-110 transition-transform shadow-lg"
+              >
                 <Camera size={16} />
-                <input type="file" className="hidden" onChange={handlePhotoUpload} accept="image/*" />
-              </label>
+              </button>
             </div>
             <h2 className="font-bold font-mono">{profile.headline}</h2>
             <p className="text-sm text-[var(--color-text-muted)] font-mono">{profile.location}</p>
@@ -328,6 +350,15 @@ export default function Admin() {
           {renderTabContent()}
         </div>
       </div>
+      <ImageUploadModal
+        isOpen={isPhotoModalOpen}
+        onClose={() => setIsPhotoModalOpen(false)}
+        onUpload={handlePhotoUpload}
+        onDelete={handlePhotoDelete}
+        currentImageUrl={profile.photoUrl}
+        title="Profile Photo"
+        isPending={saving}
+      />
     </div>
   );
 }
