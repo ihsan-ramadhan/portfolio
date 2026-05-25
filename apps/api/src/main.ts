@@ -5,6 +5,7 @@ import {
   FastifyAdapter,
   NestFastifyApplication,
 } from '@nestjs/platform-fastify';
+import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import helmet from '@fastify/helmet';
 import { AppModule } from './app.module';
 import { TransformInterceptor } from './common/interceptors/transform.interceptor';
@@ -21,10 +22,13 @@ async function bootstrap() {
 
   const configService = app.get(ConfigService);
   const port = configService.get<number>('PORT') || 3001;
+  const nodeEnv = configService.get<string>('NODE_ENV');
 
   app.setGlobalPrefix('api/v1');
 
-  await app.register(helmet);
+  await app.register(helmet, {
+    contentSecurityPolicy: nodeEnv === 'production',
+  });
 
   const frontendUrl = configService.get<string>('FRONTEND_URL');
   let corsOrigin: string | string[] | boolean = false;
@@ -55,6 +59,27 @@ async function bootstrap() {
       },
     }),
   );
+
+  if (nodeEnv !== 'production') {
+    const config = new DocumentBuilder()
+      .setTitle('Portfolio API')
+      .setDescription('REST API for ihsanramadhan.my.id')
+      .setVersion('1.0')
+      .setContact('Muhammad Ihsan Ramadhan', 'https://ihsanramadhan.my.id', '')
+      .setExternalDoc(
+        'GitHub Repository',
+        'https://github.com/ihsan-ramadhan/portfolio',
+      )
+      .addServer('http://localhost:3000/api/v1', 'Development')
+      .addServer('https://api.ihsanramadhan.my.id/api/v1', 'Production')
+      .addBearerAuth()
+      .build();
+
+    const document = SwaggerModule.createDocument(app, config);
+    SwaggerModule.setup('api/v1/docs', app, document, {
+      explorer: true,
+    });
+  }
 
   await app.listen(port, '0.0.0.0');
   console.log(`Application is running on: ${await app.getUrl()}`);

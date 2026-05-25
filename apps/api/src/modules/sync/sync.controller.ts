@@ -6,16 +6,20 @@ import {
   HttpCode,
   HttpStatus,
 } from '@nestjs/common';
+import { ApiTags, ApiOperation, ApiBearerAuth } from '@nestjs/swagger';
 import { SyncService } from './sync.service';
 import { JwtAuthGuard } from '../../auth/guards/jwt-auth.guard';
 
+@ApiTags('Sync')
+@ApiBearerAuth()
+@UseGuards(JwtAuthGuard)
 @Controller('admin/sync')
 export class SyncController {
   constructor(private readonly syncService: SyncService) {}
 
   @Post('trigger')
-  @UseGuards(JwtAuthGuard)
   @HttpCode(HttpStatus.ACCEPTED)
+  @ApiOperation({ summary: 'Trigger GitHub repository sync manually' })
   triggerSync() {
     this.syncService.syncGitHubRepositories().catch((error) => {
       console.error('Async sync error:', error);
@@ -29,7 +33,7 @@ export class SyncController {
   }
 
   @Get('status')
-  @UseGuards(JwtAuthGuard)
+  @ApiOperation({ summary: 'Get last sync status' })
   async getSyncStatus() {
     const status = await this.syncService.getLatestSyncStatus();
 
@@ -41,7 +45,7 @@ export class SyncController {
   }
 
   @Get('history')
-  @UseGuards(JwtAuthGuard)
+  @ApiOperation({ summary: 'Get sync history (last 10)' })
   async getSyncHistory() {
     const history = await this.syncService.getSyncHistory(10);
 

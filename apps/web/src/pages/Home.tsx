@@ -1,15 +1,18 @@
+import React, { Suspense } from 'react';
 import Navbar from '../components/layout/Navbar';
-import Footer from '../components/layout/Footer';
 import Hero from '../components/sections/Hero';
 import About from '../components/sections/About';
-import Skills from '../components/sections/Skills';
-import Projects from '../components/sections/Projects';
-import Contact from '../components/sections/Contact';
+
+const Skills = React.lazy(() => import('../components/sections/Skills'));
+const Projects = React.lazy(() => import('../components/sections/Projects'));
+const Contact = React.lazy(() => import('../components/sections/Contact'));
+const Footer = React.lazy(() => import('../components/layout/Footer'));
 
 import { useProfile } from '../hooks/use-profile';
+import { DEFAULT_PROFILE } from '../constants';
 
 export default function Home() {
-  const { data: profile } = useProfile();
+  const { data: profile = DEFAULT_PROFILE } = useProfile();
 
   return (
     <>
@@ -17,11 +20,15 @@ export default function Home() {
       <main className="w-full px-4 md:px-8 lg:px-16 pb-20">
         <Hero profile={profile} />
         <About profile={profile} />
-        <Skills />
-        <Projects />
-        <Contact />
+        <Suspense fallback={<div className="h-64 flex items-center justify-center font-mono text-[var(--color-text-muted)] animate-pulse">Loading sections...</div>}>
+          <Skills />
+          <Projects />
+          <Contact />
+        </Suspense>
       </main>
-      <Footer />
+      <Suspense fallback={<div className="h-20" />}>
+        <Footer />
+      </Suspense>
     </>
   );
 }

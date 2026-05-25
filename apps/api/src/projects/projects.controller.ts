@@ -10,6 +10,12 @@ import {
   UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
+import {
+  ApiTags,
+  ApiOperation,
+  ApiBearerAuth,
+  ApiConsumes,
+} from '@nestjs/swagger';
 import { SkipThrottle } from '@nestjs/throttler';
 import { FileInterceptor } from '@nest-lab/fastify-multer';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
@@ -18,6 +24,7 @@ import { UpdateProjectDto } from './dto/update-project.dto';
 import { ProjectsService } from './projects.service';
 import { StorageService } from '../modules/storage/storage.service';
 
+@ApiTags('Projects')
 @Controller()
 export class ProjectsController {
   constructor(
@@ -27,24 +34,30 @@ export class ProjectsController {
 
   @Get('projects')
   @SkipThrottle()
+  @ApiOperation({ summary: 'Get all visible projects' })
   async getProjects() {
     return this.projectsService.findAll();
   }
 
   @Get('projects/featured')
   @SkipThrottle()
+  @ApiOperation({ summary: 'Get pinned/featured projects' })
   async getFeatured() {
     return this.projectsService.findPinned();
   }
 
   @Post('projects')
   @UseGuards(JwtAuthGuard)
+  @ApiBearerAuth()
+  @ApiOperation({ summary: 'Create a project manually' })
   async createProject(@Body() createProjectDto: CreateProjectDto) {
     return this.projectsService.create(createProjectDto);
   }
 
   @Patch('projects/:id')
   @UseGuards(JwtAuthGuard)
+  @ApiBearerAuth()
+  @ApiOperation({ summary: 'Update a project' })
   async updateProject(
     @Param('id') id: string,
     @Body() updateProjectDto: UpdateProjectDto,
@@ -54,18 +67,26 @@ export class ProjectsController {
 
   @Delete('projects/:id')
   @UseGuards(JwtAuthGuard)
+  @ApiBearerAuth()
+  @ApiOperation({ summary: 'Delete a project' })
   async removeProject(@Param('id') id: string) {
     return this.projectsService.remove(id);
   }
 
   @Get('admin/projects')
   @UseGuards(JwtAuthGuard)
+  @ApiBearerAuth()
+  @ApiOperation({ summary: 'Get all projects including hidden ones' })
   async getAdminProjects() {
     return this.projectsService.findAllForAdmin();
   }
 
   @Patch('admin/projects/:id')
   @UseGuards(JwtAuthGuard)
+  @ApiBearerAuth()
+  @ApiOperation({
+    summary: 'Customize project (override GitHub data, set visibility, order)',
+  })
   async updateAdminProject(
     @Param('id') id: string,
     @Body() updateProjectDto: UpdateProjectDto,
@@ -76,6 +97,9 @@ export class ProjectsController {
   @Post('admin/projects/upload-image')
   @UseGuards(JwtAuthGuard)
   @UseInterceptors(FileInterceptor('file'))
+  @ApiBearerAuth()
+  @ApiOperation({ summary: 'Upload project preview image' })
+  @ApiConsumes('multipart/form-data')
   async uploadProjectImage(@UploadedFile() file: Express.Multer.File) {
     const fileName = `project-image-${Date.now()}`;
     const url = await this.storageService.uploadFile(file, fileName);
