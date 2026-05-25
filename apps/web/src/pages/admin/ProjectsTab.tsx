@@ -16,6 +16,7 @@ export function ProjectsTab({ token, setMessage }: Readonly<ProjectsTabProps>) {
 
   const [isProjectModalOpen, setIsProjectModalOpen] = useState(false);
   const [isImageModalOpen, setIsImageModalOpen] = useState(false);
+  const [showCloseConfirm, setShowCloseConfirm] = useState(false);
   const [editingProject, setEditingProject] = useState<Project | null>(null);
   const [projectForm, setProjectForm] = useState<{
     name: string;
@@ -78,7 +79,29 @@ export function ProjectsTab({ token, setMessage }: Readonly<ProjectsTabProps>) {
     }
   };
 
+  const hasUnsavedChanges = () => {
+    if (!editingProject) return false;
+    return (
+      projectForm.name !== editingProject.name ||
+      projectForm.customDesc !== (editingProject.customDesc || '') ||
+      projectForm.imageUrl !== (editingProject.imageUrl || '') ||
+      projectForm.language !== (editingProject.language || '') ||
+      JSON.stringify(projectForm.tags) !== JSON.stringify(editingProject.tags || []) ||
+      projectForm.isPinned !== editingProject.isPinned ||
+      projectForm.isVisible !== editingProject.isVisible
+    );
+  };
+
+  const handleCloseAttempt = () => {
+    if (hasUnsavedChanges()) {
+      setShowCloseConfirm(true);
+    } else {
+      setIsProjectModalOpen(false);
+    }
+  };
+
   const handleOpenEditProject = (project: Project) => {
+    setShowCloseConfirm(false);
     setEditingProject(project);
     setProjectForm({
       name: project.name,
@@ -281,7 +304,7 @@ export function ProjectsTab({ token, setMessage }: Readonly<ProjectsTabProps>) {
                 Customize Project
               </h3>
               <button
-                onClick={() => setIsProjectModalOpen(false)}
+                onClick={handleCloseAttempt}
                 className="text-[var(--color-text-muted)] hover:text-[var(--color-text)] transition-colors cursor-pointer"
               >
                 <X size={20} />
@@ -401,7 +424,7 @@ export function ProjectsTab({ token, setMessage }: Readonly<ProjectsTabProps>) {
               <div className="flex justify-end gap-3 pt-4 border-t border-[var(--color-border)]">
                 <button
                   type="button"
-                  onClick={() => setIsProjectModalOpen(false)}
+                  onClick={handleCloseAttempt}
                   className="px-4 py-2 bg-[var(--color-bg)] border border-[var(--color-border)] rounded-lg font-mono text-sm text-[var(--color-text)] hover:bg-[var(--color-bg-subtle)] hover:border-[var(--color-text-muted)] transition-all cursor-pointer"
                 >
                   Cancel
@@ -415,6 +438,42 @@ export function ProjectsTab({ token, setMessage }: Readonly<ProjectsTabProps>) {
                 </button>
               </div>
             </form>
+          </motion.div>
+        </div>
+      )}
+
+      {showCloseConfirm && (
+        <div className="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            className="bg-[var(--color-bg-subtle)] border border-[var(--color-border)] rounded-2xl p-6 w-full max-w-sm space-y-4 shadow-2xl relative text-center"
+          >
+            <h4 className="font-mono font-bold text-base text-[var(--color-text)]">
+              Discard Changes?
+            </h4>
+            <p className="font-mono text-xs text-[var(--color-text-muted)] leading-relaxed">
+              You have unsaved changes. If you close now, your customizations will be discarded.
+            </p>
+            <div className="flex justify-center gap-3 pt-2">
+              <button
+                type="button"
+                onClick={() => setShowCloseConfirm(false)}
+                className="px-4 py-2 bg-[var(--color-bg)] border border-[var(--color-border)] rounded-lg font-mono text-xs text-[var(--color-text)] hover:bg-[var(--color-bg-subtle)] hover:border-[var(--color-text-muted)] transition-all cursor-pointer"
+              >
+                Keep Editing
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  setShowCloseConfirm(false);
+                  setIsProjectModalOpen(false);
+                }}
+                className="px-4 py-2 bg-red-600 text-white rounded-lg font-mono text-xs hover:bg-red-500 transition-all cursor-pointer shadow-md"
+              >
+                Discard Changes
+              </button>
+            </div>
           </motion.div>
         </div>
       )}
