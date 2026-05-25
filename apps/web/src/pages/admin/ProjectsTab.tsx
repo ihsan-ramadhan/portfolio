@@ -18,6 +18,9 @@ export function ProjectsTab({ token, setMessage }: Readonly<ProjectsTabProps>) {
   const [isImageModalOpen, setIsImageModalOpen] = useState(false);
   const [showCloseConfirm, setShowCloseConfirm] = useState(false);
   const [editingProject, setEditingProject] = useState<Project | null>(null);
+  const [pendingImageFile, setPendingImageFile] = useState<File | null>(null);
+  const [previewUrlForPending, setPreviewUrlForPending] = useState<string | null>(null);
+  const [shouldDeleteExistingImage, setShouldDeleteExistingImage] = useState(false);
   const [projectForm, setProjectForm] = useState<{
     name: string;
     customDesc: string;
@@ -42,24 +45,13 @@ export function ProjectsTab({ token, setMessage }: Readonly<ProjectsTabProps>) {
     enabled: !!token,
   });
 
-  const uploadProjectImageMut = useMutation({
-    mutationFn: projectsApi.uploadProjectImage,
-    onSuccess: (url) => {
-      setProjectForm((prev) => ({ ...prev, imageUrl: url }));
-      setMessage({ text: 'Project image uploaded successfully!', type: 'success' });
-    },
-    onError: () => {
-      setMessage({ text: 'Failed to upload project image', type: 'error' });
-    },
-  });
-
   const updateProjectMut = useMutation({
     mutationFn: projectsApi.updateProject,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['adminProjects'] });
       queryClient.invalidateQueries({ queryKey: ['projects'] });
       setMessage({ text: 'Project updated successfully!', type: 'success' });
-      setIsProjectModalOpen(false);
+      handleClose();
     },
     onError: () => {
       setMessage({ text: 'Failed to update project', type: 'error' });
@@ -67,15 +59,28 @@ export function ProjectsTab({ token, setMessage }: Readonly<ProjectsTabProps>) {
   });
   const isPending = updateProjectMut.isPending;
 
-  const handleDeleteImage = async () => {
-    if (token && projectForm.imageUrl) {
-      try {
-        await projectsApi.deleteProjectImage({ imageUrl: projectForm.imageUrl, token });
-        setProjectForm(prev => ({ ...prev, imageUrl: '' }));
-        setMessage({ text: 'Image deleted successfully', type: 'success' });
-      } catch {
-        setMessage({ text: 'Failed to delete image', type: 'error' });
-      }
+  const cleanupPreviewUrl = () => {
+    if (previewUrlForPending) {
+      URL.revokeObjectURL(previewUrlForPending);
+      setPreviewUrlForPending(null);
+    }
+  };
+
+  const handleLocalImageUpload = (file: File) => {
+    cleanupPreviewUrl();
+    const objectUrl = URL.createObjectURL(file);
+    setPendingImageFile(file);
+    setPreviewUrlForPending(objectUrl);
+    setProjectForm((prev) => ({ ...prev, imageUrl: objectUrl }));
+    setShouldDeleteExistingImage(false);
+  };
+
+  const handleLocalImageDelete = () => {
+    setPendingImageFile(null);
+    cleanupPreviewUrl();
+    setProjectForm((prev) => ({ ...prev, imageUrl: '' }));
+    if (editingProject?.imageUrl) {
+      setShouldDeleteExistingImage(true);
     }
   };
 
@@ -84,6 +89,8 @@ export function ProjectsTab({ token, setMessage }: Readonly<ProjectsTabProps>) {
     return (
       projectForm.name !== editingProject.name ||
       projectForm.customDesc !== (editingProject.customDesc || '') ||
+      pendingImageFile !== null ||
+      shouldDeleteExistingImage ||
       projectForm.imageUrl !== (editingProject.imageUrl || '') ||
       projectForm.language !== (editingProject.language || '') ||
       JSON.stringify(projectForm.tags) !== JSON.stringify(editingProject.tags || []) ||
@@ -92,16 +99,28 @@ export function ProjectsTab({ token, setMessage }: Readonly<ProjectsTabProps>) {
     );
   };
 
+  const handleClose = () => {
+    cleanupPreviewUrl();
+    setPendingImageFile(null);
+    setPreviewUrlForPending(null);
+    setShouldDeleteExistingImage(false);
+    setIsProjectModalOpen(false);
+    setShowCloseConfirm(false);
+  };
+
   const handleCloseAttempt = () => {
     if (hasUnsavedChanges()) {
       setShowCloseConfirm(true);
     } else {
-      setIsProjectModalOpen(false);
+      handleClose();
     }
   };
 
   const handleOpenEditProject = (project: Project) => {
     setShowCloseConfirm(false);
+    setPendingImageFile(null);
+    setPreviewUrlForPending(null);
+    setShouldDeleteExistingImage(false);
     setEditingProject(project);
     setProjectForm({
       name: project.name,
@@ -120,12 +139,31 @@ export function ProjectsTab({ token, setMessage }: Readonly<ProjectsTabProps>) {
     if (!token || !editingProject) return;
 
     try {
+      let finalImageUrl = projectForm.imageUrl;
+
+      // 1. If we have a pending local image file, upload it now
+      if (pendingImageFile) {
+        const uploadedUrl = await projectsApi.uploadProjectImage({
+          file: pendingImageFile,
+          oldImageUrl: editingProject.imageUrl || undefined,
+          token,
+        });
+        finalImageUrl = uploadedUrl;
+      } else if (shouldDeleteExistingImage && editingProject.imageUrl) {
+        // 2. If the user explicitly deleted the existing image, delete it from storage
+        await projectsApi.deleteProjectImage({
+          imageUrl: editingProject.imageUrl,
+          token,
+        });
+        finalImageUrl = '';
+      }
+
       await updateProjectMut.mutateAsync({
         id: editingProject.id,
         data: {
           name: projectForm.name,
           customDesc: projectForm.customDesc,
-          imageUrl: projectForm.imageUrl,
+          imageUrl: finalImageUrl,
           language: projectForm.language,
           tags: projectForm.tags,
           isPinned: projectForm.isPinned,
@@ -134,7 +172,8 @@ export function ProjectsTab({ token, setMessage }: Readonly<ProjectsTabProps>) {
         token,
       });
     } catch {
-      // Error handled in mutation onError
+      // Error handled in mutation/catch block
+      setMessage({ text: 'Failed to save customizations', type: 'error' });
     }
   };
 
@@ -351,7 +390,7 @@ export function ProjectsTab({ token, setMessage }: Readonly<ProjectsTabProps>) {
                     <img src={projectForm.imageUrl} alt="Preview" className="w-full h-full object-cover" />
                     <button
                       type="button"
-                      onClick={handleDeleteImage}
+                      onClick={handleLocalImageDelete}
                       className="absolute top-1 right-1 bg-black/75 hover:bg-red-600 text-white rounded-full p-1 transition-all cursor-pointer shadow-md"
                       title="Delete Image"
                     >
@@ -465,10 +504,7 @@ export function ProjectsTab({ token, setMessage }: Readonly<ProjectsTabProps>) {
               </button>
               <button
                 type="button"
-                onClick={() => {
-                  setShowCloseConfirm(false);
-                  setIsProjectModalOpen(false);
-                }}
+                onClick={handleClose}
                 className="px-4 py-2 bg-red-600 text-white rounded-lg font-mono text-xs hover:bg-red-500 transition-all cursor-pointer shadow-md"
               >
                 Discard Changes
@@ -481,18 +517,13 @@ export function ProjectsTab({ token, setMessage }: Readonly<ProjectsTabProps>) {
         isOpen={isImageModalOpen}
         onClose={() => setIsImageModalOpen(false)}
         onUpload={async (file) => {
-          if (token) {
-            await uploadProjectImageMut.mutateAsync({ 
-              file, 
-              oldImageUrl: projectForm.imageUrl, 
-              token 
-            });
-          }
+          handleLocalImageUpload(file);
         }}
-        onDelete={handleDeleteImage}
+        onDelete={async () => {
+          handleLocalImageDelete();
+        }}
         currentImageUrl={projectForm.imageUrl}
         title="Project Preview Image"
-        isPending={uploadProjectImageMut.isPending}
       />
     </div>
   );
