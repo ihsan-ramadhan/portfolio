@@ -79,7 +79,9 @@ export default function Admin() {
         body: JSON.stringify({
           headline: profile.headline,
           bio: profile.bio,
-          location: profile.location
+          location: profile.location,
+          statusBadge: profile.statusBadge,
+          tagline: profile.tagline
         })
       });
 

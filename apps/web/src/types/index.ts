@@ -3,6 +3,8 @@ export interface Profile {
   bio: string;
   location: string;
   photoUrl: string;
+  statusBadge?: string;
+  tagline?: string;
 }
 
 export interface Project {

@@ -30,35 +30,16 @@ async function main() {
     });
   }
 
-  const contents = [
-    {
-      key: 'bio',
-      value:
-        'Full Stack Developer with a passion for building clean and functional web applications.',
-    },
-    { key: 'tagline', value: 'Building digital experiences that matter.' },
-    { key: 'openToWork', value: 'true' },
-  ];
-
-  for (const content of contents) {
-    await prisma.siteContent.upsert({
-      where: { key: content.key },
-      update: {},
-      create: {
-        key: content.key,
-        value: content.value,
-      },
-    });
-  }
-
   await prisma.profile.upsert({
     where: { id: 'default-profile' },
     update: {},
     create: {
       id: 'default-profile',
       headline: 'Full Stack Developer',
+      tagline: 'Building digital experiences that matter.',
       bio: 'I love coding and building things.',
       location: 'Bandung, Indonesia',
+      statusBadge: 'Still Exploring',
     },
   });
 

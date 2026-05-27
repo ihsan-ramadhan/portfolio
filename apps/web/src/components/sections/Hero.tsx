@@ -9,17 +9,19 @@ export default function Hero({ profile }: { profile: Profile | null }) {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center w-full">
         {/* Left Side: Text Content */}
         <div className="flex flex-col items-start">
-          <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="mb-8 inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-[var(--color-primary)] bg-[var(--color-bg-subtle)] text-[var(--color-primary)] text-xs md:text-sm font-mono shadow-sm"
-          >
-            <span className="relative flex h-2.5 w-2.5">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[var(--color-primary)] opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-[var(--color-primary)]"></span>
-            </span>
-            Still Learning
-          </motion.div>
+          {profile?.statusBadge && (
+            <motion.div
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="mb-8 inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-[var(--color-primary)] bg-[var(--color-bg-subtle)] text-[var(--color-primary)] text-xs md:text-sm font-mono shadow-sm"
+            >
+              <span className="relative flex h-2.5 w-2.5">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[var(--color-primary)] opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-[var(--color-primary)]"></span>
+              </span>
+              {profile.statusBadge}
+            </motion.div>
+          )}
 
           <motion.h1
             initial={{ opacity: 0, x: -30 }}
@@ -34,10 +36,21 @@ export default function Hero({ profile }: { profile: Profile | null }) {
             initial={{ opacity: 0, x: -30 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.2 }}
-            className="text-xl md:text-2xl text-[var(--color-text-muted)] mb-10 max-w-2xl leading-relaxed"
+            className={`text-xl md:text-2xl text-[var(--color-text-muted)] max-w-2xl leading-relaxed ${profile?.tagline ? 'mb-4' : 'mb-10'}`}
           >
             {profile?.headline || 'Full Stack Developer'}
           </motion.h2>
+
+          {profile?.tagline && (
+            <motion.p
+              initial={{ opacity: 0, x: -30 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.3 }}
+              className="text-base md:text-lg text-[var(--color-text-muted)] opacity-85 mb-10 max-w-2xl"
+            >
+              {profile.tagline}
+            </motion.p>
+          )}
 
           <motion.div
             initial={{ opacity: 0, y: 30 }}

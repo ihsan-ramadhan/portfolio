@@ -7,12 +7,6 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model SiteContent {
-  id        String   @id @default(cuid())
-  key       String   @unique // "bio", "tagline", "openToWork"
-  value     String
-  updatedAt DateTime @updatedAt
-}
 
 model SiteSection {
   id        String  @id @default(cuid())
@@ -38,12 +32,14 @@ enum SkillCategory {
 }
 
 model Profile {
-  id        String   @id @default(cuid())
-  headline  String // "Full Stack Developer"
-  bio       String // About me / summary
-  photoUrl  String? // URL dari Supabase Storage
-  location  String?
-  updatedAt DateTime @updatedAt
+  id          String   @id @default(cuid())
+  headline    String // "Full Stack Developer"
+  tagline     String?
+  bio         String // About me / summary
+  photoUrl    String? // URL dari Supabase Storage
+  location    String?
+  statusBadge String?
+  updatedAt   DateTime @updatedAt
 
   experiences Experience[]
   educations  Education[]

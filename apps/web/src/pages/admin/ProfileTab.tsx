@@ -1,5 +1,5 @@
 import React from 'react';
-import { User, Layout, MapPin, FileText, Save } from 'lucide-react';
+import { User, Layout, MapPin, FileText, Save, Activity } from 'lucide-react';
 import type { Profile } from '../../types';
 
 interface ProfileTabProps {
@@ -31,12 +31,38 @@ export function ProfileTab({ profile, setProfile, saving, handleUpdateProfile }:
 
       <div className="space-y-2">
         <label className="text-xs font-mono text-[var(--color-text-muted)] flex items-center gap-2 uppercase">
+          <FileText size={14} /> Tagline
+        </label>
+        <input 
+          type="text" 
+          placeholder="Leave empty to hide tagline"
+          value={profile.tagline || ''}
+          onChange={(e) => setProfile({...profile, tagline: e.target.value})}
+          className="w-full bg-[var(--color-bg)] border border-[var(--color-border)] rounded-lg p-3 focus:outline-none focus:border-[var(--color-primary)] transition-colors font-mono"
+        />
+      </div>
+
+      <div className="space-y-2">
+        <label className="text-xs font-mono text-[var(--color-text-muted)] flex items-center gap-2 uppercase">
           <MapPin size={14} /> Location
         </label>
         <input 
           type="text" 
           value={profile.location || ''}
           onChange={(e) => setProfile({...profile, location: e.target.value})}
+          className="w-full bg-[var(--color-bg)] border border-[var(--color-border)] rounded-lg p-3 focus:outline-none focus:border-[var(--color-primary)] transition-colors font-mono"
+        />
+      </div>
+
+      <div className="space-y-2">
+        <label className="text-xs font-mono text-[var(--color-text-muted)] flex items-center gap-2 uppercase">
+          <Activity size={14} /> Status Badge
+        </label>
+        <input 
+          type="text" 
+          placeholder="Leave empty to hide badge"
+          value={profile.statusBadge || ''}
+          onChange={(e) => setProfile({...profile, statusBadge: e.target.value})}
           className="w-full bg-[var(--color-bg)] border border-[var(--color-border)] rounded-lg p-3 focus:outline-none focus:border-[var(--color-primary)] transition-colors font-mono"
         />
       </div>
