@@ -2,16 +2,17 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { SpeedInsights } from '@vercel/speed-insights/react';
 import { Analytics } from '@vercel/analytics/react';
 import { Toaster } from 'sonner';
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect, Suspense } from 'react';
 import InteractiveMesh from './components/layout/InteractiveMesh';
 import CommandPalette from './components/layout/CommandPalette';
-import Home from './pages/Home';
-import Login from './pages/Login';
-import Admin from './pages/Admin';
-import NotFound from './pages/NotFound';
+
+const Home = React.lazy(() => import('./pages/Home'));
+const Login = React.lazy(() => import('./pages/Login'));
+const Admin = React.lazy(() => import('./pages/Admin'));
+const NotFound = React.lazy(() => import('./pages/NotFound'));
 
 function App() {
-  const [isDesktop, setIsDesktop] = useState(true);
+  const [isDesktop, setIsDesktop] = useState(false);
 
   useEffect(() => {
     const checkIsDesktop = () => {
@@ -30,12 +31,14 @@ function App() {
         {isDesktop && <InteractiveMesh />}
         <CommandPalette />
         
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/admin" element={<Admin />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
+        <Suspense fallback={<div className="h-screen w-full flex items-center justify-center font-mono text-[var(--color-text-muted)] animate-pulse">Initializing...</div>}>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/admin" element={<Admin />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </Suspense>
         <SpeedInsights />
         <Analytics />
         <Toaster 

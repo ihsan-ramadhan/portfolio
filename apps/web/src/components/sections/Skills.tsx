@@ -1,7 +1,6 @@
-import { motion } from 'framer-motion';
 import { Terminal } from 'lucide-react';
-import SectionHeader from '../ui/SectionHeader';
 import AnimatedSection from '../ui/AnimatedSection';
+import SectionHeader from '../ui/SectionHeader';
 import ErrorState from '../ui/ErrorState';
 import Skeleton from '../ui/Skeleton';
 import { useSkills } from '../../hooks/use-skills';
@@ -15,7 +14,8 @@ export default function Skills() {
     url: s.url || `https://google.com/search?q=${encodeURIComponent(s.name)}`
   }));
 
-  const duplicatedStack = [...displaySkills, ...displaySkills];
+  const multiplier = displaySkills.length < 8 ? 4 : 2;
+  const duplicatedStack = Array(multiplier).fill(displaySkills).flat();
 
   return (
     <section id="skills" className="py-20 w-full border-t border-[var(--color-border)] overflow-hidden">
@@ -38,15 +38,7 @@ export default function Skills() {
         ) : skills.length === 0 ? (
           <ErrorState message="Tech stack information is temporarily unavailable." />
         ) : (
-          <motion.div
-            className="flex whitespace-nowrap gap-16 py-4"
-            animate={{ x: ["0%", "-50%"] }}
-            transition={{
-              ease: "linear",
-              duration: 40, 
-              repeat: Infinity,
-            }}
-          >
+          <div className="animate-marquee gap-16 py-4">
             {duplicatedStack.map((tech, index) => (
               <a
                 key={index}
@@ -68,7 +60,7 @@ export default function Skills() {
                 </span>
               </a>
             ))}
-          </motion.div>
+          </div>
         )}
       </div>
     </section>

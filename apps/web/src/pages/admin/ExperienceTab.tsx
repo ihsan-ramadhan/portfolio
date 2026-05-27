@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import { Briefcase, Plus, Edit, Trash2, X, Calendar, Save } from 'lucide-react';
 import { motion } from 'framer-motion';
 import type { Experience } from '../../types';
-import { useExperiences, useCreateExperience, useUpdateExperience, useDeleteExperience } from '../../hooks/use-experience';
+import { useExperiences } from '../../hooks/use-experience';
+import { useCreateExperience, useUpdateExperience, useDeleteExperience } from '../../hooks/use-admin-experience';
 
 interface ExperienceTabProps {
   token: string | null;

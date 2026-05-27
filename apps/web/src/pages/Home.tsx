@@ -1,14 +1,13 @@
-import React, { Suspense } from 'react';
+import React from 'react';
 import Navbar from '../components/layout/Navbar';
 import Hero from '../components/sections/Hero';
 import About from '../components/sections/About';
-
-const Skills = React.lazy(() => import('../components/sections/Skills'));
-const Projects = React.lazy(() => import('../components/sections/Projects'));
-const Experience = React.lazy(() => import('../components/sections/Experience'));
-const Education = React.lazy(() => import('../components/sections/Education'));
-const Contact = React.lazy(() => import('../components/sections/Contact'));
-const Footer = React.lazy(() => import('../components/layout/Footer'));
+import Skills from '../components/sections/Skills';
+import Projects from '../components/sections/Projects';
+import Experience from '../components/sections/Experience';
+import Education from '../components/sections/Education';
+import Contact from '../components/sections/Contact';
+import Footer from '../components/layout/Footer';
 
 import { useProfile } from '../hooks/use-profile';
 import { useSections } from '../hooks/use-sections';
@@ -36,24 +35,19 @@ export default function Home() {
   ];
 
   const activeSections = sections.length > 0 ? sections : defaultSections;
-
   return (
     <>
       <Navbar />
-      <main className="w-full px-4 md:px-8 lg:px-16 pb-20">
-        <Suspense fallback={<div className="h-64 flex items-center justify-center font-mono text-[var(--color-text-muted)] animate-pulse">Loading section...</div>}>
-          {activeSections
-            .filter((sec) => sec.isEnabled && sectionRenderer[sec.name])
-            .map((sec) => (
-              <React.Fragment key={sec.name}>
-                {sectionRenderer[sec.name]}
-              </React.Fragment>
-            ))}
-        </Suspense>
+      <main className="w-full px-4 md:px-8 lg:px-16 pb-20 min-h-screen">
+        {activeSections
+          .filter((sec) => sec.isEnabled && sectionRenderer[sec.name])
+          .map((sec) => (
+            <React.Fragment key={sec.name}>
+              {sectionRenderer[sec.name]}
+            </React.Fragment>
+          ))}
       </main>
-      <Suspense fallback={<div className="h-20" />}>
-        <Footer />
-      </Suspense>
+      <Footer />
     </>
   );
 }
