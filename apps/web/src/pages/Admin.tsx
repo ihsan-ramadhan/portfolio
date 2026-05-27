@@ -10,7 +10,9 @@ import {
   Code,
   X,
   Mail,
-  FolderGit2
+  FolderGit2,
+  Briefcase,
+  GraduationCap
 } from 'lucide-react';
 import { useQueryClient } from '@tanstack/react-query';
 
@@ -22,6 +24,9 @@ import { ProfileTab } from './admin/ProfileTab';
 import { SkillsTab } from './admin/SkillsTab';
 import { InboxTab } from './admin/InboxTab';
 import { ProjectsTab } from './admin/ProjectsTab';
+import { SectionsTab } from './admin/SectionsTab';
+import { ExperienceTab } from './admin/ExperienceTab';
+import { EducationTab } from './admin/EducationTab';
 
 export default function Admin() {
   const [profile, setProfile] = useState<Profile | null>(null);
@@ -33,7 +38,7 @@ export default function Admin() {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
 
-  const [activeTab, setActiveTab] = useState<'profile' | 'skills' | 'inbox' | 'projects'>('profile');
+  const [activeTab, setActiveTab] = useState<'profile' | 'sections' | 'skills' | 'projects' | 'experience' | 'education' | 'inbox'>('profile');
 
   const token = localStorage.getItem('token');
 
@@ -70,7 +75,7 @@ export default function Admin() {
 
     setSaving(true);
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/profile`, {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/admin/profile`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
@@ -79,7 +84,9 @@ export default function Admin() {
         body: JSON.stringify({
           headline: profile.headline,
           bio: profile.bio,
-          location: profile.location
+          location: profile.location,
+          statusBadge: profile.statusBadge,
+          tagline: profile.tagline
         })
       });
 
@@ -128,7 +135,7 @@ export default function Admin() {
       const formData = new FormData();
       formData.append('file', file);
 
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/profile/photo`, {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/admin/profile/photo`, {
         method: 'POST',
         headers: { 'Authorization': `Bearer ${token}` },
         body: formData
@@ -153,7 +160,7 @@ export default function Admin() {
   const handlePhotoDelete = async () => {
     setSaving(true);
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/profile/photo`, {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/admin/profile/photo`, {
         method: 'DELETE',
         headers: { 'Authorization': `Bearer ${token}` },
       });
@@ -191,12 +198,18 @@ export default function Admin() {
             handleUpdateProfile={handleUpdateProfile}
           />
         );
+      case 'sections':
+        return <SectionsTab token={token} setMessage={setMessage} />;
       case 'skills':
         return <SkillsTab token={token} setMessage={setMessage} />;
       case 'inbox':
         return <InboxTab token={token} setMessage={setMessage} />;
       case 'projects':
         return <ProjectsTab token={token} setMessage={setMessage} />;
+      case 'experience':
+        return <ExperienceTab token={token} setMessage={setMessage} />;
+      case 'education':
+        return <EducationTab token={token} setMessage={setMessage} />;
       default:
         return null;
     }
@@ -258,11 +271,10 @@ export default function Admin() {
         </div>
       )}
 
-      {/* Navigation Tabs */}
       <div className="flex gap-2 border-b border-[var(--color-border)] pb-4 overflow-x-auto">
         <button
           onClick={() => setActiveTab('profile')}
-          className={`flex items-center gap-2 px-4 py-2 rounded-lg font-mono text-sm transition-all cursor-pointer ${
+          className={`flex items-center gap-2 px-4 py-2 rounded-lg font-mono text-sm transition-all cursor-pointer whitespace-nowrap ${
             activeTab === 'profile'
               ? 'bg-[var(--color-primary)] text-white font-bold shadow-lg'
               : 'bg-[var(--color-bg-subtle)] text-[var(--color-text-muted)] hover:text-[var(--color-text)] border border-[var(--color-border)]'
@@ -271,8 +283,18 @@ export default function Admin() {
           <User size={16} /> Profile Details
         </button>
         <button
+          onClick={() => setActiveTab('sections')}
+          className={`flex items-center gap-2 px-4 py-2 rounded-lg font-mono text-sm transition-all cursor-pointer whitespace-nowrap ${
+            activeTab === 'sections'
+              ? 'bg-[var(--color-primary)] text-white font-bold shadow-lg'
+              : 'bg-[var(--color-bg-subtle)] text-[var(--color-text-muted)] hover:text-[var(--color-text)] border border-[var(--color-border)]'
+          }`}
+        >
+          <Layout size={16} /> Site Sections
+        </button>
+        <button
           onClick={() => setActiveTab('skills')}
-          className={`flex items-center gap-2 px-4 py-2 rounded-lg font-mono text-sm transition-all cursor-pointer ${
+          className={`flex items-center gap-2 px-4 py-2 rounded-lg font-mono text-sm transition-all cursor-pointer whitespace-nowrap ${
             activeTab === 'skills'
               ? 'bg-[var(--color-primary)] text-white font-bold shadow-lg'
               : 'bg-[var(--color-bg-subtle)] text-[var(--color-text-muted)] hover:text-[var(--color-text)] border border-[var(--color-border)]'
@@ -281,8 +303,38 @@ export default function Admin() {
           <Code size={16} /> Tech Stack & Skills
         </button>
         <button
+          onClick={() => setActiveTab('projects')}
+          className={`flex items-center gap-2 px-4 py-2 rounded-lg font-mono text-sm transition-all cursor-pointer whitespace-nowrap ${
+            activeTab === 'projects'
+              ? 'bg-[var(--color-primary)] text-white font-bold shadow-lg'
+              : 'bg-[var(--color-bg-subtle)] text-[var(--color-text-muted)] hover:text-[var(--color-text)] border border-[var(--color-border)]'
+          }`}
+        >
+          <FolderGit2 size={16} /> Project Customizations
+        </button>
+        <button
+          onClick={() => setActiveTab('experience')}
+          className={`flex items-center gap-2 px-4 py-2 rounded-lg font-mono text-sm transition-all cursor-pointer whitespace-nowrap ${
+            activeTab === 'experience'
+              ? 'bg-[var(--color-primary)] text-white font-bold shadow-lg'
+              : 'bg-[var(--color-bg-subtle)] text-[var(--color-text-muted)] hover:text-[var(--color-text)] border border-[var(--color-border)]'
+          }`}
+        >
+          <Briefcase size={16} /> Work Experience
+        </button>
+        <button
+          onClick={() => setActiveTab('education')}
+          className={`flex items-center gap-2 px-4 py-2 rounded-lg font-mono text-sm transition-all cursor-pointer whitespace-nowrap ${
+            activeTab === 'education'
+              ? 'bg-[var(--color-primary)] text-white font-bold shadow-lg'
+              : 'bg-[var(--color-bg-subtle)] text-[var(--color-text-muted)] hover:text-[var(--color-text)] border border-[var(--color-border)]'
+          }`}
+        >
+          <GraduationCap size={16} /> Academic History
+        </button>
+        <button
           onClick={() => setActiveTab('inbox')}
-          className={`flex items-center gap-2 px-4 py-2 rounded-lg font-mono text-sm transition-all cursor-pointer ${
+          className={`flex items-center gap-2 px-4 py-2 rounded-lg font-mono text-sm transition-all cursor-pointer whitespace-nowrap ${
             activeTab === 'inbox'
               ? 'bg-[var(--color-primary)] text-white font-bold shadow-lg'
               : 'bg-[var(--color-bg-subtle)] text-[var(--color-text-muted)] hover:text-[var(--color-text)] border border-[var(--color-border)]'
@@ -294,16 +346,6 @@ export default function Admin() {
               {unreadCount}
             </span>
           )}
-        </button>
-        <button
-          onClick={() => setActiveTab('projects')}
-          className={`flex items-center gap-2 px-4 py-2 rounded-lg font-mono text-sm transition-all cursor-pointer ${
-            activeTab === 'projects'
-              ? 'bg-[var(--color-primary)] text-white font-bold shadow-lg'
-              : 'bg-[var(--color-bg-subtle)] text-[var(--color-text-muted)] hover:text-[var(--color-text)] border border-[var(--color-border)]'
-          }`}
-        >
-          <FolderGit2 size={16} /> Project Customizations
         </button>
       </div>
 

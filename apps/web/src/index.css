@@ -56,3 +56,29 @@
 html {
   scroll-behavior: smooth;
 }
+
+@keyframes scan {
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(200%);
+  }
+}
+
+.animate-scan {
+  animation: scan 4s linear infinite;
+}
+
+@keyframes ascii-glow {
+  0%, 100% {
+    filter: drop-shadow(0 0 10px rgba(59, 130, 246, 0.4));
+  }
+  50% {
+    filter: drop-shadow(0 0 18px rgba(59, 130, 246, 0.75));
+  }
+}
+
+.animate-ascii-glow {
+  animation: ascii-glow 3s ease-in-out infinite;
+}

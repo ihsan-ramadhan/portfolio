@@ -24,4 +24,17 @@ export class UpdateProfileDto {
   @IsString()
   @IsOptional()
   location?: string;
+
+  @ApiProperty({ example: 'Still Exploring', required: false })
+  @IsString()
+  @IsOptional()
+  statusBadge?: string;
+
+  @ApiProperty({
+    example: 'Building digital experiences that matter.',
+    required: false,
+  })
+  @IsString()
+  @IsOptional()
+  tagline?: string;
 }

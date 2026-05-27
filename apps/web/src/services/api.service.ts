@@ -1,7 +1,7 @@
 import axios from 'axios';
-import type { Profile, Project, Skill, ContactMessage, ApiResponse } from '../types';
+import type { Profile, Project, Skill, ContactMessage, SiteSection, Experience, Education, ApiResponse } from '../types';
 
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001/api/v1';
+const API_BASE_URL = import.meta.env.VITE_API_URL;
 
 export const apiClient = axios.create({
   baseURL: API_BASE_URL,
@@ -66,19 +66,19 @@ export const skillsApi = {
     return response.data.data;
   },
   createSkill: async ({ data, token }: { data: Omit<Skill, 'id'>; token: string }): Promise<Skill> => {
-    const response = await apiClient.post<ApiResponse<Skill>>('/skills', data, {
+    const response = await apiClient.post<ApiResponse<Skill>>('/admin/skills', data, {
       headers: { Authorization: `Bearer ${token}` },
     });
     return response.data.data;
   },
   updateSkill: async ({ id, data, token }: { id: string; data: Partial<Skill>; token: string }): Promise<Skill> => {
-    const response = await apiClient.patch<ApiResponse<Skill>>(`/skills/${id}`, data, {
+    const response = await apiClient.patch<ApiResponse<Skill>>(`/admin/skills/${id}`, data, {
       headers: { Authorization: `Bearer ${token}` },
     });
     return response.data.data;
   },
   deleteSkill: async ({ id, token }: { id: string; token: string }): Promise<void> => {
-    await apiClient.delete(`/skills/${id}`, {
+    await apiClient.delete(`/admin/skills/${id}`, {
       headers: { Authorization: `Bearer ${token}` },
     });
   },
@@ -99,6 +99,73 @@ export const messagesApi = {
   },
   deleteMessage: async ({ id, token }: { id: string; token: string }): Promise<void> => {
     await apiClient.delete(`/admin/messages/${id}`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+  },
+};
+
+export const sectionsApi = {
+  getSections: async (): Promise<SiteSection[]> => {
+    const response = await apiClient.get<ApiResponse<SiteSection[]>>('/sections');
+    return response.data.data;
+  },
+  updateSection: async ({ id, data, token }: { id: string; data: Partial<SiteSection>; token: string }): Promise<SiteSection> => {
+    const response = await apiClient.patch<ApiResponse<SiteSection>>(`/admin/sections/${id}`, data, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    return response.data.data;
+  },
+  reorderSections: async ({ sections, token }: { sections: { name: string; order: number }[]; token: string }): Promise<SiteSection[]> => {
+    const response = await apiClient.put<ApiResponse<SiteSection[]>>('/admin/sections/reorder', { sections }, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    return response.data.data;
+  },
+};
+
+export const experienceApi = {
+  getExperiences: async (): Promise<Experience[]> => {
+    const response = await apiClient.get<ApiResponse<Experience[]>>('/experience');
+    return response.data.data;
+  },
+  createExperience: async ({ data, token }: { data: Omit<Experience, 'id'>; token: string }): Promise<Experience> => {
+    const response = await apiClient.post<ApiResponse<Experience>>('/admin/experience', data, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    return response.data.data;
+  },
+  updateExperience: async ({ id, data, token }: { id: string; data: Partial<Experience>; token: string }): Promise<Experience> => {
+    const response = await apiClient.patch<ApiResponse<Experience>>(`/admin/experience/${id}`, data, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    return response.data.data;
+  },
+  deleteExperience: async ({ id, token }: { id: string; token: string }): Promise<void> => {
+    await apiClient.delete(`/admin/experience/${id}`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+  },
+};
+
+export const educationApi = {
+  getEducations: async (): Promise<Education[]> => {
+    const response = await apiClient.get<ApiResponse<Education[]>>('/education');
+    return response.data.data;
+  },
+  createEducation: async ({ data, token }: { data: Omit<Education, 'id'>; token: string }): Promise<Education> => {
+    const response = await apiClient.post<ApiResponse<Education>>('/admin/education', data, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    return response.data.data;
+  },
+  updateEducation: async ({ id, data, token }: { id: string; data: Partial<Education>; token: string }): Promise<Education> => {
+    const response = await apiClient.patch<ApiResponse<Education>>(`/admin/education/${id}`, data, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    return response.data.data;
+  },
+  deleteEducation: async ({ id, token }: { id: string; token: string }): Promise<void> => {
+    await apiClient.delete(`/admin/education/${id}`, {
       headers: { Authorization: `Bearer ${token}` },
     });
   },

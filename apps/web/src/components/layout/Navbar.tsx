@@ -2,15 +2,23 @@ import { useState, useEffect } from 'react';
 import { Menu, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import ThemeToggle from './ThemeToggle';
+import { useSections } from '../../hooks/use-sections';
 
-const navLinks = [
-  { name: "About", href: "#about" },
-  { name: "Stacks", href: "#skills" },
-  { name: "Projects", href: "#projects" },
-  { name: "Contact", href: "#contact" },
-];
+const sectionMapping: Record<string, { name: string; href: string }> = {
+  about: { name: "About", href: "#about" },
+  skills: { name: "Stacks", href: "#skills" },
+  projects: { name: "Projects", href: "#projects" },
+  experience: { name: "Experience", href: "#experience" },
+  education: { name: "Education", href: "#education" },
+  contact: { name: "Contact", href: "#contact" },
+};
 
 export default function Navbar() {
+  const { data: sections = [] } = useSections();
+  
+  const navLinks = sections
+    .filter((sec) => sec.isEnabled && sectionMapping[sec.name])
+    .map((sec) => sectionMapping[sec.name]);
   const [scrolled, setScrolled] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
 

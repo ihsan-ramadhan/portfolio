@@ -10,56 +10,80 @@ async function main() {
   console.log('Seeding initial data...');
 
   const sections = [
-    { name: 'hero', order: 1 },
-    { name: 'about', order: 2 },
-    { name: 'skills', order: 3 },
-    { name: 'projects', order: 4 },
-    { name: 'experience', order: 5 },
-    { name: 'contact', order: 6 },
+    { name: 'hero', order: 1, isEnabled: true },
+    { name: 'about', order: 2, isEnabled: true },
+    { name: 'skills', order: 3, isEnabled: true },
+    { name: 'projects', order: 4, isEnabled: true },
+    { name: 'experience', order: 5, isEnabled: false },
+    { name: 'education', order: 6, isEnabled: false },
+    { name: 'contact', order: 7, isEnabled: true },
   ];
 
   for (const section of sections) {
     await prisma.siteSection.upsert({
       where: { name: section.name },
-      update: {},
+      update: {
+        order: section.order,
+      },
       create: {
         name: section.name,
         order: section.order,
-        isEnabled: true,
+        isEnabled: section.isEnabled,
       },
     });
   }
 
-  const contents = [
-    {
-      key: 'bio',
-      value:
-        'Full Stack Developer with a passion for building clean and functional web applications.',
-    },
-    { key: 'tagline', value: 'Building digital experiences that matter.' },
-    { key: 'openToWork', value: 'true' },
-  ];
-
-  for (const content of contents) {
-    await prisma.siteContent.upsert({
-      where: { key: content.key },
-      update: {},
-      create: {
-        key: content.key,
-        value: content.value,
-      },
-    });
-  }
-
-  await prisma.profile.upsert({
+  const profile = await prisma.profile.upsert({
     where: { id: 'default-profile' },
     update: {},
     create: {
       id: 'default-profile',
       headline: 'Full Stack Developer',
+      tagline: 'Building digital experiences that matter.',
       bio: 'I love coding and building things.',
       location: 'Bandung, Indonesia',
+      statusBadge: 'Still Exploring',
     },
+  });
+
+  await prisma.experience.deleteMany({ where: { profileId: profile.id } });
+  await prisma.experience.createMany({
+    data: [
+      {
+        profileId: profile.id,
+        company: 'PT Awan Digital',
+        position: 'Web Developer',
+        startDate: 'Jan 2026',
+        endDate: 'Present',
+        description:
+          'Assisted in building responsive landing pages and backend APIs using Laravel.',
+        order: 1,
+      },
+      {
+        profileId: profile.id,
+        company: 'PT Sejahtera',
+        position: 'Web Developer Intern',
+        startDate: 'Jul 2024',
+        endDate: 'Dec 2024',
+        description:
+          'Assisted in building responsive landing pages and backend APIs using Laravel.',
+        order: 2,
+      },
+    ],
+  });
+
+  await prisma.education.deleteMany({ where: { profileId: profile.id } });
+  await prisma.education.createMany({
+    data: [
+      {
+        profileId: profile.id,
+        institution: 'Politeknik Negeri Bandung',
+        major: 'Informatics Engineering',
+        startYear: 2024,
+        endYear: 2027,
+        order: 1,
+      },
+    ],
   });
 
   const skills = [

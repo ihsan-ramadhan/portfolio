@@ -2,13 +2,13 @@ import { motion } from 'framer-motion';
 import { Github, Terminal} from 'lucide-react';
 import SectionHeader from '../ui/SectionHeader';
 import AnimatedSection from '../ui/AnimatedSection';
+import ErrorState from '../ui/ErrorState';
+import Skeleton from '../ui/Skeleton';
 
 import { useProjects } from '../../hooks/use-projects';
-import { FALLBACK_PROJECTS } from '../../constants';
 
 export default function Projects() {
-  const { data: projects = FALLBACK_PROJECTS, isLoading: loading } =
-    useProjects();
+  const { data: projects = [], isLoading: loading } = useProjects();
 
   return (
     <section id="projects" className="py-20 w-full border-t border-[var(--color-border)]">
@@ -16,74 +16,101 @@ export default function Projects() {
         <SectionHeader 
           icon={Terminal} 
           title="ls ./projects" 
-          subtitle={`Total items: ${projects.length}`}
         />
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="flex flex-col gap-20 md:gap-28">
           {loading ? (
-            [1, 2, 3].map((i) => (
-              <div key={i} className="h-[400px] bg-[var(--color-bg-subtle)] rounded-xl border border-[var(--color-border)] animate-pulse" />
-            ))
-          ) : (
-            projects.map((project, index) => (
-              <motion.div
-                key={project.id}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
-                className="group relative flex flex-col bg-[var(--color-bg-subtle)] border border-[var(--color-border)] rounded-xl overflow-hidden hover:border-[var(--color-primary)] transition-all duration-300"
-              >
-                {/* Project Image / Placeholder Icon */}
-                <div className="relative aspect-video overflow-hidden bg-[var(--color-bg)] flex items-center justify-center border-b border-[var(--color-border)] group">
-                  {project.imageUrl ? (
-                    <img
-                      src={project.imageUrl}
-                      alt={project.name}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                    />
-                  ) : (
-                    <div className="flex flex-col items-center gap-3 opacity-20 group-hover:opacity-40 transition-opacity">
-                      <Terminal size={48} className="text-[var(--color-primary)]" />
-                      <span className="font-mono text-xs uppercase tracking-widest">{project.language || 'Repository'}</span>
+            [0, 1].map((i) => {
+              const isEven = i % 2 === 0;
+              return (
+                <div 
+                  key={i} 
+                  className={`flex flex-col ${isEven ? 'lg:flex-row' : 'lg:flex-row-reverse'} gap-8 lg:gap-16 items-center w-full`}
+                >
+                  <Skeleton className="w-full lg:w-[45%] aspect-video rounded-xl" />
+                  <div className="w-full lg:w-[55%] space-y-4">
+                    <Skeleton className="h-5 w-12" />
+                    <Skeleton className="h-8 w-1/2" />
+                    <Skeleton className="h-24 w-full" />
+                    <div className="flex gap-2">
+                      <Skeleton className="h-6 w-20" />
+                      <Skeleton className="h-6 w-20" />
                     </div>
-                  )}
+                  </div>
                 </div>
+              );
+            })
+          ) : projects.length === 0 ? (
+            <ErrorState message="Projects are temporarily unavailable." className="py-12" />
+          ) : (
+            projects.map((project, index) => {
+              const isEven = index % 2 === 0;
+              const projectNum = String(index + 1).padStart(2, '0');
+              return (
+                <motion.div
+                  key={project.id}
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: "-100px" }}
+                  transition={{ duration: 0.6 }}
+                  className={`flex flex-col ${isEven ? 'lg:flex-row' : 'lg:flex-row-reverse'} gap-8 lg:gap-16 items-center w-full group py-4`}
+                >
+                  <div className="w-full lg:w-[45%] aspect-video bg-[#070b14] border border-[var(--color-border)] rounded-xl overflow-hidden group-hover:border-[var(--color-primary)] transition-all duration-300 shadow-xl flex-shrink-0 relative">
+                    {project.imageUrl ? (
+                      <img
+                        src={project.imageUrl}
+                        alt={project.name}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                      />
+                    ) : (
+                      <div className="w-full h-full flex flex-col p-4 font-mono text-xs text-slate-500 justify-between select-none">
+                        <div className="flex flex-col items-center justify-center flex-grow gap-3 opacity-30 group-hover:opacity-60 group-hover:text-[var(--color-primary)] transition-all duration-300">
+                          <Terminal size={48} className="text-[var(--color-primary)]" />
+                          <span className="font-bold tracking-widest text-xs uppercase">{project.language || 'source-code'}</span>
+                        </div>
+                      </div>
+                    )}
+                  </div>
 
-                {/* Project Info */}
-                <div className="p-6 flex flex-col flex-grow">
-                  <h3 className="text-xl font-bold mb-3 group-hover:text-[var(--color-primary)] transition-colors font-mono">
-                    {project.name}
-                  </h3>
-                  <p className="text-sm text-[var(--color-text-muted)] mb-6 line-clamp-3 leading-relaxed font-mono">
-                    {project.customDesc || project.description || 'No description provided.'}
-                  </p>
+                  <div className="w-full lg:w-[55%] flex flex-col">
+                    <div className="font-mono text-xs md:text-sm text-[var(--color-primary)] font-bold mb-2 tracking-widest">
+                      {projectNum}.
+                    </div>
+                    
+                    <h3 className="text-2xl md:text-3xl font-extrabold mb-4 group-hover:text-[var(--color-primary)] transition-colors font-mono tracking-tight text-white">
+                      {project.name}
+                    </h3>
 
-                  <div className="flex flex-wrap gap-2 mb-6 mt-auto">
-                    {/* Combine language and custom tags */}
-                    {[project.language, ...(project.tags || [])].filter(Boolean).map((tag) => (
-                      <span
-                        key={tag}
-                        className="px-2.5 py-1 text-[10px] font-mono font-bold bg-[var(--color-bg)] text-[var(--color-primary)] border border-[var(--color-border)] rounded-md uppercase tracking-wider shadow-sm"
+                    <p className="text-sm text-[var(--color-text-muted)] mb-6 leading-relaxed font-mono whitespace-pre-wrap">
+                      {project.customDesc || project.description || 'No description provided.'}
+                    </p>
+
+                    <div className="flex flex-wrap gap-2 mb-8">
+                      {[project.language, ...(project.tags || [])].filter(Boolean).map((tag) => (
+                        <span
+                          key={tag}
+                          className="px-3 py-1 text-[10px] font-mono font-bold bg-[var(--color-bg-subtle)] text-[var(--color-primary)] border border-[var(--color-border)] rounded-md uppercase tracking-wider shadow-sm"
+                        >
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+
+                    <div className="flex items-center gap-4 pt-6 border-t border-[var(--color-border)]/60 w-fit">
+                      <a
+                        href={project.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-[var(--color-text-muted)] hover:text-[var(--color-text)] transition-colors flex items-center gap-2 text-xs font-mono group/btn"
                       >
-                        {tag}
-                      </span>
-                    ))}
+                        <Github size={18} className="group-hover/btn:rotate-12 transition-transform duration-300" /> 
+                        <span>View Code</span>
+                      </a>
+                    </div>
                   </div>
-
-                  <div className="flex items-center gap-4 pt-4 border-t border-[var(--color-border)]">
-                    <a
-                      href={project.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-[var(--color-text-muted)] hover:text-[var(--color-text)] transition-colors flex items-center gap-2 text-xs font-mono"
-                    >
-                      <Github size={18} /> View Code
-                    </a>
-                  </div>
-                </div>
-              </motion.div>
-            ))
+                </motion.div>
+              );
+            })
           )}
         </div>
       </AnimatedSection>

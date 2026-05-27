@@ -14,6 +14,9 @@ import { GitHubModule } from './modules/github/github.module';
 import { SyncModule } from './modules/sync/sync.module';
 import { StorageModule } from './modules/storage/storage.module';
 import { ContactModule } from './modules/contact/contact.module';
+import { SectionsModule } from './sections/sections.module';
+import { ExperienceModule } from './experience/experience.module';
+import { EducationModule } from './education/education.module';
 
 @Module({
   imports: [
@@ -57,6 +60,9 @@ import { ContactModule } from './modules/contact/contact.module';
     SyncModule,
     StorageModule,
     ContactModule,
+    SectionsModule,
+    ExperienceModule,
+    EducationModule,
   ],
   controllers: [AppController],
   providers: [
