@@ -25,7 +25,7 @@ export default function Skills() {
         </AnimatedSection>
       </div>
 
-      <div className="relative w-full flex items-center justify-center">
+      <div className="relative w-full flex items-center overflow-hidden">
         {isLoading ? (
           <div className="flex gap-8 py-4 overflow-hidden w-full justify-center flex-wrap md:flex-nowrap">
             {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14].map((i) => (
