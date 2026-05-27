@@ -66,23 +66,22 @@ export default function About({ profile, isLoading }: { profile?: Profile; isLoa
             <div className="absolute -inset-1 bg-gradient-to-r from-[var(--color-primary)] to-blue-500 rounded-xl blur opacity-20 group-hover:opacity-40 transition duration-500"></div>
             
             <div className="relative aspect-square rounded-xl bg-[var(--color-bg-subtle)] border border-[var(--color-border)] p-2 flex items-center justify-center overflow-hidden">
-               {profile?.photoUrl ? (
-                 <img 
-                   src={profile.photoUrl} 
-                   alt="Ihsan" 
-                   loading="lazy"
-                   decoding="async"
-                   fetchPriority="low"
-                   width={400}
-                   height={400}
-                   className="w-full h-full object-cover rounded-lg"
-                 />
-               ) : (
-                 <div className="w-full h-full rounded-lg bg-[var(--color-terminal)] flex flex-col items-center justify-center text-[var(--color-text-muted)] border border-dashed border-[var(--color-text-muted)]/30">
-                   <ImageIcon size={40} className="mb-3 opacity-40" />
-                   <span className="font-mono text-xs">/assets/profile-ihsan.jpg</span>
-                 </div>
-               )}
+              {profile?.photoUrl ? (
+                <img
+                  src={profile.photoUrl}
+                  alt="Ihsan"
+                  loading="lazy"      
+                  decoding="async"
+                  width={400}
+                  height={400}
+                  className="w-full h-full object-cover rounded-lg"
+                />
+              ) : (
+                <div className="w-full h-full rounded-lg bg-[var(--color-terminal)] flex flex-col items-center justify-center text-[var(--color-text-muted)] border border-dashed border-[var(--color-text-muted)]/30">
+                  <ImageIcon size={40} className="mb-3 opacity-40" />
+                  <span className="font-mono text-xs">/assets/profile-ihsan.jpg</span>
+                </div>
+              )}
             </div>
           </div>
         </div>

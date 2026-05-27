@@ -1,6 +1,7 @@
 import { Briefcase, Calendar } from 'lucide-react';
 import SectionHeader from '../ui/SectionHeader';
 import AnimatedSection from '../ui/AnimatedSection';
+import Skeleton from '../ui/Skeleton';
 import { useExperiences } from '../../hooks/use-experience';
 
 export default function Experience() {
@@ -9,9 +10,19 @@ export default function Experience() {
   if (isLoading && experiences.length === 0) {
     return (
       <section id="experience" className="py-20 w-full border-t border-[var(--color-border)]">
-        <div className="text-center font-mono text-[var(--color-text-muted)] animate-pulse">
-          Loading experiences...
-        </div>
+        <AnimatedSection>
+          <SectionHeader icon={Briefcase} title="experience" />
+          <div className="relative border-l border-[var(--color-border)] ml-3 md:ml-6 space-y-12">
+            {[1, 2].map((i) => (
+              <div key={i} className="relative pl-8 md:pl-10">
+                <span className="absolute left-[-5px] top-1.5 flex h-2.5 w-2.5 items-center justify-center">
+                  <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-[var(--color-border)]"></span>
+                </span>
+                <Skeleton className="h-[120px] rounded-xl w-full" />
+              </div>
+            ))}
+          </div>
+        </AnimatedSection>
       </section>
     );
   }

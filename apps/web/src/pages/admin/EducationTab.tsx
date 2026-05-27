@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import { GraduationCap, Plus, Edit, Trash2, X, Calendar, Save } from 'lucide-react';
 import { motion } from 'framer-motion';
 import type { Education } from '../../types';
-import { useEducations, useCreateEducation, useUpdateEducation, useDeleteEducation } from '../../hooks/use-education';
+import { useEducations } from '../../hooks/use-education';
+import { useCreateEducation, useUpdateEducation, useDeleteEducation } from '../../hooks/use-admin-education';
 
 interface EducationTabProps {
   token: string | null;
