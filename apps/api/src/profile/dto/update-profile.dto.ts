@@ -30,7 +30,10 @@ export class UpdateProfileDto {
   @IsOptional()
   statusBadge?: string;
 
-  @ApiProperty({ example: 'Building digital experiences that matter.', required: false })
+  @ApiProperty({
+    example: 'Building digital experiences that matter.',
+    required: false,
+  })
   @IsString()
   @IsOptional()
   tagline?: string;

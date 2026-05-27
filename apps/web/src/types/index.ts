@@ -48,3 +48,29 @@ export interface ContactMessage {
   createdAt: string;
 }
 
+export interface SiteSection {
+  id: string;
+  name: string;
+  isEnabled: boolean;
+  order: number;
+}
+
+export interface Experience {
+  id?: string;
+  company: string;
+  position: string;
+  startDate: string;
+  endDate?: string;
+  description?: string;
+  order?: number;
+}
+
+export interface Education {
+  id?: string;
+  institution: string;
+  major: string;
+  startYear: number;
+  endYear?: number;
+  order?: number;
+}
+
