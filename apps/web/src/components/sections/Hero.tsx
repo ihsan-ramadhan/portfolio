@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 import { Terminal } from 'lucide-react';
-import TechCloud from '../ui/TechCloud';
+import AsciiLogo from '../ui/AsciiLogo';
 import type { Profile } from '../../types';
 
 export default function Hero({ profile }: { profile: Profile | null }) {
@@ -92,9 +92,9 @@ export default function Hero({ profile }: { profile: Profile | null }) {
           </motion.div>
         </div>
 
-        {/* Right Side: Tech Cloud Visual */}
+        {/* Right Side: Ascii Logo Visual */}
         <div className="hidden lg:block relative">
-          <TechCloud />
+          <AsciiLogo />
         </div>
       </div>
     </section>
