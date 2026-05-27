@@ -15,8 +15,12 @@ describe('AppController', () => {
   });
 
   describe('root', () => {
-    it('should return "Hello World!"', () => {
-      expect(appController.getHello()).toBe('Hello World!');
+    it('should return API info object', () => {
+      expect(appController.getInfo()).toEqual({
+        name: 'Portfolio API',
+        author: 'Muhammad Ihsan Ramadhan',
+        status: 'ok',
+      });
     });
   });
 });

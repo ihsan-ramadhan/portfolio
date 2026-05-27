@@ -70,7 +70,7 @@ export default function Admin() {
 
     setSaving(true);
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/profile`, {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/admin/profile`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
@@ -128,7 +128,7 @@ export default function Admin() {
       const formData = new FormData();
       formData.append('file', file);
 
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/profile/photo`, {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/admin/profile/photo`, {
         method: 'POST',
         headers: { 'Authorization': `Bearer ${token}` },
         body: formData
@@ -153,7 +153,7 @@ export default function Admin() {
   const handlePhotoDelete = async () => {
     setSaving(true);
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/profile/photo`, {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/admin/profile/photo`, {
         method: 'DELETE',
         headers: { 'Authorization': `Bearer ${token}` },
       });

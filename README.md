@@ -91,9 +91,11 @@ Base URL: `/api/v1`
 | `POST` | `/admin/auth/login` | Get JWT token |
 | `PATCH` | `/admin/profile` | Update bio, headline |
 | `POST` | `/admin/profile/photo` | Upload profile photo |
+| `DELETE` | `/admin/profile/photo` | Delete profile photo |
 | `GET` | `/admin/projects` | All projects (including hidden) |
 | `PATCH` | `/admin/projects/:id` | Customize project data |
 | `POST` | `/admin/projects/upload-image` | Upload project preview image |
+| `DELETE` | `/admin/projects/image` | Delete project image |
 | `POST` | `/admin/skills` | Add skill |
 | `PATCH` | `/admin/skills/:id` | Update skill |
 | `DELETE` | `/admin/skills/:id` | Delete skill |

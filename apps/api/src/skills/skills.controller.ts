@@ -15,18 +15,18 @@ import { CreateSkillDto } from './dto/create-skill.dto';
 import { SkillsService } from './skills.service';
 
 @ApiTags('Skills')
-@Controller('skills')
+@Controller()
 export class SkillsController {
   constructor(private readonly skillsService: SkillsService) {}
 
-  @Get()
+  @Get('skills')
   @SkipThrottle()
   @ApiOperation({ summary: 'Get all skills' })
   async getSkills() {
     return this.skillsService.findAll();
   }
 
-  @Post()
+  @Post('admin/skills')
   @UseGuards(JwtAuthGuard)
   @ApiBearerAuth()
   @ApiOperation({ summary: 'Add a new skill' })
@@ -34,7 +34,7 @@ export class SkillsController {
     return this.skillsService.create(createSkillDto);
   }
 
-  @Patch(':id')
+  @Patch('admin/skills/:id')
   @UseGuards(JwtAuthGuard)
   @ApiBearerAuth()
   @ApiOperation({ summary: 'Update a skill' })
@@ -45,7 +45,7 @@ export class SkillsController {
     return this.skillsService.update(id, updateSkillDto);
   }
 
-  @Delete(':id')
+  @Delete('admin/skills/:id')
   @UseGuards(JwtAuthGuard)
   @ApiBearerAuth()
   @ApiOperation({ summary: 'Delete a skill' })

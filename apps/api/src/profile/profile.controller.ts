@@ -23,21 +23,21 @@ import { ProfileService } from './profile.service';
 import { StorageService } from '../modules/storage/storage.service';
 
 @ApiTags('Profile')
-@Controller('profile')
+@Controller()
 export class ProfileController {
   constructor(
     private readonly profileService: ProfileService,
     private readonly storageService: StorageService,
   ) {}
 
-  @Get()
+  @Get('profile')
   @SkipThrottle()
   @ApiOperation({ summary: 'Get profile data' })
   async getProfile() {
     return this.profileService.findOne();
   }
 
-  @Patch()
+  @Patch('admin/profile')
   @UseGuards(JwtAuthGuard)
   @ApiBearerAuth()
   @ApiOperation({ summary: 'Update profile bio, headline, location' })
@@ -45,7 +45,7 @@ export class ProfileController {
     return this.profileService.update(updateProfileDto);
   }
 
-  @Post('photo')
+  @Post('admin/profile/photo')
   @UseGuards(JwtAuthGuard)
   @UseInterceptors(FileInterceptor('file'))
   @ApiBearerAuth()
@@ -62,7 +62,7 @@ export class ProfileController {
     return this.profileService.update({ photoUrl: url });
   }
 
-  @Delete('photo')
+  @Delete('admin/profile/photo')
   @UseGuards(JwtAuthGuard)
   @ApiBearerAuth()
   @ApiOperation({ summary: 'Delete profile photo' })

@@ -1,7 +1,7 @@
 import axios from 'axios';
 import type { Profile, Project, Skill, ContactMessage, ApiResponse } from '../types';
 
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001/api/v1';
+const API_BASE_URL = import.meta.env.VITE_API_URL;
 
 export const apiClient = axios.create({
   baseURL: API_BASE_URL,
@@ -66,19 +66,19 @@ export const skillsApi = {
     return response.data.data;
   },
   createSkill: async ({ data, token }: { data: Omit<Skill, 'id'>; token: string }): Promise<Skill> => {
-    const response = await apiClient.post<ApiResponse<Skill>>('/skills', data, {
+    const response = await apiClient.post<ApiResponse<Skill>>('/admin/skills', data, {
       headers: { Authorization: `Bearer ${token}` },
     });
     return response.data.data;
   },
   updateSkill: async ({ id, data, token }: { id: string; data: Partial<Skill>; token: string }): Promise<Skill> => {
-    const response = await apiClient.patch<ApiResponse<Skill>>(`/skills/${id}`, data, {
+    const response = await apiClient.patch<ApiResponse<Skill>>(`/admin/skills/${id}`, data, {
       headers: { Authorization: `Bearer ${token}` },
     });
     return response.data.data;
   },
   deleteSkill: async ({ id, token }: { id: string; token: string }): Promise<void> => {
-    await apiClient.delete(`/skills/${id}`, {
+    await apiClient.delete(`/admin/skills/${id}`, {
       headers: { Authorization: `Bearer ${token}` },
     });
   },
