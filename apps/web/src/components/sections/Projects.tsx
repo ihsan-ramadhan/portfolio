@@ -2,13 +2,13 @@ import { motion } from 'framer-motion';
 import { Github, Terminal} from 'lucide-react';
 import SectionHeader from '../ui/SectionHeader';
 import AnimatedSection from '../ui/AnimatedSection';
+import ErrorState from '../ui/ErrorState';
+import Skeleton from '../ui/Skeleton';
 
 import { useProjects } from '../../hooks/use-projects';
-import { FALLBACK_PROJECTS } from '../../constants';
 
 export default function Projects() {
-  const { data: projects = FALLBACK_PROJECTS, isLoading: loading } =
-    useProjects();
+  const { data: projects = [], isLoading: loading } = useProjects();
 
   return (
     <section id="projects" className="py-20 w-full border-t border-[var(--color-border)]">
@@ -22,8 +22,10 @@ export default function Projects() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {loading ? (
             [1, 2, 3].map((i) => (
-              <div key={i} className="h-[400px] bg-[var(--color-bg-subtle)] rounded-xl border border-[var(--color-border)] animate-pulse" />
+              <Skeleton key={i} className="h-[400px] rounded-xl" />
             ))
+          ) : projects.length === 0 ? (
+            <ErrorState message="Projects are temporarily unavailable." className="col-span-full py-12" />
           ) : (
             projects.map((project, index) => (
               <motion.div

@@ -1,9 +1,46 @@
 import { motion } from 'framer-motion';
 import { Terminal } from 'lucide-react';
 import AsciiLogo from '../ui/AsciiLogo';
+import Skeleton from '../ui/Skeleton';
 import type { Profile } from '../../types';
 
-export default function Hero({ profile }: { profile: Profile | null }) {
+export default function Hero({ profile, isLoading }: { profile?: Profile; isLoading: boolean }) {
+  if (isLoading) {
+    return (
+      <section className="min-h-[85vh] flex flex-col justify-center items-start w-full py-12">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center w-full">
+          <div className="flex flex-col items-start w-full">
+            <Skeleton className="mb-8 w-36 h-8 rounded-full" />
+            
+            <h1 className="text-5xl md:text-7xl font-extrabold mb-4 tracking-tight">
+              Hi, I'm <span className="text-[var(--color-primary)]">Ihsan</span>.
+            </h1>
+
+            <Skeleton className="h-8 w-2/3 mb-4" />
+            <Skeleton className="h-6 w-1/2 mb-10" />
+
+            <div className="w-full max-w-2xl bg-[var(--color-terminal)] rounded-lg overflow-hidden border border-[var(--color-border)] shadow-2xl">
+              <div className="flex items-center px-4 py-3 bg-[#0A0F1E]/50 border-b border-[var(--color-border)]">
+                <div className="flex gap-2">
+                  <div className="w-3 h-3 rounded-full bg-red-500/80"></div>
+                  <div className="w-3 h-3 rounded-full bg-yellow-500/80"></div>
+                  <div className="w-3 h-3 rounded-full bg-green-500/80"></div>
+                </div>
+                <div className="mx-auto flex items-center gap-2 text-xs text-slate-400 font-mono">
+                  <Terminal size={14} /> guest@ihsan-portfolio:~
+                </div>
+              </div>
+              <div className="p-5 font-mono text-sm md:text-base h-24 flex items-center justify-center text-[var(--color-text-muted)] animate-pulse">
+                Establishing secure connection...
+              </div>
+            </div>
+          </div>
+          <Skeleton className="hidden lg:block relative w-full h-[350px] rounded-xl" />
+        </div>
+      </section>
+    );
+  }
+
   return (
     <section className="min-h-[85vh] flex flex-col justify-center items-start w-full py-12">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center w-full">

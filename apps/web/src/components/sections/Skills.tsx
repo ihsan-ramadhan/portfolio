@@ -2,20 +2,18 @@ import { motion } from 'framer-motion';
 import { Terminal } from 'lucide-react';
 import SectionHeader from '../ui/SectionHeader';
 import AnimatedSection from '../ui/AnimatedSection';
+import ErrorState from '../ui/ErrorState';
+import Skeleton from '../ui/Skeleton';
 import { useSkills } from '../../hooks/use-skills';
-import { FALLBACK_SKILLS } from '../../constants';
 
 export default function Skills() {
   const { data: skills = [], isLoading } = useSkills();
 
-  const displaySkills = skills.length > 0 ? skills.map(s => {
-    const fallbackMatch = FALLBACK_SKILLS.find(f => f.name.toLowerCase() === s.name.toLowerCase());
-    return {
-      name: s.name,
-      icon: s.icon || fallbackMatch?.icon || s.name.toLowerCase().replace(/[^a-z0-9]/g, ''),
-      url: s.url || fallbackMatch?.url || `https://google.com/search?q=${encodeURIComponent(s.name)}`
-    };
-  }) : FALLBACK_SKILLS;
+  const displaySkills = skills.map(s => ({
+    name: s.name,
+    icon: s.icon || s.name.toLowerCase().replace(/[^a-z0-9]/g, ''),
+    url: s.url || `https://google.com/search?q=${encodeURIComponent(s.name)}`
+  }));
 
   const duplicatedStack = [...displaySkills, ...displaySkills];
 
@@ -27,11 +25,18 @@ export default function Skills() {
         </AnimatedSection>
       </div>
 
-      <div className="relative w-full flex items-center">
-        {isLoading && skills.length === 0 ? (
-          <div className="w-full py-12 text-center font-mono text-[var(--color-text-muted)] animate-pulse">
-            Loading tech stack...
+      <div className="relative w-full flex items-center justify-center">
+        {isLoading ? (
+          <div className="flex gap-8 py-4 overflow-hidden w-full justify-center flex-wrap md:flex-nowrap">
+            {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14].map((i) => (
+              <div key={i} className="flex flex-col items-center gap-2 flex-shrink-0">
+                <Skeleton className="w-14 h-14 md:w-16 md:h-16 rounded-xl" />
+                <Skeleton className="w-12 h-3" />
+              </div>
+            ))}
           </div>
+        ) : skills.length === 0 ? (
+          <ErrorState message="Tech stack information is temporarily unavailable." />
         ) : (
           <motion.div
             className="flex whitespace-nowrap gap-16 py-4"

@@ -1,9 +1,47 @@
 import { MapPin, Terminal, Image as ImageIcon } from 'lucide-react';
 import SectionHeader from '../ui/SectionHeader';
 import AnimatedSection from '../ui/AnimatedSection';
+import ErrorState from '../ui/ErrorState';
+import Skeleton from '../ui/Skeleton';
 import type { Profile } from '../../types';
 
-export default function About({ profile }: { profile: Profile | null }) {
+export default function About({ profile, isLoading }: { profile?: Profile; isLoading: boolean }) {
+  if (isLoading) {
+    return (
+      <section id="about" className="py-20 w-full border-t border-[var(--color-border)]">
+        <AnimatedSection>
+          <SectionHeader icon={Terminal} title="whoami" />
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-10 items-start">
+            {/* Text Content Skeleton */}
+            <div className="md:col-span-2 space-y-4">
+              <Skeleton className="h-4 w-full" />
+              <Skeleton className="h-4 w-full" />
+              <Skeleton className="h-4 w-5/6" />
+              <Skeleton className="h-4 w-4/5" />
+              <Skeleton className="h-4 w-full" />
+              <Skeleton className="h-4 w-2/3" />
+              <div className="flex gap-4 pt-6">
+                <Skeleton className="h-6 w-32" />
+              </div>
+            </div>
+            {/* Image Skeleton */}
+            <Skeleton className="relative aspect-square rounded-xl w-full max-w-sm mx-auto" />
+          </div>
+        </AnimatedSection>
+      </section>
+    );
+  }
+
+  if (!profile) {
+    return (
+      <section id="about" className="py-20 w-full border-t border-[var(--color-border)]">
+        <AnimatedSection>
+          <SectionHeader icon={Terminal} title="whoami" />
+          <ErrorState message="Biography data is temporarily unavailable." />
+        </AnimatedSection>
+      </section>
+    );
+  }
   return (
     <section id="about" className="py-20 w-full border-t border-[var(--color-border)]">
       <AnimatedSection>

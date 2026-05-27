@@ -12,15 +12,14 @@ const Footer = React.lazy(() => import('../components/layout/Footer'));
 
 import { useProfile } from '../hooks/use-profile';
 import { useSections } from '../hooks/use-sections';
-import { DEFAULT_PROFILE } from '../constants';
 
 export default function Home() {
-  const { data: profile = DEFAULT_PROFILE } = useProfile();
+  const { data: profile, isLoading: isProfileLoading } = useProfile();
   const { data: sections = [] } = useSections();
 
   const sectionRenderer: Record<string, React.ReactNode> = {
-    hero: <Hero profile={profile} />,
-    about: <About profile={profile} />,
+    hero: <Hero profile={profile} isLoading={isProfileLoading} />,
+    about: <About profile={profile} isLoading={isProfileLoading} />,
     skills: <Skills />,
     projects: <Projects />,
     experience: <Experience />,
