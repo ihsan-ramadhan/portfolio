@@ -16,6 +16,18 @@ export default function Home() {
   const { data: profile, isLoading: isProfileLoading } = useProfile();
   const { data: sections = [] } = useSections();
 
+  const defaultSections = [
+    { name: 'hero', isEnabled: true },
+    { name: 'about', isEnabled: true },
+    { name: 'education', isEnabled: true },
+    { name: 'experience', isEnabled: true },
+    { name: 'skills', isEnabled: true },
+    { name: 'projects', isEnabled: true },
+    { name: 'contact', isEnabled: true },
+  ];
+
+  const activeSections = sections.length > 0 ? sections : defaultSections;
+
   const sectionRenderer: Record<string, React.ReactNode> = {
     hero: <Hero profile={profile} isLoading={isProfileLoading} />,
     about: <About profile={profile} isLoading={isProfileLoading} />,
@@ -25,16 +37,6 @@ export default function Home() {
     education: <Education />,
     contact: <Contact />,
   };
-
-  const defaultSections = [
-    { name: 'hero', isEnabled: true },
-    { name: 'about', isEnabled: true },
-    { name: 'skills', isEnabled: true },
-    { name: 'projects', isEnabled: true },
-    { name: 'contact', isEnabled: true },
-  ];
-
-  const activeSections = sections.length > 0 ? sections : defaultSections;
   return (
     <>
       <Navbar />

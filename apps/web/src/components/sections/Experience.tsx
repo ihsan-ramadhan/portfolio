@@ -2,6 +2,7 @@ import { Briefcase, Calendar } from 'lucide-react';
 import SectionHeader from '../ui/SectionHeader';
 import AnimatedSection from '../ui/AnimatedSection';
 import Skeleton from '../ui/Skeleton';
+import ErrorState from '../ui/ErrorState';
 import { useExperiences } from '../../hooks/use-experience';
 
 export default function Experience() {
@@ -27,6 +28,17 @@ export default function Experience() {
     );
   }
 
+  if (experiences.length === 0) {
+    return (
+      <section id="experience" className="py-20 w-full border-t border-[var(--color-border)]">
+        <AnimatedSection>
+          <SectionHeader icon={Briefcase} title="experience" />
+          <ErrorState message="Experience data is temporarily unavailable." />
+        </AnimatedSection>
+      </section>
+    );
+  }
+
   return (
     <section id="experience" className="py-20 w-full border-t border-[var(--color-border)]">
       <AnimatedSection>
@@ -35,9 +47,7 @@ export default function Experience() {
         <div className="relative border-l border-[var(--color-border)] ml-3 md:ml-6 space-y-12">
           {experiences.map((exp, idx) => (
             <div key={exp.id || idx} className="relative pl-8 md:pl-10 group">
-              {/* Timeline Indicator Dot */}
               <span className="absolute left-[-5px] top-1.5 flex h-2.5 w-2.5 items-center justify-center">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[var(--color-primary)] opacity-30 group-hover:opacity-75"></span>
                 <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-[var(--color-primary)]"></span>
               </span>
 
