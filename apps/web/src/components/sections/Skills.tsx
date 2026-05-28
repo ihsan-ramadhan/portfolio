@@ -38,14 +38,14 @@ export default function Skills() {
         ) : skills.length === 0 ? (
           <ErrorState message="Tech stack information is temporarily unavailable." />
         ) : (
-          <div className="animate-marquee gap-16 py-4">
+          <div className="animate-marquee pt-4 pb-10">
             {duplicatedStack.map((tech, index) => (
               <a
                 key={index}
                 href={tech.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group relative flex flex-col items-center justify-center transition-transform hover:scale-110"
+                className="group relative flex flex-col items-center justify-center transition-transform hover:scale-110 mr-16"
                 title={tech.name}
               >
                 <div className="w-14 h-14 md:w-16 md:h-16 flex items-center justify-center p-3 rounded-xl bg-[var(--color-bg-subtle)] border border-[var(--color-border)] group-hover:border-[var(--color-primary)] group-hover:shadow-[0_0_20px_rgba(59,130,246,0.15)] transition-all duration-300">

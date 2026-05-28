@@ -4,7 +4,6 @@ import { Analytics } from '@vercel/analytics/react';
 import { Toaster } from 'sonner';
 import React, { useState, useEffect, Suspense } from 'react';
 import InteractiveMesh from './components/layout/InteractiveMesh';
-import CommandPalette from './components/layout/CommandPalette';
 
 const Home = React.lazy(() => import('./pages/Home'));
 const Login = React.lazy(() => import('./pages/Login'));
@@ -29,7 +28,6 @@ function App() {
     <Router>
       <div className="relative z-0 min-h-screen bg-[var(--color-bg)] text-[var(--color-text)] transition-colors duration-300 ease-in-out selection:bg-[var(--color-primary)] selection:text-white">
         {isDesktop && <InteractiveMesh />}
-        <CommandPalette />
         
         <Suspense fallback={<div className="h-screen w-full flex items-center justify-center font-mono text-[var(--color-text-muted)] animate-pulse">Initializing...</div>}>
           <Routes>

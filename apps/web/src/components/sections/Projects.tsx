@@ -41,7 +41,7 @@ export default function Projects() {
               );
             })
           ) : projects.length === 0 ? (
-            <ErrorState message="Projects are temporarily unavailable." className="py-12" />
+            <ErrorState message="Projects are temporarily unavailable." />
           ) : (
             projects.map((project, index) => {
               const isEven = index % 2 === 0;
@@ -55,7 +55,7 @@ export default function Projects() {
                   transition={{ duration: 0.6 }}
                   className={`flex flex-col ${isEven ? 'lg:flex-row' : 'lg:flex-row-reverse'} gap-8 lg:gap-16 items-center w-full group py-4`}
                 >
-                  <div className="w-full lg:w-[45%] aspect-video bg-[#070b14] border border-[var(--color-border)] rounded-xl overflow-hidden group-hover:border-[var(--color-primary)] transition-all duration-300 shadow-xl flex-shrink-0 relative">
+                  <div className="w-full lg:w-[45%] aspect-video bg-[var(--color-bg-subtle)] border border-[var(--color-border)] rounded-xl overflow-hidden group-hover:border-[var(--color-primary)] transition-all duration-300 shadow-xl flex-shrink-0 relative">
                     {project.imageUrl ? (
                       <img
                         src={project.imageUrl}
@@ -63,7 +63,7 @@ export default function Projects() {
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                       />
                     ) : (
-                      <div className="w-full h-full flex flex-col p-4 font-mono text-xs text-slate-500 justify-between select-none">
+                      <div className="w-full h-full flex flex-col p-4 font-mono text-xs text-[var(--color-text-muted)] justify-between select-none">
                         <div className="flex flex-col items-center justify-center flex-grow gap-3 opacity-30 group-hover:opacity-60 group-hover:text-[var(--color-primary)] transition-all duration-300">
                           <Terminal size={48} className="text-[var(--color-primary)]" />
                           <span className="font-bold tracking-widest text-xs uppercase">{project.language || 'source-code'}</span>
@@ -77,7 +77,7 @@ export default function Projects() {
                       {projectNum}.
                     </div>
                     
-                    <h3 className="text-2xl md:text-3xl font-extrabold mb-4 group-hover:text-[var(--color-primary)] transition-colors font-mono tracking-tight text-white">
+                    <h3 className="text-2xl md:text-3xl font-extrabold mb-4 group-hover:text-[var(--color-primary)] transition-colors font-mono tracking-tight text-[var(--color-text)]">
                       {project.name}
                     </h3>
 

@@ -2,6 +2,7 @@ import { GraduationCap, Calendar } from 'lucide-react';
 import SectionHeader from '../ui/SectionHeader';
 import AnimatedSection from '../ui/AnimatedSection';
 import Skeleton from '../ui/Skeleton';
+import ErrorState from '../ui/ErrorState';
 import { useEducations } from '../../hooks/use-education';
 
 export default function Education() {
@@ -27,6 +28,17 @@ export default function Education() {
     );
   }
 
+  if (educations.length === 0) {
+    return (
+      <section id="education" className="py-20 w-full border-t border-[var(--color-border)]">
+        <AnimatedSection>
+          <SectionHeader icon={GraduationCap} title="education" />
+          <ErrorState message="Education data is temporarily unavailable." />
+        </AnimatedSection>
+      </section>
+    );
+  }
+
   return (
     <section id="education" className="py-20 w-full border-t border-[var(--color-border)]">
       <AnimatedSection>
@@ -36,7 +48,6 @@ export default function Education() {
           {educations.map((edu, idx) => (
             <div key={edu.id || idx} className="relative pl-8 md:pl-10 group">
               <span className="absolute left-[-5px] top-1.5 flex h-2.5 w-2.5 items-center justify-center">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[var(--color-primary)] opacity-30 group-hover:opacity-75"></span>
                 <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-[var(--color-primary)]"></span>
               </span>
 

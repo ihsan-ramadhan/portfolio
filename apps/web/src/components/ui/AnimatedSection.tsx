@@ -14,13 +14,15 @@ export default function AnimatedSection({
 }: AnimatedSectionProps) {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
+      initial={{ opacity: 0, y: 35, scale: 0.98 }}
+      whileInView={{ opacity: 1, y: 0, scale: 1 }}
+      viewport={{ once: true, margin: "-12% 0px -12% 0px" }}
       transition={{ 
-        duration: 0.5, 
-        delay,
-        ease: "easeOut"
+        type: "spring",
+        stiffness: 80,
+        damping: 18,
+        mass: 0.85,
+        delay
       }}
       className={className}
       {...props}
