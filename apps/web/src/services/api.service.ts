@@ -1,5 +1,5 @@
 import axios from 'axios';
-import type { Profile, Project, Skill, ContactMessage, SiteSection, Experience, Education, ApiResponse } from '../types';
+import type { Profile, Project, Skill, ContactMessage, SiteSection, Experience, Education, ApiResponse, Interest } from '../types';
 
 const API_BASE_URL = import.meta.env.VITE_API_URL;
 
@@ -79,6 +79,30 @@ export const skillsApi = {
   },
   deleteSkill: async ({ id, token }: { id: string; token: string }): Promise<void> => {
     await apiClient.delete(`/admin/skills/${id}`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+  },
+};
+
+export const interestsApi = {
+  getInterests: async (): Promise<Interest[]> => {
+    const response = await apiClient.get<ApiResponse<Interest[]>>('/interests');
+    return response.data.data;
+  },
+  createInterest: async ({ data, token }: { data: Omit<Interest, 'id'>; token: string }): Promise<Interest> => {
+    const response = await apiClient.post<ApiResponse<Interest>>('/admin/interests', data, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    return response.data.data;
+  },
+  updateInterest: async ({ id, data, token }: { id: string; data: Partial<Interest>; token: string }): Promise<Interest> => {
+    const response = await apiClient.patch<ApiResponse<Interest>>(`/admin/interests/${id}`, data, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    return response.data.data;
+  },
+  deleteInterest: async ({ id, token }: { id: string; token: string }): Promise<void> => {
+    await apiClient.delete(`/admin/interests/${id}`, {
       headers: { Authorization: `Bearer ${token}` },
     });
   },

@@ -74,3 +74,9 @@ export interface Education {
   order?: number;
 }
 
+export interface Interest {
+  id: string;
+  name: string;
+  order: number;
+}
+

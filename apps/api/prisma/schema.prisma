@@ -113,3 +113,9 @@ enum SyncStatus {
   SUCCESS
   FAILED
 }
+
+model Interest {
+  id    String @id @default(cuid())
+  name  String
+  order Int    @default(0)
+}

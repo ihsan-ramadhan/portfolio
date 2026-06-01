@@ -17,6 +17,7 @@ import { ContactModule } from './modules/contact/contact.module';
 import { SectionsModule } from './sections/sections.module';
 import { ExperienceModule } from './experience/experience.module';
 import { EducationModule } from './education/education.module';
+import { InterestsModule } from './interests/interests.module';
 
 @Module({
   imports: [
@@ -63,6 +64,7 @@ import { EducationModule } from './education/education.module';
     SectionsModule,
     ExperienceModule,
     EducationModule,
+    InterestsModule,
   ],
   controllers: [AppController],
   providers: [
