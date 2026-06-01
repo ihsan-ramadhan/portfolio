@@ -54,9 +54,9 @@ export default function About({
       >
         <AnimatedSection>
           <SectionHeader icon={Terminal} title="whoami" />
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <Skeleton className="h-[250px] md:col-span-2 md:row-span-2 rounded-xl w-full" />
-            <Skeleton className="h-[250px] rounded-xl w-full" />
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 auto-rows-[minmax(120px,_auto)]">
+            <Skeleton className="md:col-span-2 md:row-span-2 rounded-xl w-full min-h-[260px]" />
+            <Skeleton className="md:col-span-1 md:row-span-2 rounded-xl w-full min-h-[260px]" />
             <Skeleton className="h-[120px] rounded-xl w-full" />
             <Skeleton className="h-[120px] rounded-xl w-full" />
             <Skeleton className="h-[120px] rounded-xl w-full" />
