@@ -12,6 +12,34 @@ export interface GitHubRepository {
   pinned: boolean;
 }
 
+export interface ContributionRepoEntry {
+  name: string;
+  count: number;
+}
+
+export interface GitHubActivitySummary {
+  stats: {
+    publicRepos: number;
+    totalStars: number;
+    totalContributions: number;
+  };
+  contributions: {
+    period: string;
+    commits: {
+      total: number;
+      repoCount: number;
+      topRepos: ContributionRepoEntry[];
+    };
+    pullRequests: {
+      opened: number;
+      merged: number;
+    };
+    reviews: number;
+    reposCreated: number;
+  };
+  syncTime: string;
+}
+
 @Injectable()
 export class GitHubService {
   private readonly logger = new Logger(GitHubService.name);
@@ -174,6 +202,161 @@ export class GitHubService {
         `Error fetching details for repo ${owner}/${repo}`,
         error,
       );
+      throw error;
+    }
+  }
+
+  private activityCache: GitHubActivitySummary | null = null;
+  private activityCacheExpiry: number = 0;
+
+  async getGitHubActivitySummary(): Promise<GitHubActivitySummary> {
+    if (!this.octokit) {
+      throw new Error('GitHub credentials not configured');
+    }
+
+    const now = Date.now();
+    if (this.activityCache && now < this.activityCacheExpiry) {
+      this.logger.log('Returning cached GitHub activity summary');
+      return this.activityCache;
+    }
+
+    this.logger.log(
+      'Fetching fresh GitHub activity summary and updating cache',
+    );
+
+    try {
+      const today = new Date();
+      const fromDate = new Date(
+        Date.UTC(today.getUTCFullYear(), today.getUTCMonth(), 1),
+      );
+      const toDate = today;
+      const period = fromDate.toLocaleString('en-US', {
+        month: 'long',
+        year: 'numeric',
+        timeZone: 'UTC',
+      });
+
+      const query = `
+        query($username: String!, $from: DateTime!, $to: DateTime!) {
+          user(login: $username) {
+            publicRepositories: repositories(privacy: PUBLIC, ownerAffiliations: OWNER) {
+              totalCount
+            }
+            repositories(first: 100, ownerAffiliations: OWNER, privacy: PUBLIC) {
+              nodes { stargazerCount }
+            }
+            contributionsCollection {
+              contributionCalendar { totalContributions }
+            }
+            monthlyContributions: contributionsCollection(from: $from, to: $to) {
+              totalCommitContributions
+              totalRepositoriesWithContributedCommits
+              totalPullRequestContributions
+              totalPullRequestReviewContributions
+              totalRepositoryContributions
+              commitContributionsByRepository(maxRepositories: 5) {
+                repository { nameWithOwner }
+                contributions { totalCount }
+              }
+              pullRequestContributionsByRepository(maxRepositories: 5) {
+                repository { nameWithOwner }
+                contributions(first: 50) {
+                  totalCount
+                  nodes {
+                    pullRequest { merged }
+                  }
+                }
+              }
+            }
+          }
+        }
+      `;
+
+      interface GraphQLContributionResponse {
+        user: {
+          publicRepositories: { totalCount: number };
+          repositories: { nodes: Array<{ stargazerCount: number }> };
+          contributionsCollection: {
+            contributionCalendar: { totalContributions: number };
+          };
+          monthlyContributions: {
+            totalCommitContributions: number;
+            totalRepositoriesWithContributedCommits: number;
+            totalPullRequestContributions: number;
+            totalPullRequestReviewContributions: number;
+            totalRepositoryContributions: number;
+            commitContributionsByRepository: Array<{
+              repository: { nameWithOwner: string };
+              contributions: { totalCount: number };
+            }>;
+            pullRequestContributionsByRepository: Array<{
+              repository: { nameWithOwner: string };
+              contributions: {
+                totalCount: number;
+                nodes: Array<{ pullRequest: { merged: boolean } }>;
+              };
+            }>;
+          };
+        };
+      }
+
+      const response = await this.octokit.graphql<GraphQLContributionResponse>(
+        query,
+        {
+          username: this.username,
+          from: fromDate.toISOString(),
+          to: toDate.toISOString(),
+        },
+      );
+
+      const user = response.user;
+      const monthly = user.monthlyContributions;
+
+      const publicRepos = user.publicRepositories.totalCount;
+      const totalContributions =
+        user.contributionsCollection.contributionCalendar.totalContributions;
+      const totalStars = user.repositories.nodes.reduce(
+        (sum, repo) => sum + (repo.stargazerCount || 0),
+        0,
+      );
+
+      const topRepos = monthly.commitContributionsByRepository.map((r) => ({
+        name: r.repository.nameWithOwner.replace(`${this.username}/`, ''),
+        count: r.contributions.totalCount,
+      }));
+
+      let totalMerged = 0;
+      for (const prByRepo of monthly.pullRequestContributionsByRepository) {
+        for (const node of prByRepo.contributions.nodes) {
+          if (node.pullRequest.merged) totalMerged++;
+        }
+      }
+
+      const summary: GitHubActivitySummary = {
+        stats: { publicRepos, totalStars, totalContributions },
+        contributions: {
+          period,
+          commits: {
+            total: monthly.totalCommitContributions,
+            repoCount: monthly.totalRepositoriesWithContributedCommits,
+            topRepos,
+          },
+          pullRequests: {
+            opened: monthly.totalPullRequestContributions,
+            merged: totalMerged,
+          },
+          reviews: monthly.totalPullRequestReviewContributions,
+          reposCreated: monthly.totalRepositoryContributions,
+        },
+        syncTime: new Date().toISOString(),
+      };
+
+      this.activityCache = summary;
+      this.activityCacheExpiry = now + 5 * 60 * 1000;
+
+      return summary;
+    } catch (error) {
+      this.logger.error('Failed to generate GitHub activity summary:', error);
       throw error;
     }
   }

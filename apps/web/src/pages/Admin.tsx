@@ -12,7 +12,8 @@ import {
   Mail,
   FolderGit2,
   Briefcase,
-  GraduationCap
+  GraduationCap,
+  Sparkles
 } from 'lucide-react';
 import { useQueryClient } from '@tanstack/react-query';
 
@@ -27,6 +28,7 @@ import { ProjectsTab } from './admin/ProjectsTab';
 import { SectionsTab } from './admin/SectionsTab';
 import { ExperienceTab } from './admin/ExperienceTab';
 import { EducationTab } from './admin/EducationTab';
+import { InterestsTab } from './admin/InterestsTab';
 
 export default function Admin() {
   const [profile, setProfile] = useState<Profile | null>(null);
@@ -38,7 +40,7 @@ export default function Admin() {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
 
-  const [activeTab, setActiveTab] = useState<'profile' | 'sections' | 'skills' | 'projects' | 'experience' | 'education' | 'inbox'>('profile');
+  const [activeTab, setActiveTab] = useState<'profile' | 'sections' | 'skills' | 'projects' | 'experience' | 'education' | 'interests' | 'inbox'>('profile');
 
   const token = localStorage.getItem('token');
 
@@ -210,6 +212,8 @@ export default function Admin() {
         return <ExperienceTab token={token} setMessage={setMessage} />;
       case 'education':
         return <EducationTab token={token} setMessage={setMessage} />;
+      case 'interests':
+        return <InterestsTab token={token} setMessage={setMessage} />;
       default:
         return null;
     }
@@ -331,6 +335,16 @@ export default function Admin() {
           }`}
         >
           <GraduationCap size={16} /> Academic History
+        </button>
+        <button
+          onClick={() => setActiveTab('interests')}
+          className={`flex items-center gap-2 px-4 py-2 rounded-lg font-mono text-sm transition-all cursor-pointer whitespace-nowrap ${
+            activeTab === 'interests'
+              ? 'bg-[var(--color-primary)] text-white font-bold shadow-lg'
+              : 'bg-[var(--color-bg-subtle)] text-[var(--color-text-muted)] hover:text-[var(--color-text)] border border-[var(--color-border)]'
+          }`}
+        >
+          <Sparkles size={16} /> Interests
         </button>
         <button
           onClick={() => setActiveTab('inbox')}

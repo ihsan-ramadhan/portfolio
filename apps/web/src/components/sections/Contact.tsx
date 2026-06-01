@@ -56,7 +56,7 @@ export default function Contact() {
   return (
     <section id="contact" className="py-20 w-full border-t border-[var(--color-border)]">
       <AnimatedSection>
-        <SectionHeader icon={Terminal} title="contact.sh" />
+        <SectionHeader icon={Terminal} title="contact" />
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
           <div className="space-y-8">
@@ -66,7 +66,7 @@ export default function Contact() {
                 Let's Connect
               </h3>
               <p className="text-[var(--color-text-muted)] leading-relaxed">
-                Got an exciting project idea, want to collaborate, or just looking for a casual chat? Feel free to reach out through the contact details below!
+                I read every message. Whether it's an internship offer, collab idea, or just a question, reach out!
               </p>
             </div>
 

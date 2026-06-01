@@ -1,6 +1,5 @@
-import { motion } from 'framer-motion';
-import { Terminal } from 'lucide-react';
 import AsciiLogo from '../ui/AsciiLogo';
+import GitHubActivity from './GitHubActivity';
 import type { Profile } from '../../types';
 
 export default function Hero({ profile }: { profile?: Profile; isLoading?: boolean }) {
@@ -31,40 +30,7 @@ export default function Hero({ profile }: { profile?: Profile; isLoading?: boole
             </p>
           )}
 
-          <div className="w-full max-w-2xl bg-[var(--color-terminal)] rounded-lg overflow-hidden border border-[var(--color-border)] shadow-2xl">
-            <div className="flex items-center px-4 py-3 bg-[#0A0F1E]/50 border-b border-[var(--color-border)]">
-              <div className="flex gap-2">
-                <div className="w-3 h-3 rounded-full bg-red-500/80"></div>
-                <div className="w-3 h-3 rounded-full bg-yellow-500/80"></div>
-                <div className="w-3 h-3 rounded-full bg-green-500/80"></div>
-              </div>
-              <div className="mx-auto flex items-center gap-2 text-xs text-slate-400 font-mono">
-                <Terminal size={14} /> guest@ihsan-portfolio:~
-              </div>
-            </div>
-            
-            <div className="p-5 font-mono text-sm md:text-base">
-              <div className="relative overflow-hidden w-fit text-green-400">
-                <span>$ pnpm run dev:portfolio</span>
-                <motion.div
-                  initial={{ x: "0%" }}
-                  animate={{ x: "100%" }}
-                  transition={{ duration: 1.5, delay: 0.8, ease: "linear" }}
-                  className="absolute inset-y-0 right-0 left-0 bg-[var(--color-terminal)] border-l-2 border-green-400"
-                />
-              </div>
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 2.5 }}
-                className="text-slate-200 mt-3 leading-loose"
-              >
-                <span className="text-blue-400">{'>'}</span> Initializing stack... [OK]<br/>
-                <span className="text-blue-400">{'>'}</span> Loading projects module... [OK]<br/>
-                <span className="text-green-400">{'>'}</span> System ready. Scroll to explore.
-              </motion.div>
-            </div>
-          </div>
+          <GitHubActivity />
         </div>
 
         {/* Right Side: Ascii Logo Visual */}

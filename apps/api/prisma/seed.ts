@@ -120,6 +120,15 @@ async function main() {
     }
   }
 
+  await prisma.interest.deleteMany({});
+  await prisma.interest.createMany({
+    data: [
+      { name: 'Web Dev', order: 1 },
+      { name: 'Open Source', order: 2 },
+      { name: 'UI/UX', order: 3 },
+    ],
+  });
+
   console.log('Seeding finished.');
 }
 
