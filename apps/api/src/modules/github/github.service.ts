@@ -12,20 +12,9 @@ export interface GitHubRepository {
   pinned: boolean;
 }
 
-export interface GitHubRawEvent {
-  id: string;
-  type: string | null;
-  repo: {
-    id: number;
-    name: string;
-    url: string;
-  };
-  payload?: {
-    action?: string;
-    ref_type?: string;
-    ref?: string;
-  };
-  created_at: string | null;
+export interface ContributionRepoEntry {
+  name: string;
+  count: number;
 }
 
 export interface GitHubActivitySummary {
@@ -34,7 +23,20 @@ export interface GitHubActivitySummary {
     totalStars: number;
     totalContributions: number;
   };
-  events: GitHubRawEvent[];
+  contributions: {
+    period: string;
+    commits: {
+      total: number;
+      repoCount: number;
+      topRepos: ContributionRepoEntry[];
+    };
+    pullRequests: {
+      opened: number;
+      merged: number;
+    };
+    reviews: number;
+    reposCreated: number;
+  };
   syncTime: string;
 }
 
@@ -223,40 +225,129 @@ export class GitHubService {
     );
 
     try {
-      const [profileStats, events] = await Promise.all([
-        this.getGitHubProfileStats(),
-        this.getUserEvents(10),
-      ]);
+      const today = new Date();
+      const fromDate = new Date(
+        Date.UTC(today.getUTCFullYear(), today.getUTCMonth(), 1),
+      );
+      const toDate = today;
+      const period = fromDate.toLocaleString('en-US', {
+        month: 'long',
+        year: 'numeric',
+        timeZone: 'UTC',
+      });
 
-      const allowedTypes = ['PushEvent', 'PullRequestEvent', 'CreateEvent'];
-      const filteredEvents = events
-        .filter((event: GitHubRawEvent) =>
-          allowedTypes.includes(event.type || ''),
-        )
-        .slice(0, 5)
-        .map((event: GitHubRawEvent) => ({
-          id: event.id,
-          type: event.type || '',
-          repo: {
-            id: event.repo.id,
-            name: event.repo.name,
-            url: event.repo.url,
-          },
-          payload: {
-            action: event.payload?.action,
-            ref_type: event.payload?.ref_type,
-            ref: event.payload?.ref,
-          },
-          created_at: event.created_at || '',
-        }));
+      const query = `
+        query($username: String!, $from: DateTime!, $to: DateTime!) {
+          user(login: $username) {
+            publicRepositories: repositories(privacy: PUBLIC, ownerAffiliations: OWNER) {
+              totalCount
+            }
+            repositories(first: 100, ownerAffiliations: OWNER, privacy: PUBLIC) {
+              nodes { stargazerCount }
+            }
+            contributionsCollection {
+              contributionCalendar { totalContributions }
+            }
+            monthlyContributions: contributionsCollection(from: $from, to: $to) {
+              totalCommitContributions
+              totalRepositoriesWithContributedCommits
+              totalPullRequestContributions
+              totalPullRequestReviewContributions
+              totalRepositoryContributions
+              commitContributionsByRepository(maxRepositories: 5) {
+                repository { nameWithOwner }
+                contributions { totalCount }
+              }
+              pullRequestContributionsByRepository(maxRepositories: 5) {
+                repository { nameWithOwner }
+                contributions(first: 50) {
+                  totalCount
+                  nodes {
+                    pullRequest { merged }
+                  }
+                }
+              }
+            }
+          }
+        }
+      `;
 
-      const summary = {
-        stats: {
-          publicRepos: profileStats.publicRepos,
-          totalStars: profileStats.totalStars,
-          totalContributions: profileStats.totalContributions,
+      interface GraphQLContributionResponse {
+        user: {
+          publicRepositories: { totalCount: number };
+          repositories: { nodes: Array<{ stargazerCount: number }> };
+          contributionsCollection: {
+            contributionCalendar: { totalContributions: number };
+          };
+          monthlyContributions: {
+            totalCommitContributions: number;
+            totalRepositoriesWithContributedCommits: number;
+            totalPullRequestContributions: number;
+            totalPullRequestReviewContributions: number;
+            totalRepositoryContributions: number;
+            commitContributionsByRepository: Array<{
+              repository: { nameWithOwner: string };
+              contributions: { totalCount: number };
+            }>;
+            pullRequestContributionsByRepository: Array<{
+              repository: { nameWithOwner: string };
+              contributions: {
+                totalCount: number;
+                nodes: Array<{ pullRequest: { merged: boolean } }>;
+              };
+            }>;
+          };
+        };
+      }
+
+      const response = await this.octokit.graphql<GraphQLContributionResponse>(
+        query,
+        {
+          username: this.username,
+          from: fromDate.toISOString(),
+          to: toDate.toISOString(),
         },
-        events: filteredEvents,
+      );
+
+      const user = response.user;
+      const monthly = user.monthlyContributions;
+
+      const publicRepos = user.publicRepositories.totalCount;
+      const totalContributions =
+        user.contributionsCollection.contributionCalendar.totalContributions;
+      const totalStars = user.repositories.nodes.reduce(
+        (sum, repo) => sum + (repo.stargazerCount || 0),
+        0,
+      );
+
+      const topRepos = monthly.commitContributionsByRepository.map((r) => ({
+        name: r.repository.nameWithOwner.replace(`${this.username}/`, ''),
+        count: r.contributions.totalCount,
+      }));
+
+      let totalMerged = 0;
+      for (const prByRepo of monthly.pullRequestContributionsByRepository) {
+        for (const node of prByRepo.contributions.nodes) {
+          if (node.pullRequest.merged) totalMerged++;
+        }
+      }
+
+      const summary: GitHubActivitySummary = {
+        stats: { publicRepos, totalStars, totalContributions },
+        contributions: {
+          period,
+          commits: {
+            total: monthly.totalCommitContributions,
+            repoCount: monthly.totalRepositoriesWithContributedCommits,
+            topRepos,
+          },
+          pullRequests: {
+            opened: monthly.totalPullRequestContributions,
+            merged: totalMerged,
+          },
+          reviews: monthly.totalPullRequestReviewContributions,
+          reposCreated: monthly.totalRepositoryContributions,
+        },
         syncTime: new Date().toISOString(),
       };
 
@@ -267,88 +358,6 @@ export class GitHubService {
     } catch (error) {
       this.logger.error('Failed to generate GitHub activity summary:', error);
       throw error;
-    }
-  }
-
-  private async getGitHubProfileStats(): Promise<{
-    publicRepos: number;
-    totalStars: number;
-    totalContributions: number;
-  }> {
-    if (!this.octokit) {
-      return { publicRepos: 0, totalStars: 0, totalContributions: 0 };
-    }
-    try {
-      this.logger.log(`Fetching general GitHub stats for ${this.username}`);
-      const query = `
-        query($username: String!) {
-          user(login: $username) {
-            publicRepositories: repositories(privacy: PUBLIC, ownerAffiliations: OWNER) {
-              totalCount
-            }
-            contributionsCollection {
-              contributionCalendar {
-                totalContributions
-              }
-            }
-            repositories(first: 100, ownerAffiliations: OWNER, privacy: PUBLIC) {
-              nodes {
-                stargazerCount
-              }
-            }
-          }
-        }
-      `;
-      interface GraphQLStatsResponse {
-        user: {
-          publicRepositories: {
-            totalCount: number;
-          };
-          contributionsCollection: {
-            contributionCalendar: {
-              totalContributions: number;
-            };
-          };
-          repositories: {
-            nodes: Array<{
-              stargazerCount: number;
-            }>;
-          };
-        };
-      }
-      const response = await this.octokit.graphql<GraphQLStatsResponse>(query, {
-        username: this.username,
-      });
-      const user = response.user;
-      const publicRepos = user.publicRepositories.totalCount;
-      const totalContributions =
-        user.contributionsCollection.contributionCalendar.totalContributions;
-      const totalStars = user.repositories.nodes.reduce(
-        (sum: number, repo: { stargazerCount: number }) =>
-          sum + (repo.stargazerCount || 0),
-        0,
-      );
-      return { publicRepos, totalContributions, totalStars };
-    } catch (error) {
-      this.logger.error(
-        'Error fetching general GitHub stats via GraphQL:',
-        error,
-      );
-      return { publicRepos: 0, totalStars: 0, totalContributions: 0 };
-    }
-  }
-
-  private async getUserEvents(perPage: number): Promise<GitHubRawEvent[]> {
-    if (!this.octokit) return [];
-    try {
-      const { data } = await this.octokit.activity.listPublicEventsForUser({
-        username: this.username,
-        per_page: perPage,
-      });
-      return data;
-    } catch (error) {
-      this.logger.error('Error fetching user events:', error);
-      return [];
     }
   }
 }

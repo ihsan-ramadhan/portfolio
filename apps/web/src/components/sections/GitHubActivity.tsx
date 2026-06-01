@@ -1,6 +1,26 @@
 import { useEffect, useState } from 'react';
-import { GitCommit, GitPullRequest, GitBranch } from 'lucide-react';
+import { GitCommit, GitPullRequest, GitBranch, FolderPlus, Eye } from 'lucide-react';
 import ErrorState from '../ui/ErrorState';
+
+interface ContributionRepoEntry {
+  name: string;
+  count: number;
+}
+
+interface GitHubContributions {
+  period: string;
+  commits: {
+    total: number;
+    repoCount: number;
+    topRepos: ContributionRepoEntry[];
+  };
+  pullRequests: {
+    opened: number;
+    merged: number;
+  };
+  reviews: number;
+  reposCreated: number;
+}
 
 interface GitHubStats {
   publicRepos: number;
@@ -8,20 +28,10 @@ interface GitHubStats {
   totalContributions: number;
 }
 
-interface GitHubEvent {
-  id: string;
-  type: 'PushEvent' | 'PullRequestEvent' | 'CreateEvent' | string;
-  repo: {
-    id: number;
-    name: string;
-    url: string;
-  };
-  payload?: {
-    action?: string;
-    ref_type?: string;
-    ref?: string;
-  };
-  created_at: string;
+interface GitHubActivityData {
+  stats: GitHubStats;
+  contributions: GitHubContributions;
+  syncTime: string;
 }
 
 function getRelativeTime(date: Date): string {
@@ -43,8 +53,7 @@ function getRelativeTime(date: Date): string {
 }
 
 export default function GitHubActivity() {
-  const [stats, setStats] = useState<GitHubStats | null>(null);
-  const [events, setEvents] = useState<GitHubEvent[]>([]);
+  const [data, setData] = useState<GitHubActivityData | null>(null);
   const [syncTime, setSyncTime] = useState<Date | null>(null);
   const [relativeSyncStr, setRelativeSyncStr] = useState<string>('just now');
   const [loading, setLoading] = useState<boolean>(true);
@@ -64,12 +73,11 @@ export default function GitHubActivity() {
         }
 
         const json = await response.json();
-        const { stats: fetchedStats, events: fetchedEvents, syncTime: fetchedSyncTime } = json.data || {};
+        const payload = json.data;
 
         if (isMounted) {
-          setStats(fetchedStats || null);
-          setEvents(fetchedEvents || []);
-          setSyncTime(fetchedSyncTime ? new Date(fetchedSyncTime) : null);
+          setData(payload ?? null);
+          setSyncTime(payload?.syncTime ? new Date(payload.syncTime) : null);
           setLoading(false);
         }
       } catch {
@@ -123,36 +131,7 @@ export default function GitHubActivity() {
     );
   }
 
-  const getEventIcon = (type: string) => {
-    switch (type) {
-      case 'PushEvent':
-        return <GitCommit size={14} className="text-primary shrink-0" />;
-      case 'PullRequestEvent':
-        return <GitPullRequest size={14} className="text-primary shrink-0" />;
-      case 'CreateEvent':
-        return <GitBranch size={14} className="text-primary shrink-0" />;
-      default:
-        return null;
-    }
-  };
-
-  const getEventActionText = (event: GitHubEvent) => {
-    switch (event.type) {
-      case 'PushEvent':
-        return 'pushed to';
-      case 'PullRequestEvent': {
-        const prAction = event.payload?.action || 'opened';
-        return `${prAction} PR on`;
-      }
-      case 'CreateEvent': {
-        const refType = event.payload?.ref_type || 'repository';
-        const refName = event.payload?.ref ? ` ${event.payload.ref}` : '';
-        return `created ${refType}${refName} on`;
-      }
-      default:
-        return 'interacted with';
-    }
-  };
+  const { stats, contributions } = data ?? {};
 
   return (
     <div className="w-full max-w-2xl bg-terminal border border-border rounded-md px-4 py-3 font-mono shadow-2xl">
@@ -178,34 +157,93 @@ export default function GitHubActivity() {
             <span className="text-primary font-bold">·</span>
             <span>
               <span className="text-text font-semibold">{stats.totalContributions}</span>{' '}
-              {stats.totalContributions === 1 ? 'contribution' : 'contributions'} (last year)
+              contributions (last year)
             </span>
           </div>
         </div>
       )}
 
-      {events.length > 0 && (
-        <div className="mt-3 border-t border-border pt-3 space-y-2">
-          {events.map((event) => {
-            const icon = getEventIcon(event.type);
-            const actionText = getEventActionText(event);
-            const repoName = event.repo.name.replace(/^[^/]+\//, '');
-            const timeStr = getRelativeTime(new Date(event.created_at));
+      {contributions && (
+        <div className="mt-3 border-t border-border pt-3 space-y-2.5 text-xs text-text-muted">
 
-            return (
-              <div key={event.id} className="flex items-start gap-2 text-xs text-text-muted">
-                <span className="mt-0.5">{icon}</span>
-                <span className="leading-snug">
-                  {actionText}{' '}
-                  <span className="text-primary-dim font-medium">{repoName}</span>
-                  {' '}
-                  <span className="text-primary font-bold">·</span>
-                  {' '}
-                  <span>{timeStr}</span>
+          {contributions.commits.total > 0 && (
+            <div className="space-y-1">
+              <div className="flex items-center gap-2">
+                <GitCommit size={13} className="text-primary shrink-0" />
+                <span>
+                  <span className="text-text font-semibold">{contributions.commits.total}</span>
+                  {' '}commit{contributions.commits.total !== 1 ? 's' : ''} in{' '}
+                  <span className="text-text font-semibold">{contributions.commits.repoCount}</span>
+                  {' '}repositor{contributions.commits.repoCount !== 1 ? 'ies' : 'y'}
+                  <span className="text-text-muted opacity-60 ml-1">({contributions.period})</span>
                 </span>
               </div>
-            );
-          })}
+              {contributions.commits.topRepos.length > 0 && (
+                <div className="ml-5 space-y-0.5">
+                  {contributions.commits.topRepos.map((repo, i) => (
+                    <div key={repo.name} className="flex items-center gap-1.5 text-[11px]">
+                      <span className="text-primary/50">
+                        {i === contributions.commits.topRepos.length - 1 ? '└' : '├'}
+                      </span>
+                      <span className="text-primary-dim font-medium">{repo.name}</span>
+                      <span className="text-text-muted opacity-60">
+                        {repo.count} commit{repo.count !== 1 ? 's' : ''}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          )}
+
+          {contributions.pullRequests.opened > 0 && (
+            <div className="flex items-center gap-2">
+              <GitPullRequest size={13} className="text-primary shrink-0" />
+              <span>
+                <span className="text-text font-semibold">{contributions.pullRequests.opened}</span>
+                {' '}pull request{contributions.pullRequests.opened !== 1 ? 's' : ''} opened
+                {contributions.pullRequests.merged > 0 && (
+                  <span className="text-text-muted opacity-70">
+                    {' '}·{' '}
+                    <span className="text-green-400 font-semibold">{contributions.pullRequests.merged}</span>
+                    {' '}merged
+                  </span>
+                )}
+              </span>
+            </div>
+          )}
+
+          {contributions.reviews > 0 && (
+            <div className="flex items-center gap-2">
+              <Eye size={13} className="text-primary shrink-0" />
+              <span>
+                reviewed{' '}
+                <span className="text-text font-semibold">{contributions.reviews}</span>
+                {' '}pull request{contributions.reviews !== 1 ? 's' : ''}
+              </span>
+            </div>
+          )}
+
+          {contributions.reposCreated > 0 && (
+            <div className="flex items-center gap-2">
+              <FolderPlus size={13} className="text-primary shrink-0" />
+              <span>
+                created{' '}
+                <span className="text-text font-semibold">{contributions.reposCreated}</span>
+                {' '}repositor{contributions.reposCreated !== 1 ? 'ies' : 'y'}
+              </span>
+            </div>
+          )}
+
+          {contributions.commits.total === 0 &&
+            contributions.pullRequests.opened === 0 &&
+            contributions.reviews === 0 &&
+            contributions.reposCreated === 0 && (
+              <div className="flex items-center gap-2 opacity-50">
+                <GitBranch size={13} className="text-primary shrink-0" />
+                <span>no contributions this month yet</span>
+              </div>
+            )}
         </div>
       )}
     </div>
