@@ -12,6 +12,32 @@ export interface GitHubRepository {
   pinned: boolean;
 }
 
+export interface GitHubRawEvent {
+  id: string;
+  type: string | null;
+  repo: {
+    id: number;
+    name: string;
+    url: string;
+  };
+  payload?: {
+    action?: string;
+    ref_type?: string;
+    ref?: string;
+  };
+  created_at: string | null;
+}
+
+export interface GitHubActivitySummary {
+  stats: {
+    publicRepos: number;
+    totalStars: number;
+    totalContributions: number;
+  };
+  events: GitHubRawEvent[];
+  syncTime: string;
+}
+
 @Injectable()
 export class GitHubService {
   private readonly logger = new Logger(GitHubService.name);
@@ -175,6 +201,154 @@ export class GitHubService {
         error,
       );
       throw error;
+    }
+  }
+
+  private activityCache: GitHubActivitySummary | null = null;
+  private activityCacheExpiry: number = 0;
+
+  async getGitHubActivitySummary(): Promise<GitHubActivitySummary> {
+    if (!this.octokit) {
+      throw new Error('GitHub credentials not configured');
+    }
+
+    const now = Date.now();
+    if (this.activityCache && now < this.activityCacheExpiry) {
+      this.logger.log('Returning cached GitHub activity summary');
+      return this.activityCache;
+    }
+
+    this.logger.log(
+      'Fetching fresh GitHub activity summary and updating cache',
+    );
+
+    try {
+      const [profileStats, events] = await Promise.all([
+        this.getGitHubProfileStats(),
+        this.getUserEvents(10),
+      ]);
+
+      const allowedTypes = ['PushEvent', 'PullRequestEvent', 'CreateEvent'];
+      const filteredEvents = events
+        .filter((event: GitHubRawEvent) =>
+          allowedTypes.includes(event.type || ''),
+        )
+        .slice(0, 5)
+        .map((event: GitHubRawEvent) => ({
+          id: event.id,
+          type: event.type || '',
+          repo: {
+            id: event.repo.id,
+            name: event.repo.name,
+            url: event.repo.url,
+          },
+          payload: {
+            action: event.payload?.action,
+            ref_type: event.payload?.ref_type,
+            ref: event.payload?.ref,
+          },
+          created_at: event.created_at || '',
+        }));
+
+      const summary = {
+        stats: {
+          publicRepos: profileStats.publicRepos,
+          totalStars: profileStats.totalStars,
+          totalContributions: profileStats.totalContributions,
+        },
+        events: filteredEvents,
+        syncTime: new Date().toISOString(),
+      };
+
+      this.activityCache = summary;
+      this.activityCacheExpiry = now + 5 * 60 * 1000;
+
+      return summary;
+    } catch (error) {
+      this.logger.error('Failed to generate GitHub activity summary:', error);
+      throw error;
+    }
+  }
+
+  private async getGitHubProfileStats(): Promise<{
+    publicRepos: number;
+    totalStars: number;
+    totalContributions: number;
+  }> {
+    if (!this.octokit) {
+      return { publicRepos: 0, totalStars: 0, totalContributions: 0 };
+    }
+    try {
+      this.logger.log(`Fetching general GitHub stats for ${this.username}`);
+      const query = `
+        query($username: String!) {
+          user(login: $username) {
+            publicRepositories: repositories(privacy: PUBLIC, ownerAffiliations: OWNER) {
+              totalCount
+            }
+            contributionsCollection {
+              contributionCalendar {
+                totalContributions
+              }
+            }
+            repositories(first: 100, ownerAffiliations: OWNER, privacy: PUBLIC) {
+              nodes {
+                stargazerCount
+              }
+            }
+          }
+        }
+      `;
+      interface GraphQLStatsResponse {
+        user: {
+          publicRepositories: {
+            totalCount: number;
+          };
+          contributionsCollection: {
+            contributionCalendar: {
+              totalContributions: number;
+            };
+          };
+          repositories: {
+            nodes: Array<{
+              stargazerCount: number;
+            }>;
+          };
+        };
+      }
+      const response = await this.octokit.graphql<GraphQLStatsResponse>(query, {
+        username: this.username,
+      });
+      const user = response.user;
+      const publicRepos = user.publicRepositories.totalCount;
+      const totalContributions =
+        user.contributionsCollection.contributionCalendar.totalContributions;
+      const totalStars = user.repositories.nodes.reduce(
+        (sum: number, repo: { stargazerCount: number }) =>
+          sum + (repo.stargazerCount || 0),
+        0,
+      );
+      return { publicRepos, totalContributions, totalStars };
+    } catch (error) {
+      this.logger.error(
+        'Error fetching general GitHub stats via GraphQL:',
+        error,
+      );
+      return { publicRepos: 0, totalStars: 0, totalContributions: 0 };
+    }
+  }
+
+  private async getUserEvents(perPage: number): Promise<GitHubRawEvent[]> {
+    if (!this.octokit) return [];
+    try {
+      const { data } = await this.octokit.activity.listPublicEventsForUser({
+        username: this.username,
+        per_page: perPage,
+      });
+      return data;
+    } catch (error) {
+      this.logger.error('Error fetching user events:', error);
+      return [];
     }
   }
 }
