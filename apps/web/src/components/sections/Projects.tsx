@@ -15,7 +15,7 @@ export default function Projects() {
       <AnimatedSection>
         <SectionHeader 
           icon={Terminal} 
-          title="ls ./projects" 
+          title="projects" 
         />
 
         <div className="flex flex-col gap-20 md:gap-28">

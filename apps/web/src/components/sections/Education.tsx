@@ -1,4 +1,4 @@
-import { GraduationCap, Calendar } from 'lucide-react';
+import { Terminal, Calendar } from 'lucide-react';
 import SectionHeader from '../ui/SectionHeader';
 import AnimatedSection from '../ui/AnimatedSection';
 import Skeleton from '../ui/Skeleton';
@@ -12,7 +12,7 @@ export default function Education() {
     return (
       <section id="education" className="py-20 w-full border-t border-[var(--color-border)]">
         <AnimatedSection>
-          <SectionHeader icon={GraduationCap} title="education" />
+          <SectionHeader icon={Terminal} title="education" />
           <div className="relative border-l border-[var(--color-border)] ml-3 md:ml-6 space-y-12">
             {[1, 2].map((i) => (
               <div key={i} className="relative pl-8 md:pl-10">
@@ -32,7 +32,7 @@ export default function Education() {
     return (
       <section id="education" className="py-20 w-full border-t border-[var(--color-border)]">
         <AnimatedSection>
-          <SectionHeader icon={GraduationCap} title="education" />
+          <SectionHeader icon={Terminal} title="education" />
           <ErrorState message="Education data is temporarily unavailable." />
         </AnimatedSection>
       </section>
@@ -42,7 +42,7 @@ export default function Education() {
   return (
     <section id="education" className="py-20 w-full border-t border-[var(--color-border)]">
       <AnimatedSection>
-        <SectionHeader icon={GraduationCap} title="education" />
+        <SectionHeader icon={Terminal} title="education" />
 
         <div className="relative border-l border-[var(--color-border)] ml-3 md:ml-6 space-y-12">
           {educations.map((edu, idx) => (

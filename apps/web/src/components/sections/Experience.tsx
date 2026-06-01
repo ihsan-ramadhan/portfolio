@@ -1,4 +1,4 @@
-import { Briefcase, Calendar } from 'lucide-react';
+import { Terminal, Calendar } from 'lucide-react';
 import SectionHeader from '../ui/SectionHeader';
 import AnimatedSection from '../ui/AnimatedSection';
 import Skeleton from '../ui/Skeleton';
@@ -12,7 +12,7 @@ export default function Experience() {
     return (
       <section id="experience" className="py-20 w-full border-t border-[var(--color-border)]">
         <AnimatedSection>
-          <SectionHeader icon={Briefcase} title="experience" />
+          <SectionHeader icon={Terminal} title="experience" />
           <div className="relative border-l border-[var(--color-border)] ml-3 md:ml-6 space-y-12">
             {[1, 2].map((i) => (
               <div key={i} className="relative pl-8 md:pl-10">
@@ -32,7 +32,7 @@ export default function Experience() {
     return (
       <section id="experience" className="py-20 w-full border-t border-[var(--color-border)]">
         <AnimatedSection>
-          <SectionHeader icon={Briefcase} title="experience" />
+          <SectionHeader icon={Terminal} title="experience" />
           <ErrorState message="Experience data is temporarily unavailable." />
         </AnimatedSection>
       </section>
@@ -42,7 +42,7 @@ export default function Experience() {
   return (
     <section id="experience" className="py-20 w-full border-t border-[var(--color-border)]">
       <AnimatedSection>
-        <SectionHeader icon={Briefcase} title="experience" />
+        <SectionHeader icon={Terminal} title="experience" />
 
         <div className="relative border-l border-[var(--color-border)] ml-3 md:ml-6 space-y-12">
           {experiences.map((exp, idx) => (
