@@ -14,7 +14,9 @@
     "sourceMap": true,
     "outDir": "./dist",
     "baseUrl": "./",
-    "paths": {},
+    "paths": {
+      "shared-types": ["../../packages/shared-types/src/index.ts"]
+    },
     "incremental": true,
     "skipLibCheck": true,
     "strictNullChecks": true,
