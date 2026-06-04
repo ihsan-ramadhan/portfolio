@@ -205,7 +205,7 @@ export default function GitHubActivity() {
                 {contributions.pullRequests.merged > 0 && (
                   <span className="text-text-muted opacity-70">
                     {' '}·{' '}
-                    <span className="text-green-400 font-semibold">{contributions.pullRequests.merged}</span>
+                    <span className="text-emerald-600 dark:text-green-400 font-semibold">{contributions.pullRequests.merged}</span>
                     {' '}merged
                   </span>
                 )}
