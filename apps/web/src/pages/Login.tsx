@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Terminal, Lock, Mail, ArrowRight } from 'lucide-react';
+import { useAuthStore } from '../stores/auth.store';
 
 export default function Login() {
   const [email, setEmail] = useState('');
@@ -9,6 +10,7 @@ export default function Login() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const navigate = useNavigate();
+  const setToken = useAuthStore((state) => state.setToken);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -26,7 +28,7 @@ export default function Login() {
 
       if (!response.ok) throw new Error(data.message || 'Login gagal');
 
-      localStorage.setItem('token', data.data.access_token);
+      setToken(data.data.access_token);
       navigate('/admin');
     } catch (err) {
       const errorMessage = err instanceof Error ? err.message : 'Terjadi kesalahan yang tidak diketahui';

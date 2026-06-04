@@ -1,5 +1,6 @@
 import axios from 'axios';
 import type { Profile, Project, Skill, ContactMessage, SiteSection, Experience, Education, ApiResponse, Interest } from '../types';
+import { useAuthStore } from '../stores/auth.store';
 
 const API_BASE_URL = import.meta.env.VITE_API_URL;
 
@@ -12,7 +13,7 @@ apiClient.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error.response?.status === 401) {
-      localStorage.removeItem('token');
+      useAuthStore.getState().clearToken();
       window.location.href = '/login';
     }
     return Promise.reject(error);

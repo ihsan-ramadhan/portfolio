@@ -20,6 +20,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import type { Profile } from '../types';
 import { useMessages } from '../hooks/use-messages';
 import { ImageUploadModal } from '../components/ui/ImageUploadModal';
+import { useAuthStore } from '../stores/auth.store';
 
 import { ProfileTab } from './admin/ProfileTab';
 import { SkillsTab } from './admin/SkillsTab';
@@ -42,7 +43,7 @@ export default function Admin() {
 
   const [activeTab, setActiveTab] = useState<'profile' | 'sections' | 'skills' | 'projects' | 'experience' | 'education' | 'interests' | 'inbox'>('profile');
 
-  const token = localStorage.getItem('token');
+  const { token, clearToken } = useAuthStore();
 
   const fetchProfile = useCallback(async () => {
     try {
@@ -93,7 +94,7 @@ export default function Admin() {
       });
 
       if (response.status === 401) {
-        localStorage.removeItem('token');
+        clearToken();
         window.location.href = '/login';
         return;
       }
@@ -115,7 +116,7 @@ export default function Admin() {
         headers: { 'Authorization': `Bearer ${token}` }
       });
       if (response.status === 401) {
-        localStorage.removeItem('token');
+        clearToken();
         window.location.href = '/login';
         return;
       }
@@ -143,7 +144,7 @@ export default function Admin() {
         body: formData
       });
       if (response.status === 401) {
-        localStorage.removeItem('token');
+        clearToken();
         window.location.href = '/login';
         return;
       }
@@ -167,7 +168,7 @@ export default function Admin() {
         headers: { 'Authorization': `Bearer ${token}` },
       });
       if (response.status === 401) {
-        localStorage.removeItem('token');
+        clearToken();
         window.location.href = '/login';
         return;
       }
@@ -184,7 +185,7 @@ export default function Admin() {
 
   const handleLogout = () => {
     if (window.confirm('Are you sure you want to log out from the Admin Control Panel?')) {
-      localStorage.removeItem('token');
+      clearToken();
       navigate('/login');
     }
   };
