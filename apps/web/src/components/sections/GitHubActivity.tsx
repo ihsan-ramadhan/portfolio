@@ -134,7 +134,7 @@ export default function GitHubActivity() {
   const { stats, contributions } = data ?? {};
 
   return (
-    <div className="w-full max-w-2xl bg-terminal border border-border rounded-md px-4 py-3 font-mono shadow-2xl">
+    <div className="w-full max-w-2xl glass-panel hover-glow rounded-md px-4 py-3 font-mono shadow-md shadow-[var(--color-border)]/15">
       {stats && (
         <div className="flex flex-col gap-1 text-xs md:text-sm font-mono text-text-muted">
           <div className="flex items-center gap-1.5 flex-wrap">

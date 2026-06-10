@@ -73,7 +73,7 @@ export default function Contact() {
             <div className="space-y-4">
               <button 
                 onClick={handleCopyEmail}
-                className="w-full text-left flex items-center gap-4 p-4 rounded-xl bg-[var(--color-bg-subtle)] border border-[var(--color-border)] hover:border-[var(--color-primary)] transition-all group cursor-pointer"
+                className="w-full text-left flex items-center gap-4 p-4 rounded-xl glass-panel hover-glow transition-all group cursor-pointer"
               >
                 <div className="p-3 rounded-lg bg-[var(--color-bg)] text-[var(--color-primary)] group-hover:bg-[var(--color-primary)] group-hover:text-white transition-colors">
                   <Mail size={20} />
@@ -88,7 +88,7 @@ export default function Contact() {
                 href="https://linkedin.com/in/m-ihsan-r" 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="flex items-center gap-4 p-4 rounded-xl bg-[var(--color-bg-subtle)] border border-[var(--color-border)] hover:border-[var(--color-primary)] transition-all group"
+                className="flex items-center gap-4 p-4 rounded-xl glass-panel hover-glow transition-all group"
               >
                 <div className="p-3 rounded-lg bg-[var(--color-bg)] text-[var(--color-primary)] group-hover:bg-[var(--color-primary)] group-hover:text-white transition-colors">
                   <Linkedin size={20} />
@@ -103,7 +103,7 @@ export default function Contact() {
                 href="https://github.com/ihsan-ramadhan" 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="flex items-center gap-4 p-4 rounded-xl bg-[var(--color-bg-subtle)] border border-[var(--color-border)] hover:border-[var(--color-primary)] transition-all group"
+                className="flex items-center gap-4 p-4 rounded-xl glass-panel hover-glow transition-all group"
               >
                 <div className="p-3 rounded-lg bg-[var(--color-bg)] text-[var(--color-primary)] group-hover:bg-[var(--color-primary)] group-hover:text-white transition-colors">
                   <Github size={20} />
@@ -116,7 +116,7 @@ export default function Contact() {
             </div>
           </div>
 
-          <div className="p-8 rounded-2xl bg-[var(--color-bg-subtle)] border border-[var(--color-border)] relative overflow-hidden">
+          <div className="p-8 rounded-2xl glass-panel hover-glow relative overflow-hidden">
             <div className="absolute top-0 right-0 p-4 opacity-5 pointer-events-none">
               <Send size={120} />
             </div>

@@ -22,6 +22,13 @@ function getPrimaryColor(): [number, number, number] {
   return hexToRgb(raw || '#3b82f6');
 }
 
+function getSecondaryColor(): [number, number, number] {
+  const raw = getComputedStyle(document.documentElement)
+    .getPropertyValue('--color-secondary-theme')
+    .trim();
+  return hexToRgb(raw || '#0d9488');
+}
+
 export default function InteractiveMesh() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
@@ -39,10 +46,12 @@ export default function InteractiveMesh() {
 
     const isMobile = window.innerWidth < 768;
 
-    let cachedColor: [number, number, number] | null = null;
+    let cachedColorPrimary: [number, number, number] | null = null;
+    let cachedColorSecondary: [number, number, number] | null = null;
 
     const observer = new MutationObserver(() => {
-      cachedColor = null;
+      cachedColorPrimary = null;
+      cachedColorSecondary = null;
     });
     observer.observe(document.documentElement, {
       attributes: true,
@@ -60,19 +69,32 @@ export default function InteractiveMesh() {
       smooth.x = lerp(smooth.x, mouse.x, LERP_SPEED);
       smooth.y = lerp(smooth.y, mouse.y, LERP_SPEED);
 
-      if (!cachedColor) cachedColor = getPrimaryColor();
-      const [r, g, b] = cachedColor;
+      if (!cachedColorPrimary) cachedColorPrimary = getPrimaryColor();
+      if (!cachedColorSecondary) cachedColorSecondary = getSecondaryColor();
+      const [r1, g1, b1] = cachedColorPrimary;
+      const [r2, g2, b2] = cachedColorSecondary;
 
       if (!isMobile && mouse.x > -1000) {
-        const grad = ctx.createRadialGradient(
-          smooth.x, smooth.y, 0,
-          smooth.x, smooth.y, MOUSE_REPEL_DIST * 1.2
+        const grad1 = ctx.createRadialGradient(
+          smooth.x - 30, smooth.y - 10, 0,
+          smooth.x - 30, smooth.y - 10, MOUSE_REPEL_DIST * 1.4
         );
-        grad.addColorStop(0, `rgba(${r},${g},${b},0.06)`);
-        grad.addColorStop(1, `rgba(${r},${g},${b},0)`);
-        ctx.fillStyle = grad;
+        grad1.addColorStop(0, `rgba(${r1},${g1},${b1},0.08)`);
+        grad1.addColorStop(1, `rgba(${r1},${g1},${b1},0)`);
+        ctx.fillStyle = grad1;
         ctx.beginPath();
-        ctx.arc(smooth.x, smooth.y, MOUSE_REPEL_DIST * 1.2, 0, Math.PI * 2);
+        ctx.arc(smooth.x - 30, smooth.y - 10, MOUSE_REPEL_DIST * 1.4, 0, Math.PI * 2);
+        ctx.fill();
+
+        const grad2 = ctx.createRadialGradient(
+          smooth.x + 30, smooth.y + 10, 0,
+          smooth.x + 30, smooth.y + 10, MOUSE_REPEL_DIST * 1.4
+        );
+        grad2.addColorStop(0, `rgba(${r2},${g2},${b2},0.07)`);
+        grad2.addColorStop(1, `rgba(${r2},${g2},${b2},0)`);
+        ctx.fillStyle = grad2;
+        ctx.beginPath();
+        ctx.arc(smooth.x + 30, smooth.y + 10, MOUSE_REPEL_DIST * 1.4, 0, Math.PI * 2);
         ctx.fill();
       }
 

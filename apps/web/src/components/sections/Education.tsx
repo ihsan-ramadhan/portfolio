@@ -51,7 +51,7 @@ export default function Education() {
                 <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-[var(--color-primary)]"></span>
               </span>
 
-              <div className="bg-[var(--color-bg-subtle)] border border-[var(--color-border)] p-6 rounded-xl group-hover:border-[var(--color-primary)] transition-all duration-300 shadow-md">
+              <div className="glass-panel hover-glow p-6 rounded-xl shadow-md">
                 <div className="flex flex-col md:flex-row md:items-center justify-between gap-2">
                   <div>
                     <h3 className="text-lg font-bold text-[var(--color-text)] font-sans">

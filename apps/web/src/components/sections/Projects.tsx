@@ -55,7 +55,7 @@ export default function Projects() {
                   transition={{ duration: 0.6 }}
                   className={`flex flex-col ${isEven ? 'lg:flex-row' : 'lg:flex-row-reverse'} gap-8 lg:gap-16 items-center w-full group py-4`}
                 >
-                  <div className="w-full lg:w-[45%] aspect-video bg-[var(--color-bg-subtle)] border border-[var(--color-border)] rounded-xl overflow-hidden group-hover:border-[var(--color-primary)] transition-all duration-300 shadow-xl flex-shrink-0 relative">
+                  <div className="w-full lg:w-[45%] aspect-video glass-panel hover-glow rounded-xl overflow-hidden flex-shrink-0 relative shadow-xl">
                     {project.imageUrl ? (
                       <img
                         src={project.imageUrl}
