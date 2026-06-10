@@ -50,8 +50,8 @@ export default function Navbar() {
   return (
     <nav className={`sticky top-0 z-50 w-full border-b transition-all duration-300 ${
       scrolled 
-      ? "bg-[var(--color-bg)]/80 backdrop-blur-md border-[var(--color-border)] py-3" 
-      : "bg-transparent border-transparent py-5"
+      ? "bg-white/70 dark:bg-[#0B0F19]/65 backdrop-blur-md border-[var(--color-border)] py-3 shadow-sm shadow-[var(--color-border)]/10" 
+      : "bg-transparent border-transparent py-4"
     }`}>
       <div className="w-full px-4 md:px-8 lg:px-16 flex items-center justify-between">
         <a 
@@ -60,9 +60,9 @@ export default function Navbar() {
             e.preventDefault();
             window.scrollTo({ top: 0, behavior: 'smooth' });
           }}
-          className="font-mono font-bold text-xl tracking-tighter z-50"
+          className="font-mono font-bold text-xl tracking-tighter z-50 group hover:opacity-95 transition-opacity"
         >
-          ihsan<span className="text-[var(--color-primary)]">.dev</span>
+          ihsan<span className="text-[var(--color-primary)] group-hover:text-[var(--color-secondary)] transition-colors duration-300">.dev</span>
         </a>
 
         <div className="hidden md:flex items-center gap-8">
@@ -71,9 +71,10 @@ export default function Navbar() {
               key={link.name} 
               href={link.href}
               onClick={(e) => handleScrollClick(e, link.href)}
-              className="text-sm font-mono text-[var(--color-text-muted)] hover:text-[var(--color-primary)] transition-colors"
+              className="relative text-sm font-mono text-[var(--color-text-muted)] hover:text-[var(--color-primary)] transition-colors py-1 group"
             >
               {link.name}
+              <span className="absolute bottom-0 left-0 w-0 h-[1.5px] bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-secondary)] transition-all duration-300 group-hover:w-full" />
             </a>
           ))}
           <ThemeToggle />

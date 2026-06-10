@@ -48,7 +48,7 @@ export default function Skills() {
                 className="group relative flex flex-col items-center justify-center transition-transform hover:scale-110 mr-16"
                 title={tech.name}
               >
-                <div className="w-14 h-14 md:w-16 md:h-16 flex items-center justify-center p-3 rounded-xl bg-[var(--color-bg-subtle)] border border-[var(--color-border)] group-hover:border-[var(--color-primary)] group-hover:shadow-[0_0_20px_rgba(59,130,246,0.15)] transition-all duration-300">
+                <div className="w-14 h-14 md:w-16 md:h-16 flex items-center justify-center p-3 rounded-xl glass-panel group-hover:border-[var(--color-primary)] group-hover:shadow-[0_0_20px_rgba(59,130,246,0.15)] transition-all duration-300">
                   <img
                     src={`https://cdn.simpleicons.org/${tech.icon}/3b82f6`} 
                     alt={tech.name}

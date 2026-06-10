@@ -94,7 +94,7 @@ export default function About({
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 auto-rows-[minmax(120px,_auto)]">
           {/* CARD 1: Bio / Introduction (Spans 2 cols, 2 rows) */}
-          <div className="md:col-span-2 md:row-span-2 bg-[var(--color-bg-subtle)] border border-[var(--color-border)] p-6 rounded-xl shadow-md flex flex-col justify-between hover:border-[var(--color-primary)] transition-all duration-300">
+          <div className="md:col-span-2 md:row-span-2 glass-panel hover-glow p-6 rounded-xl shadow-md flex flex-col justify-between">
             <div>
               <div className="flex items-center gap-2 mb-4">
                 <Terminal size={16} className="text-[var(--color-primary)]" />
@@ -113,7 +113,7 @@ export default function About({
           </div>
 
           {/* CARD 2: Profile Photo (Spans 1 col, 2 rows) */}
-          <div className="md:col-span-1 md:row-span-2 bg-[var(--color-bg-subtle)] border border-[var(--color-border)] p-4 rounded-xl shadow-md hover:border-[var(--color-primary)] transition-all duration-300 flex flex-col justify-between">
+          <div className="md:col-span-1 md:row-span-2 glass-panel hover-glow p-4 rounded-xl shadow-md flex flex-col justify-between">
             <div className="relative aspect-square w-full rounded-lg overflow-hidden flex items-center justify-center">
               {profile.photoUrl ? (
                 <img
@@ -145,7 +145,7 @@ export default function About({
             </div>
           </div>
 
-          <div className="bg-[var(--color-bg-subtle)] border border-[var(--color-border)] p-6 rounded-xl shadow-md hover:border-[var(--color-primary)] transition-all duration-300 flex flex-col gap-3">
+          <div className="glass-panel hover-glow p-6 rounded-xl shadow-md flex flex-col gap-3">
             <div className="flex items-center justify-between">
               <span className="font-mono text-xs text-[var(--color-text-muted)]">
                 /location
@@ -184,7 +184,7 @@ export default function About({
           </div>
 
           {/* CARD 4: Core Tech Highlights (Spans 1 col) */}
-          <div className="bg-[var(--color-bg-subtle)] border border-[var(--color-border)] p-6 rounded-xl shadow-md hover:border-[var(--color-primary)] transition-all duration-300 flex flex-col gap-3">
+          <div className="glass-panel hover-glow p-6 rounded-xl shadow-md flex flex-col gap-3">
             <div className="flex items-center justify-between">
               <span className="font-mono text-xs text-[var(--color-text-muted)]">
                 /stack.quick
@@ -224,7 +224,7 @@ export default function About({
           </div>
 
           {/* CARD 5: Interests / Hobbies (Spans 1 col) */}
-          <div className="bg-[var(--color-bg-subtle)] border border-[var(--color-border)] p-6 rounded-xl shadow-md hover:border-[var(--color-primary)] transition-all duration-300 flex flex-col gap-3">
+          <div className="glass-panel hover-glow p-6 rounded-xl shadow-md flex flex-col gap-3">
             <div className="flex items-center justify-between">
               <span className="font-mono text-xs text-[var(--color-text-muted)]">
                 /interests
