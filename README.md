@@ -2,7 +2,7 @@
 
 Personal portfolio site with an admin dashboard for self-managing content.
 
-**Live:** [ihsanramadhan.my.id](https://ihsanramadhan.my.id) &nbsp;·&nbsp; **API:** [api.ihsanramadhan.my.id](https://api.ihsanramadhan.my.id/api/v1)
+**Live:** [ihsan.is-a.dev](https://ihsan.is-a.dev) &nbsp;·&nbsp; **API:** [api.ihsan.is-a.dev](https://api.ihsan.is-a.dev/api/v1)
 
 ---
 
@@ -112,8 +112,8 @@ Base URL: `/api/v1`
 
 | App | Platform | Domain |
 |---|---|---|
-| `apps/web` | Vercel | `ihsanramadhan.my.id` |
-| `apps/api` | Render | `api.ihsanramadhan.my.id` |
+| `apps/web` | Vercel | `ihsan.is-a.dev` |
+| `apps/api` | Render | `api.ihsan.is-a.dev` |
 
 ---
 
