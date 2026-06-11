@@ -21,7 +21,7 @@ async function bootstrap() {
   await app.register(multipart);
 
   const configService = app.get(ConfigService);
-  const port = configService.get<number>('PORT') || 3001;
+  const port = configService.get<number>('PORT') || 3000;
   const nodeEnv = configService.get<string>('NODE_ENV');
 
   app.setGlobalPrefix('api/v1');
@@ -33,7 +33,9 @@ async function bootstrap() {
   const frontendUrl = configService.get<string>('FRONTEND_URL');
   let corsOrigin: string | string[] | boolean = false;
 
-  if (frontendUrl) {
+  if (nodeEnv !== 'production') {
+    corsOrigin = true;
+  } else if (frontendUrl) {
     corsOrigin = frontendUrl.includes(',')
       ? frontendUrl.split(',')
       : frontendUrl;
@@ -63,15 +65,15 @@ async function bootstrap() {
   if (nodeEnv !== 'production') {
     const config = new DocumentBuilder()
       .setTitle('Portfolio API')
-      .setDescription('REST API for ihsanramadhan.my.id')
+      .setDescription('REST API for ihsan.is-a.dev')
       .setVersion('1.0')
-      .setContact('Muhammad Ihsan Ramadhan', 'https://ihsanramadhan.my.id', '')
+      .setContact('Muhammad Ihsan Ramadhan', 'https://ihsan.is-a.dev', '')
       .setExternalDoc(
         'GitHub Repository',
         'https://github.com/ihsan-ramadhan/portfolio',
       )
       .addServer('http://localhost:3000/api/v1', 'Development')
-      .addServer('https://api.ihsanramadhan.my.id/api/v1', 'Production')
+      .addServer('https://api.ihsan.is-a.dev/api/v1', 'Production')
       .addBearerAuth()
       .build();
 

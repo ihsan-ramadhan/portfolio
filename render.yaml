@@ -29,4 +29,4 @@ services:
       - key: SUPABASE_SERVICE_KEY
         sync: false
       - key: FRONTEND_URL
-        value: https://ihsanramadhan.my.id
+        value: https://ihsan.is-a.dev
