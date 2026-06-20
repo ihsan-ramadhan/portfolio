@@ -65,7 +65,7 @@ export default function GitHubActivity() {
   const { stats, contributions } = data ?? {};
 
   return (
-    <div className="relative w-full max-w-2xl bg-[var(--color-bg-subtle)]/70 border border-[var(--color-border)] rounded-md px-4 py-3 font-mono shadow-md hover-glow">
+    <div className="relative w-full max-w-2xl bg-bg-subtle/70 border border-border rounded-md px-4 py-3 font-mono shadow-md hover-glow">
       <div className="absolute inset-0 -z-10 rounded-md backdrop-blur-md pointer-events-none" />
       {stats && (
         <div className="flex flex-col gap-1 text-xs md:text-sm font-mono text-text-muted">

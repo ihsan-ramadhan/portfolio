@@ -49,7 +49,7 @@ export default function AsciiLogo() {
       onMouseLeave={() => setIsHovered(false)}
     >
       <div 
-        className={`absolute w-72 h-72 bg-[var(--color-primary)] rounded-full blur-[100px] pointer-events-none transition-opacity duration-500 ${
+        className={`absolute w-72 h-72 bg-primary rounded-full blur-[100px] pointer-events-none transition-opacity duration-500 ${
           isHovered ? 'opacity-15' : 'opacity-5'
         }`} 
       />
@@ -64,7 +64,7 @@ export default function AsciiLogo() {
         }}
         className="relative p-0 cursor-pointer group transition-transform duration-300"
       >
-        <pre className="font-mono text-2xl sm:text-3xl md:text-4xl leading-none text-transparent bg-clip-text bg-gradient-to-r from-blue-500 via-[var(--color-primary-dim)] to-blue-400 animate-ascii-glow select-none drop-shadow-[0_0_12px_rgba(59,130,246,0.4)] transition-all duration-300">
+        <pre className="font-mono text-2xl sm:text-3xl md:text-4xl leading-none text-transparent bg-clip-text bg-gradient-to-r from-blue-500 via-primary-dim to-blue-400 animate-ascii-glow select-none drop-shadow-[0_0_12px_rgba(59,130,246,0.4)] transition-all duration-300">
           {glitchedLogo}
         </pre>
       </motion.div>

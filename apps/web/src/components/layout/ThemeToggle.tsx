@@ -31,7 +31,7 @@ export default function ThemeToggle() {
     <button
       onClick={toggleTheme}
       className={`relative w-12 h-6 rounded-full p-1 transition-colors duration-300 flex items-center cursor-pointer ${
-        isDark ? 'bg-[var(--color-primary)]' : 'bg-[var(--color-border)]'
+        isDark ? 'bg-primary' : 'bg-border'
       }`}
       aria-label="Toggle Dark Mode"
     >

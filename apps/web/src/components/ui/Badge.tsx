@@ -12,9 +12,9 @@ export default function Badge({
   className = '' 
 }: BadgeProps) {
   const variants = {
-    outline: "border-[var(--color-primary)] text-[var(--color-primary)]",
-    primary: "bg-[var(--color-primary)] text-white border-[var(--color-primary)]",
-    ghost: "border-[var(--color-border)] text-[var(--color-text-muted)]"
+    outline: "border-primary text-primary",
+    primary: "bg-primary text-white border-primary",
+    ghost: "border-border text-text-muted"
   };
 
   return (

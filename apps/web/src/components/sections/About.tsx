@@ -50,16 +50,16 @@ export default function About({
     return (
       <section
         id="about"
-        className="py-20 w-full border-t border-[var(--color-border)]"
+        className="py-20 w-full border-t border-border"
       >
         <AnimatedSection>
           <SectionHeader icon={Terminal} title="whoami" />
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 auto-rows-[minmax(120px,_auto)]">
-            <Skeleton className="md:col-span-2 md:row-span-2 rounded-xl w-full min-h-[260px]" />
-            <Skeleton className="md:col-span-1 md:row-span-2 rounded-xl w-full min-h-[260px]" />
-            <Skeleton className="h-[120px] rounded-xl w-full" />
-            <Skeleton className="h-[120px] rounded-xl w-full" />
-            <Skeleton className="h-[120px] rounded-xl w-full" />
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 auto-rows-[minmax(120px,auto)]">
+            <Skeleton className="md:col-span-2 md:row-span-2 rounded-xl w-full min-h-65" />
+            <Skeleton className="md:col-span-1 md:row-span-2 rounded-xl w-full min-h-65" />
+            <Skeleton className="h-30 rounded-xl w-full" />
+            <Skeleton className="h-30 rounded-xl w-full" />
+            <Skeleton className="h-30 rounded-xl w-full" />
           </div>
         </AnimatedSection>
       </section>
@@ -70,7 +70,7 @@ export default function About({
     return (
       <section
         id="about"
-        className="py-20 w-full border-t border-[var(--color-border)]"
+        className="py-20 w-full border-t border-border"
       >
         <AnimatedSection>
           <SectionHeader icon={Terminal} title="whoami" />
@@ -87,27 +87,27 @@ export default function About({
   return (
     <section
       id="about"
-      className="py-20 w-full border-t border-[var(--color-border)]"
+      className="py-20 w-full border-t border-border"
     >
       <AnimatedSection>
         <SectionHeader icon={Terminal} title="whoami" />
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 auto-rows-[minmax(120px,_auto)]">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 auto-rows-[minmax(120px,auto)]">
           {/* CARD 1: Bio / Introduction (Spans 2 cols, 2 rows) */}
           <div className="md:col-span-2 md:row-span-2 glass-panel hover-glow p-6 rounded-xl shadow-md flex flex-col justify-between">
             <div>
               <div className="flex items-center gap-2 mb-4">
-                <Terminal size={16} className="text-[var(--color-primary)]" />
-                <span className="font-mono text-xs text-[var(--color-text-muted)]">
+                <Terminal size={16} className="text-primary" />
+                <span className="font-mono text-xs text-text-muted">
                   guest@ihsan-portfolio:~/bio
                 </span>
               </div>
-              <div className="text-[var(--color-text-muted)] leading-relaxed font-sans whitespace-pre-wrap text-sm md:text-base">
+              <div className="text-text-muted leading-relaxed font-sans whitespace-pre-wrap text-sm md:text-base">
                 {profile.bio}
               </div>
             </div>
-            <div className="mt-6 flex items-center gap-2 text-xs font-mono text-[var(--color-text-muted)]">
-              <span className="text-[var(--color-primary)] font-bold">~</span>
+            <div className="mt-6 flex items-center gap-2 text-xs font-mono text-text-muted">
+              <span className="text-primary font-bold">~</span>
               <span>cat bio.txt</span>
             </div>
           </div>
@@ -126,7 +126,7 @@ export default function About({
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 rounded-lg"
                 />
               ) : (
-                <div className="w-full h-full flex flex-col items-center justify-center text-[var(--color-text-muted)] bg-[var(--color-bg)] border border-[var(--color-border)] rounded-lg">
+                <div className="w-full h-full flex flex-col items-center justify-center text-text-muted bg-bg border border-border rounded-lg">
                   <ImageIcon
                     size={40}
                     className="mb-2 opacity-40 animate-pulse"
@@ -136,10 +136,10 @@ export default function About({
               )}
             </div>
             <div className="mt-4 flex flex-col gap-1">
-              <span className="font-sans font-bold text-[var(--color-text)] text-sm">
+              <span className="font-sans font-bold text-text text-sm">
                 Muhammad Ihsan Ramadhan
               </span>
-              <span className="font-mono text-xs text-[var(--color-primary)]">
+              <span className="font-mono text-xs text-primary">
                 {profile.headline || "Full Stack Developer"}
               </span>
             </div>
@@ -147,33 +147,33 @@ export default function About({
 
           <div className="glass-panel hover-glow p-6 rounded-xl shadow-md flex flex-col gap-3">
             <div className="flex items-center justify-between">
-              <span className="font-mono text-xs text-[var(--color-text-muted)]">
+              <span className="font-mono text-xs text-text-muted">
                 /location
               </span>
-              <Globe size={16} className="text-[var(--color-primary)]" />
+              <Globe size={16} className="text-primary" />
             </div>
              <div className="mt-3 space-y-2">
-               <div className="flex items-center gap-2 text-[var(--color-text-muted)] font-mono text-xs">
+               <div className="flex items-center gap-2 text-text-muted font-mono text-xs">
                  <MapPin
                    size={12}
-                   className="text-[var(--color-primary)] shrink-0"
+                   className="text-primary shrink-0"
                  />
                  <span>
                    Location:{" "}
-                   <span className="text-[var(--color-text)] font-semibold">
+                   <span className="text-text font-semibold">
                      {profile.location || "Bandung, ID"}
                    </span>
                  </span>
                </div>
                {localTime && (
-                 <div className="flex items-center gap-2 text-[var(--color-text-muted)] font-mono text-xs">
+                 <div className="flex items-center gap-2 text-text-muted font-mono text-xs">
                    <Clock
                      size={12}
-                     className="text-[var(--color-primary)] shrink-0"
+                     className="text-primary shrink-0"
                    />
                    <span>
                      Local Time:{" "}
-                     <span className="text-[var(--color-text)] font-semibold">
+                     <span className="text-text font-semibold">
                        {localTime}
                      </span>{" "}
                      (GMT+7)
@@ -186,10 +186,10 @@ export default function About({
           {/* CARD 4: Core Tech Highlights (Spans 1 col) */}
           <div className="glass-panel hover-glow p-6 rounded-xl shadow-md flex flex-col gap-3">
             <div className="flex items-center justify-between">
-              <span className="font-mono text-xs text-[var(--color-text-muted)]">
+              <span className="font-mono text-xs text-text-muted">
                 /stack.quick
               </span>
-              <Code2 size={16} className="text-[var(--color-primary)]" />
+              <Code2 size={16} className="text-primary" />
             </div>
             <div className="flex flex-wrap gap-2 mt-3">
               {isErrorSkills ? (
@@ -198,14 +198,14 @@ export default function About({
                   className="py-4 text-xs"
                 />
               ) : isLoadingSkills ? (
-                <span className="text-[10px] font-mono text-[var(--color-text-muted)] animate-pulse">
+                <span className="text-[10px] font-mono text-text-muted animate-pulse">
                   {">"} loading skills...
                 </span>
               ) : skills.length > 0 ? (
                 highlightTech.map((tech) => (
                   <div
                     key={tech.name}
-                    className="flex items-center gap-1 bg-[var(--color-bg)] border border-[var(--color-border)] px-2.5 py-1 rounded-md text-[10px] font-mono text-[var(--color-text-muted)] hover:border-[var(--color-primary)] hover:text-[var(--color-text)] transition-all duration-300"
+                    className="flex items-center gap-1 bg-bg border border-border px-2.5 py-1 rounded-md text-[10px] font-mono text-text-muted hover:border-primary hover:text-text transition-all duration-300"
                   >
                     <img
                       src={`https://cdn.simpleicons.org/${tech.icon || tech.name.toLowerCase()}/3b82f6`}
@@ -216,7 +216,7 @@ export default function About({
                   </div>
                 ))
               ) : (
-                <span className="text-[10px] font-mono text-[var(--color-text-muted)]">
+                <span className="text-[10px] font-mono text-text-muted">
                   {">"} no skills found
                 </span>
               )}
@@ -226,10 +226,10 @@ export default function About({
           {/* CARD 5: Interests / Hobbies (Spans 1 col) */}
           <div className="glass-panel hover-glow p-6 rounded-xl shadow-md flex flex-col gap-3">
             <div className="flex items-center justify-between">
-              <span className="font-mono text-xs text-[var(--color-text-muted)]">
+              <span className="font-mono text-xs text-text-muted">
                 /interests
               </span>
-              <Heart size={16} className="text-[var(--color-primary)]" />
+              <Heart size={16} className="text-primary" />
             </div>
             <div className="mt-3">
               {isErrorInterests ? (
@@ -238,7 +238,7 @@ export default function About({
                   className="py-4 text-xs"
                 />
               ) : isLoadingInterests ? (
-                <span className="text-[10px] font-mono text-[var(--color-text-muted)] animate-pulse">
+                <span className="text-[10px] font-mono text-text-muted animate-pulse">
                   {">"} loading interests...
                 </span>
               ) : interests.length > 0 ? (
@@ -246,18 +246,18 @@ export default function About({
                   {interests.map((interest) => (
                     <span
                       key={interest.id}
-                      className="px-2 py-0.5 rounded bg-[var(--color-bg)] text-[10px] font-mono text-[var(--color-text-muted)] border border-[var(--color-border)] hover:border-[var(--color-primary)] hover:text-[var(--color-text)] transition-colors duration-300"
+                      className="px-2 py-0.5 rounded bg-bg text-[10px] font-mono text-text-muted border border-border hover:border-primary hover:text-text transition-colors duration-300"
                     >
                       {interest.name}
                     </span>
                   ))}
                 </div>
               ) : (
-                <span className="text-[10px] font-mono text-[var(--color-text-muted)]">
+                <span className="text-[10px] font-mono text-text-muted">
                   {">"} no interests found
                 </span>
               )}
-              <p className="font-mono text-[9px] text-[var(--color-text-muted)] mt-2 leading-relaxed">
+              <p className="font-mono text-[9px] text-text-muted mt-2 leading-relaxed">
                 Primary areas of curiosity and building.
               </p>
             </div>

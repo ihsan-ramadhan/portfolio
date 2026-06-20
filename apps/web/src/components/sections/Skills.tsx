@@ -18,7 +18,7 @@ export default function Skills() {
   const duplicatedStack = Array(multiplier).fill(displaySkills).flat();
 
   return (
-    <section id="skills" className="py-20 w-full border-t border-[var(--color-border)] overflow-hidden">
+    <section id="skills" className="py-20 w-full border-t border-border overflow-hidden">
       <div className="w-full mb-12">
         <AnimatedSection>
           <SectionHeader icon={Terminal} title="tech.stack" />
@@ -48,14 +48,14 @@ export default function Skills() {
                 className="group relative flex flex-col items-center justify-center transition-transform hover:scale-110 mr-16"
                 title={tech.name}
               >
-                <div className="w-14 h-14 md:w-16 md:h-16 flex items-center justify-center p-3 rounded-xl glass-panel group-hover:border-[var(--color-primary)] group-hover:shadow-[0_0_20px_rgba(59,130,246,0.15)] transition-all duration-300">
+                <div className="w-14 h-14 md:w-16 md:h-16 flex items-center justify-center p-3 rounded-xl glass-panel group-hover:border-primary group-hover:shadow-[0_0_20px_rgba(59,130,246,0.15)] transition-all duration-300">
                   <img
                     src={`https://cdn.simpleicons.org/${tech.icon}/3b82f6`} 
                     alt={tech.name}
                     className="w-full h-full object-contain opacity-60 group-hover:opacity-100 transition-all duration-300"
                   />
                 </div>
-                <span className="absolute -bottom-6 font-mono text-[10px] text-[var(--color-primary)] opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
+                <span className="absolute -bottom-6 font-mono text-[10px] text-primary opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
                   {tech.name}
                 </span>
               </a>

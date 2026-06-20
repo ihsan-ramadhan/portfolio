@@ -65,7 +65,7 @@ export function InterestsTab({ token, setMessage }: Readonly<InterestsTabProps>)
     return (
       <div className="space-y-3 animate-pulse">
         {[1, 2, 3].map((i) => (
-          <div key={i} className="h-12 bg-[var(--color-bg-subtle)] rounded-lg border border-[var(--color-border)]" />
+          <div key={i} className="h-12 bg-bg-subtle rounded-lg border border-border" />
         ))}
       </div>
     );
@@ -73,29 +73,29 @@ export function InterestsTab({ token, setMessage }: Readonly<InterestsTabProps>)
 
   return (
     <div className="space-y-6">
-      <div className="bg-[var(--color-bg-subtle)] p-8 rounded-xl border border-[var(--color-border)]">
+      <div className="bg-bg-subtle p-8 rounded-xl border border-border">
         <div className="flex items-center justify-between mb-6">
           <div className="flex items-center gap-2">
-            <Sparkles size={18} className="text-[var(--color-primary)]" />
+            <Sparkles size={18} className="text-primary" />
             <div>
               <h3 className="font-mono font-bold">Manage Interests</h3>
-              <p className="text-xs text-[var(--color-text-muted)] font-mono mt-0.5">
+              <p className="text-xs text-text-muted font-mono mt-0.5">
               </p>
             </div>
           </div>
           <button
             onClick={handleOpenAdd}
-            className="flex items-center gap-2 bg-[var(--color-primary)] hover:bg-[var(--color-primary-dim)] text-white text-xs font-mono px-4 py-2 rounded-lg cursor-pointer transition-all shadow-md"
+            className="flex items-center gap-2 bg-primary hover:bg-primary-dim text-white text-xs font-mono px-4 py-2 rounded-lg cursor-pointer transition-all shadow-md"
           >
             <Plus size={14} /> Add Interest
           </button>
         </div>
 
         {interests.length === 0 ? (
-          <div className="text-center py-12 border border-dashed border-[var(--color-border)] rounded-xl">
-            <Sparkles size={32} className="mx-auto text-[var(--color-text-muted)] mb-3 opacity-40" />
-            <p className="font-mono text-sm text-[var(--color-text-muted)]">No interests yet</p>
-            <p className="font-mono text-xs text-[var(--color-text-muted)] mt-1 opacity-60">
+          <div className="text-center py-12 border border-dashed border-border rounded-xl">
+            <Sparkles size={32} className="mx-auto text-text-muted mb-3 opacity-40" />
+            <p className="font-mono text-sm text-text-muted">No interests yet</p>
+            <p className="font-mono text-xs text-text-muted mt-1 opacity-60">
               Add things you are passionate about
             </p>
           </div>
@@ -109,17 +109,17 @@ export function InterestsTab({ token, setMessage }: Readonly<InterestsTabProps>)
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, scale: 0.95 }}
                   transition={{ duration: 0.2 }}
-                  className="group flex items-center justify-between gap-3 bg-[var(--color-bg)] border border-[var(--color-border)] hover:border-[var(--color-primary)]/50 rounded-lg px-4 py-3 transition-all"
+                  className="group flex items-center justify-between gap-3 bg-bg border border-border hover:border-primary/50 rounded-lg px-4 py-3 transition-all"
                 >
                   <div className="flex items-center gap-3 min-w-0">
                     <GripVertical
                       size={14}
-                      className="text-[var(--color-text-muted)] opacity-40 shrink-0"
+                      className="text-text-muted opacity-40 shrink-0"
                     />
-                    <div className="w-7 h-7 rounded-md bg-[var(--color-primary)]/10 border border-[var(--color-primary)]/20 flex items-center justify-center shrink-0">
-                      <Tag size={12} className="text-[var(--color-primary)]" />
+                    <div className="w-7 h-7 rounded-md bg-primary/10 border border-primary/20 flex items-center justify-center shrink-0">
+                      <Tag size={12} className="text-primary" />
                     </div>
-                    <span className="font-mono text-sm font-semibold text-[var(--color-text)] truncate">
+                    <span className="font-mono text-sm font-semibold text-text truncate">
                       {interest.name}
                     </span>
                   </div>
@@ -127,13 +127,13 @@ export function InterestsTab({ token, setMessage }: Readonly<InterestsTabProps>)
                   <div className="flex items-center gap-1 shrink-0 opacity-0 group-hover:opacity-100 transition-opacity">
                     <button
                       onClick={() => handleOpenEdit(interest)}
-                      className="p-1.5 hover:bg-[var(--color-bg-subtle)] rounded-md text-[var(--color-text-muted)] hover:text-[var(--color-primary)] transition-colors cursor-pointer"
+                      className="p-1.5 hover:bg-bg-subtle rounded-md text-text-muted hover:text-primary transition-colors cursor-pointer"
                     >
                       <Edit2 size={13} />
                     </button>
                     <button
                       onClick={() => handleDelete(interest.id)}
-                      className="p-1.5 hover:bg-[var(--color-bg-subtle)] rounded-md text-[var(--color-text-muted)] hover:text-red-400 transition-colors cursor-pointer"
+                      className="p-1.5 hover:bg-bg-subtle rounded-md text-text-muted hover:text-red-400 transition-colors cursor-pointer"
                     >
                       <Trash2 size={13} />
                     </button>
@@ -153,18 +153,18 @@ export function InterestsTab({ token, setMessage }: Readonly<InterestsTabProps>)
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 16 }}
               transition={{ duration: 0.2 }}
-              className="bg-[var(--color-bg-subtle)] w-full max-w-sm rounded-xl border border-[var(--color-border)] overflow-hidden shadow-2xl"
+              className="bg-bg-subtle w-full max-w-sm rounded-xl border border-border overflow-hidden shadow-2xl"
             >
-              <div className="flex items-center justify-between px-6 py-4 border-b border-[var(--color-border)] bg-[var(--color-bg)]">
+              <div className="flex items-center justify-between px-6 py-4 border-b border-border bg-bg">
                 <div className="flex items-center gap-2">
-                  <Tag size={15} className="text-[var(--color-primary)]" />
+                  <Tag size={15} className="text-primary" />
                   <h3 className="font-mono font-bold text-sm">
                     {editingInterest ? 'Edit Interest' : 'Add Interest'}
                   </h3>
                 </div>
                 <button
                   onClick={() => setIsModalOpen(false)}
-                  className="text-[var(--color-text-muted)] hover:text-[var(--color-text)] cursor-pointer transition-colors"
+                  className="text-text-muted hover:text-text cursor-pointer transition-colors"
                 >
                   <X size={18} />
                 </button>
@@ -172,7 +172,7 @@ export function InterestsTab({ token, setMessage }: Readonly<InterestsTabProps>)
 
               <form onSubmit={handleSave} className="p-6 space-y-4">
                 <div className="space-y-1.5">
-                  <label className="text-xs font-mono text-[var(--color-text-muted)] uppercase tracking-wider">
+                  <label className="text-xs font-mono text-text-muted uppercase tracking-wider">
                     Interest Name
                   </label>
                   <input
@@ -182,12 +182,12 @@ export function InterestsTab({ token, setMessage }: Readonly<InterestsTabProps>)
                     placeholder="e.g. Open Source, System Design, Coffee..."
                     value={form.name}
                     onChange={(e) => setForm({ ...form, name: e.target.value })}
-                    className="w-full bg-[var(--color-bg)] border border-[var(--color-border)] rounded-lg p-2.5 focus:outline-none focus:border-[var(--color-primary)] transition-colors font-mono text-sm placeholder:text-[var(--color-text-muted)]/50"
+                    className="w-full bg-bg border border-border rounded-lg p-2.5 focus:outline-none focus:border-primary transition-colors font-mono text-sm placeholder:text-text-muted/50"
                   />
                 </div>
 
                 <div className="space-y-1.5">
-                  <label className="text-xs font-mono text-[var(--color-text-muted)] uppercase tracking-wider">
+                  <label className="text-xs font-mono text-text-muted uppercase tracking-wider">
                     Display Order
                   </label>
                   <input
@@ -195,7 +195,7 @@ export function InterestsTab({ token, setMessage }: Readonly<InterestsTabProps>)
                     min="0"
                     value={form.order}
                     onChange={(e) => setForm({ ...form, order: parseInt(e.target.value) || 0 })}
-                    className="w-full bg-[var(--color-bg)] border border-[var(--color-border)] rounded-lg p-2.5 focus:outline-none focus:border-[var(--color-primary)] transition-colors font-mono text-sm"
+                    className="w-full bg-bg border border-border rounded-lg p-2.5 focus:outline-none focus:border-primary transition-colors font-mono text-sm"
                   />
                 </div>
 
@@ -203,14 +203,14 @@ export function InterestsTab({ token, setMessage }: Readonly<InterestsTabProps>)
                   <button
                     type="button"
                     onClick={() => setIsModalOpen(false)}
-                    className="flex-1 py-2.5 border border-[var(--color-border)] rounded-lg font-mono text-sm text-[var(--color-text-muted)] hover:text-[var(--color-text)] transition-colors cursor-pointer"
+                    className="flex-1 py-2.5 border border-border rounded-lg font-mono text-sm text-text-muted hover:text-text transition-colors cursor-pointer"
                   >
                     Cancel
                   </button>
                   <button
                     type="submit"
                     disabled={isPending}
-                    className="flex-1 flex items-center justify-center gap-2 bg-[var(--color-primary)] text-white font-mono py-2.5 rounded-lg hover:bg-[var(--color-primary-dim)] transition-all disabled:opacity-50 cursor-pointer shadow-md text-sm"
+                    className="flex-1 flex items-center justify-center gap-2 bg-primary text-white font-mono py-2.5 rounded-lg hover:bg-primary-dim transition-all disabled:opacity-50 cursor-pointer shadow-md text-sm"
                   >
                     <Sparkles size={14} />
                     {isPending ? 'Saving...' : editingInterest ? 'Update' : 'Add'}

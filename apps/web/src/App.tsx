@@ -26,11 +26,11 @@ function App() {
 
   return (
     <Router>
-      <div className="relative z-0 min-h-screen bg-[var(--color-bg)] text-[var(--color-text)] transition-colors duration-300 ease-in-out selection:bg-[var(--color-primary)] selection:text-white">
+      <div className="relative z-0 min-h-screen bg-bg text-text transition-colors duration-300 ease-in-out selection:bg-primary selection:text-white">
         <div className="bg-grid-pattern" />
         {isDesktop && <InteractiveMesh />}
         
-        <Suspense fallback={<div className="h-screen w-full flex items-center justify-center font-mono text-[var(--color-text-muted)] animate-pulse">Initializing...</div>}>
+        <Suspense fallback={<div className="h-screen w-full flex items-center justify-center font-mono text-text-muted animate-pulse">Initializing...</div>}>
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/login" element={<Login />} />

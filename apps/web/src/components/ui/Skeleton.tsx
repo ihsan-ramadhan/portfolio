@@ -4,6 +4,6 @@ interface SkeletonProps {
 
 export default function Skeleton({ className = "" }: SkeletonProps) {
   return (
-    <div className={`animate-pulse bg-[var(--color-bg-subtle)] border border-[var(--color-border)] rounded ${className}`} />
+    <div className={`animate-pulse bg-bg-subtle border border-border rounded ${className}`} />
   );
 }

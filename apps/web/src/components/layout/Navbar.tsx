@@ -50,7 +50,7 @@ export default function Navbar() {
   return (
     <nav className={`sticky top-0 z-50 w-full border-b transition-all duration-300 ${
       scrolled 
-      ? "bg-white/70 dark:bg-[#0B0F19]/65 backdrop-blur-md border-[var(--color-border)] py-3 shadow-sm shadow-[var(--color-border)]/10" 
+      ? "bg-white/70 dark:bg-[#0B0F19]/65 backdrop-blur-md border-border py-3 shadow-sm shadow-border/10" 
       : "bg-transparent border-transparent py-4"
     }`}>
       <div className="w-full px-4 md:px-8 lg:px-16 flex items-center justify-between">
@@ -62,7 +62,7 @@ export default function Navbar() {
           }}
           className="font-mono font-bold text-xl tracking-tighter z-50 group hover:opacity-95 transition-opacity"
         >
-          ihsan<span className="text-[var(--color-primary)] group-hover:text-[var(--color-secondary)] transition-colors duration-300">.is-a.dev</span>
+          ihsan<span className="text-primary group-hover:text-secondary transition-colors duration-300">.is-a.dev</span>
         </a>
 
         <div className="hidden md:flex items-center gap-8">
@@ -71,10 +71,10 @@ export default function Navbar() {
               key={link.name} 
               href={link.href}
               onClick={(e) => handleScrollClick(e, link.href)}
-              className="relative text-sm font-mono text-[var(--color-text-muted)] hover:text-[var(--color-primary)] transition-colors py-1 group"
+              className="relative text-sm font-mono text-text-muted hover:text-primary transition-colors py-1 group"
             >
               {link.name}
-              <span className="absolute bottom-0 left-0 w-0 h-[1.5px] bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-secondary)] transition-all duration-300 group-hover:w-full" />
+              <span className="absolute bottom-0 left-0 w-0 h-[1.5px] bg-gradient-to-r from-primary to-secondary transition-all duration-300 group-hover:w-full" />
             </a>
           ))}
           <ThemeToggle />
@@ -84,7 +84,7 @@ export default function Navbar() {
           <ThemeToggle />
           <button 
             onClick={() => setIsOpen(!isOpen)}
-            className="text-[var(--color-text)] p-1"
+            className="text-text p-1"
             aria-label="Toggle menu"
             aria-expanded={isOpen}
           >
@@ -99,7 +99,7 @@ export default function Navbar() {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: '100vh' }}
             exit={{ opacity: 0, height: 0 }}
-            className="fixed inset-0 bg-[var(--color-bg)] z-40 flex flex-col items-center justify-center gap-8 md:hidden"
+            className="fixed inset-0 bg-bg z-40 flex flex-col items-center justify-center gap-8 md:hidden"
           >
             {navLinks.map((link, idx) => (
               <motion.a
@@ -109,7 +109,7 @@ export default function Navbar() {
                 key={link.name}
                 href={link.href}
                 onClick={(e) => handleScrollClick(e, link.href)}
-                className="text-2xl font-mono font-bold hover:text-[var(--color-primary)]"
+                className="text-2xl font-mono font-bold hover:text-primary"
               >
                 {link.name}
               </motion.a>

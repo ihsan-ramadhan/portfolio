@@ -83,27 +83,27 @@ export function ExperienceTab({ token, setMessage }: Readonly<ExperienceTabProps
   };
 
   if (isLoading) {
-    return <div className="font-mono text-[var(--color-text-muted)] animate-pulse">Loading experiences...</div>;
+    return <div className="font-mono text-text-muted animate-pulse">Loading experiences...</div>;
   }
 
   return (
     <div className="space-y-6">
-      <div className="bg-[var(--color-bg-subtle)] p-8 rounded-xl border border-[var(--color-border)]">
+      <div className="bg-bg-subtle p-8 rounded-xl border border-border">
         <div className="flex items-center justify-between mb-6">
           <div className="flex items-center gap-2">
-            <Briefcase size={18} className="text-[var(--color-primary)]" />
+            <Briefcase size={18} className="text-primary" />
             <h3 className="font-mono font-bold">Manage Experience</h3>
           </div>
           <button 
             onClick={handleOpenAdd}
-            className="flex items-center gap-2 bg-[var(--color-primary)] hover:bg-[var(--color-primary-dim)] text-white text-xs font-mono px-4 py-2 rounded-lg cursor-pointer transition-all"
+            className="flex items-center gap-2 bg-primary hover:bg-primary-dim text-white text-xs font-mono px-4 py-2 rounded-lg cursor-pointer transition-all"
           >
             <Plus size={14} /> Add Experience
           </button>
         </div>
 
         {experiences.length === 0 ? (
-          <div className="text-center py-8 text-[var(--color-text-muted)] font-mono text-sm border border-dashed border-[var(--color-border)] rounded-xl">
+          <div className="text-center py-8 text-text-muted font-mono text-sm border border-dashed border-border rounded-xl">
             No experience records found.
           </div>
         ) : (
@@ -111,29 +111,29 @@ export function ExperienceTab({ token, setMessage }: Readonly<ExperienceTabProps
             {experiences.map((exp) => (
               <div 
                 key={exp.id} 
-                className="bg-[var(--color-bg)] p-5 rounded-lg border border-[var(--color-border)] hover:border-[var(--color-primary)]/40 transition-colors flex justify-between items-start gap-4"
+                className="bg-bg p-5 rounded-lg border border-border hover:border-primary/40 transition-colors flex justify-between items-start gap-4"
               >
                 <div className="space-y-2">
                   <h4 className="font-bold font-sans text-base">{exp.position}</h4>
-                  <p className="text-xs font-mono text-[var(--color-primary)]">{exp.company}</p>
-                  <p className="text-xs text-[var(--color-text-muted)] flex items-center gap-1">
+                  <p className="text-xs font-mono text-primary">{exp.company}</p>
+                  <p className="text-xs text-text-muted flex items-center gap-1">
                     <Calendar size={12} /> {exp.startDate} - {exp.endDate || 'Present'}
                   </p>
                   {exp.description && (
-                    <p className="text-sm text-[var(--color-text-muted)] max-w-2xl whitespace-pre-wrap">{exp.description}</p>
+                    <p className="text-sm text-text-muted max-w-2xl whitespace-pre-wrap">{exp.description}</p>
                   )}
                 </div>
 
                 <div className="flex items-center gap-2">
                   <button 
                     onClick={() => handleOpenEdit(exp)}
-                    className="p-2 hover:bg-[var(--color-bg-subtle)] rounded-lg text-[var(--color-text-muted)] hover:text-[var(--color-primary)] transition-colors cursor-pointer"
+                    className="p-2 hover:bg-bg-subtle rounded-lg text-text-muted hover:text-primary transition-colors cursor-pointer"
                   >
                     <Edit size={16} />
                   </button>
                   <button 
                     onClick={() => handleDelete(exp.id!)}
-                    className="p-2 hover:bg-[var(--color-bg-subtle)] rounded-lg text-[var(--color-text-muted)] hover:text-red-400 transition-colors cursor-pointer"
+                    className="p-2 hover:bg-bg-subtle rounded-lg text-text-muted hover:text-red-400 transition-colors cursor-pointer"
                   >
                     <Trash2 size={16} />
                   </button>
@@ -149,15 +149,15 @@ export function ExperienceTab({ token, setMessage }: Readonly<ExperienceTabProps
           <motion.div 
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
-            className="bg-[var(--color-bg-subtle)] w-full max-w-lg rounded-xl border border-[var(--color-border)] overflow-hidden shadow-2xl"
+            className="bg-bg-subtle w-full max-w-lg rounded-xl border border-border overflow-hidden shadow-2xl"
           >
-            <div className="flex items-center justify-between px-6 py-4 border-b border-[var(--color-border)] bg-[var(--color-bg)]">
+            <div className="flex items-center justify-between px-6 py-4 border-b border-border bg-bg">
               <h3 className="font-mono font-bold text-sm">
                 {editingExp ? 'Edit Experience' : 'Add Experience'}
               </h3>
               <button 
                 onClick={() => setIsModalOpen(false)}
-                className="text-[var(--color-text-muted)] hover:text-[var(--color-text)] cursor-pointer"
+                className="text-text-muted hover:text-text cursor-pointer"
               >
                 <X size={18} />
               </button>
@@ -165,78 +165,78 @@ export function ExperienceTab({ token, setMessage }: Readonly<ExperienceTabProps
 
             <form onSubmit={handleSave} className="p-6 space-y-4">
               <div className="space-y-1">
-                <label className="text-xs font-mono text-[var(--color-text-muted)] uppercase">Company</label>
+                <label className="text-xs font-mono text-text-muted uppercase">Company</label>
                 <input 
                   type="text" 
                   required
                   value={form.company}
                   onChange={(e) => setForm({...form, company: e.target.value})}
-                  className="w-full bg-[var(--color-bg)] border border-[var(--color-border)] rounded-lg p-2.5 focus:outline-none focus:border-[var(--color-primary)] transition-colors font-mono text-sm"
+                  className="w-full bg-bg border border-border rounded-lg p-2.5 focus:outline-none focus:border-primary transition-colors font-mono text-sm"
                 />
               </div>
 
               <div className="space-y-1">
-                <label className="text-xs font-mono text-[var(--color-text-muted)] uppercase">Position</label>
+                <label className="text-xs font-mono text-text-muted uppercase">Position</label>
                 <input 
                   type="text" 
                   required
                   value={form.position}
                   onChange={(e) => setForm({...form, position: e.target.value})}
-                  className="w-full bg-[var(--color-bg)] border border-[var(--color-border)] rounded-lg p-2.5 focus:outline-none focus:border-[var(--color-primary)] transition-colors font-mono text-sm"
+                  className="w-full bg-bg border border-border rounded-lg p-2.5 focus:outline-none focus:border-primary transition-colors font-mono text-sm"
                 />
               </div>
 
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-1">
-                  <label className="text-xs font-mono text-[var(--color-text-muted)] uppercase">Start Date</label>
+                  <label className="text-xs font-mono text-text-muted uppercase">Start Date</label>
                   <input 
                     type="text" 
                     placeholder="e.g. Jan 2024"
                     required
                     value={form.startDate}
                     onChange={(e) => setForm({...form, startDate: e.target.value})}
-                    className="w-full bg-[var(--color-bg)] border border-[var(--color-border)] rounded-lg p-2.5 focus:outline-none focus:border-[var(--color-primary)] transition-colors font-mono text-sm"
+                    className="w-full bg-bg border border-border rounded-lg p-2.5 focus:outline-none focus:border-primary transition-colors font-mono text-sm"
                   />
                 </div>
 
                 <div className="space-y-1">
-                  <label className="text-xs font-mono text-[var(--color-text-muted)] uppercase">End Date</label>
+                  <label className="text-xs font-mono text-text-muted uppercase">End Date</label>
                   <input 
                     type="text" 
                     placeholder="e.g. Present or Dec 2024"
                     required
                     value={form.endDate}
                     onChange={(e) => setForm({...form, endDate: e.target.value})}
-                    className="w-full bg-[var(--color-bg)] border border-[var(--color-border)] rounded-lg p-2.5 focus:outline-none focus:border-[var(--color-primary)] transition-colors font-mono text-sm"
+                    className="w-full bg-bg border border-border rounded-lg p-2.5 focus:outline-none focus:border-primary transition-colors font-mono text-sm"
                   />
                 </div>
               </div>
 
               <div className="space-y-1">
-                <label className="text-xs font-mono text-[var(--color-text-muted)] uppercase">Description</label>
+                <label className="text-xs font-mono text-text-muted uppercase">Description</label>
                 <textarea 
                   rows={4}
                   value={form.description}
                   onChange={(e) => setForm({...form, description: e.target.value})}
-                  className="w-full bg-[var(--color-bg)] border border-[var(--color-border)] rounded-lg p-2.5 focus:outline-none focus:border-[var(--color-primary)] transition-colors font-mono text-sm resize-none"
+                  className="w-full bg-bg border border-border rounded-lg p-2.5 focus:outline-none focus:border-primary transition-colors font-mono text-sm resize-none"
                 />
               </div>
 
               <div className="space-y-1">
-                <label className="text-xs font-mono text-[var(--color-text-muted)] uppercase">Display Order</label>
+                <label className="text-xs font-mono text-text-muted uppercase">Display Order</label>
                 <input 
                   type="number" 
                   required
                   value={form.order}
                   onChange={(e) => setForm({...form, order: parseInt(e.target.value) || 1})}
-                  className="w-full bg-[var(--color-bg)] border border-[var(--color-border)] rounded-lg p-2.5 focus:outline-none focus:border-[var(--color-primary)] transition-colors font-mono text-sm"
+                  className="w-full bg-bg border border-border rounded-lg p-2.5 focus:outline-none focus:border-primary transition-colors font-mono text-sm"
                 />
               </div>
 
               <button 
                 type="submit"
                 disabled={isPending}
-                className="w-full flex items-center justify-center gap-2 bg-[var(--color-primary)] text-white font-mono py-2.5 rounded-lg hover:bg-[var(--color-primary-dim)] transition-all disabled:opacity-50 cursor-pointer shadow-md text-sm"
+                className="w-full flex items-center justify-center gap-2 bg-primary text-white font-mono py-2.5 rounded-lg hover:bg-primary-dim transition-all disabled:opacity-50 cursor-pointer shadow-md text-sm"
               >
                 <Save size={16} />
                 {isPending ? 'Saving...' : 'Save Experience'}

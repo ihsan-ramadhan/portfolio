@@ -81,22 +81,22 @@ export function SkillsTab({ token, setMessage }: Readonly<SkillsTabProps>) {
   };
 
   if (skillsLoading) {
-    return <div className="font-mono text-[var(--color-text-muted)] animate-pulse">Loading skills...</div>;
+    return <div className="font-mono text-text-muted animate-pulse">Loading skills...</div>;
   }
 
   const categories: Skill['category'][] = ['FRONTEND', 'BACKEND', 'TOOLS', 'OTHERS'];
 
   return (
     <div className="space-y-6">
-      <div className="bg-[var(--color-bg-subtle)] p-8 rounded-xl border border-[var(--color-border)]">
+      <div className="bg-bg-subtle p-8 rounded-xl border border-border">
         <div className="flex items-center justify-between mb-6">
           <div className="flex items-center gap-2">
-            <Code size={18} className="text-[var(--color-primary)]" />
+            <Code size={18} className="text-primary" />
             <h3 className="font-mono font-bold">Manage Skills</h3>
           </div>
           <button 
             onClick={handleOpenAddSkill}
-            className="flex items-center gap-2 bg-[var(--color-primary)] hover:bg-[var(--color-primary-dim)] text-white text-xs font-mono px-4 py-2 rounded-lg cursor-pointer transition-all"
+            className="flex items-center gap-2 bg-primary hover:bg-primary-dim text-white text-xs font-mono px-4 py-2 rounded-lg cursor-pointer transition-all"
           >
             <Plus size={14} /> Add Skill
           </button>
@@ -109,16 +109,16 @@ export function SkillsTab({ token, setMessage }: Readonly<SkillsTabProps>) {
 
             return (
               <div key={cat} className="space-y-3">
-                <h4 className="font-mono text-xs text-[var(--color-text-muted)] uppercase border-b border-[var(--color-border)] pb-1">{cat}</h4>
+                <h4 className="font-mono text-xs text-text-muted uppercase border-b border-border pb-1">{cat}</h4>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                   {catSkills.map((skill) => (
                     <div 
                       key={skill.id} 
-                      className="bg-[var(--color-bg)] p-4 rounded-lg border border-[var(--color-border)] hover:border-[var(--color-primary)]/40 transition-colors flex justify-between items-center"
+                      className="bg-bg p-4 rounded-lg border border-border hover:border-primary/40 transition-colors flex justify-between items-center"
                     >
                       <div className="flex items-center gap-3">
                         {skill.icon && (
-                          <div className="w-8 h-8 rounded-lg bg-[var(--color-bg-subtle)] border border-[var(--color-border)] p-1.5 flex items-center justify-center">
+                          <div className="w-8 h-8 rounded-lg bg-bg-subtle border border-border p-1.5 flex items-center justify-center">
                             <img 
                               src={`https://cdn.simpleicons.org/${skill.icon}/3b82f6`} 
                               alt={skill.name} 
@@ -128,20 +128,20 @@ export function SkillsTab({ token, setMessage }: Readonly<SkillsTabProps>) {
                         )}
                         <div>
                           <p className="font-bold text-sm">{skill.name}</p>
-                          <p className="text-[10px] font-mono text-[var(--color-text-muted)]">Proficiency: {skill.proficiency}%</p>
+                          <p className="text-[10px] font-mono text-text-muted">Proficiency: {skill.proficiency}%</p>
                         </div>
                       </div>
 
                       <div className="flex items-center gap-1">
                         <button 
                           onClick={() => handleOpenEditSkill(skill)}
-                          className="p-1.5 hover:bg-[var(--color-bg-subtle)] rounded-md text-[var(--color-text-muted)] hover:text-[var(--color-primary)] transition-colors cursor-pointer"
+                          className="p-1.5 hover:bg-bg-subtle rounded-md text-text-muted hover:text-primary transition-colors cursor-pointer"
                         >
                           <Edit size={14} />
                         </button>
                         <button 
                           onClick={() => handleDeleteSkill(skill.id)}
-                          className="p-1.5 hover:bg-[var(--color-bg-subtle)] rounded-md text-[var(--color-text-muted)] hover:text-red-400 transition-colors cursor-pointer"
+                          className="p-1.5 hover:bg-bg-subtle rounded-md text-text-muted hover:text-red-400 transition-colors cursor-pointer"
                         >
                           <Trash2 size={14} />
                         </button>
@@ -160,15 +160,15 @@ export function SkillsTab({ token, setMessage }: Readonly<SkillsTabProps>) {
           <motion.div 
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
-            className="bg-[var(--color-bg-subtle)] w-full max-w-md rounded-xl border border-[var(--color-border)] overflow-hidden shadow-2xl"
+            className="bg-bg-subtle w-full max-w-md rounded-xl border border-border overflow-hidden shadow-2xl"
           >
-            <div className="flex items-center justify-between px-6 py-4 border-b border-[var(--color-border)] bg-[var(--color-bg)]">
+            <div className="flex items-center justify-between px-6 py-4 border-b border-border bg-bg">
               <h3 className="font-mono font-bold text-sm">
                 {editingSkill ? 'Edit Skill' : 'Add Skill'}
               </h3>
               <button 
                 onClick={() => setIsSkillModalOpen(false)}
-                className="text-[var(--color-text-muted)] hover:text-[var(--color-text)] cursor-pointer"
+                className="text-text-muted hover:text-text cursor-pointer"
               >
                 <X size={18} />
               </button>
@@ -176,22 +176,22 @@ export function SkillsTab({ token, setMessage }: Readonly<SkillsTabProps>) {
 
             <form onSubmit={handleSaveSkill} className="p-6 space-y-4">
               <div className="space-y-1">
-                <label className="text-xs font-mono text-[var(--color-text-muted)] uppercase">Skill Name</label>
+                <label className="text-xs font-mono text-text-muted uppercase">Skill Name</label>
                 <input 
                   type="text" 
                   required
                   value={skillForm.name}
                   onChange={(e) => setSkillForm({...skillForm, name: e.target.value})}
-                  className="w-full bg-[var(--color-bg)] border border-[var(--color-border)] rounded-lg p-2.5 focus:outline-none focus:border-[var(--color-primary)] transition-colors font-mono text-sm"
+                  className="w-full bg-bg border border-border rounded-lg p-2.5 focus:outline-none focus:border-primary transition-colors font-mono text-sm"
                 />
               </div>
 
               <div className="space-y-1">
-                <label className="text-xs font-mono text-[var(--color-text-muted)] uppercase">Category</label>
+                <label className="text-xs font-mono text-text-muted uppercase">Category</label>
                 <select 
                   value={skillForm.category}
                   onChange={(e) => setSkillForm({...skillForm, category: e.target.value as Skill['category']})}
-                  className="w-full bg-[var(--color-bg)] border border-[var(--color-border)] rounded-lg p-2.5 focus:outline-none focus:border-[var(--color-primary)] transition-colors font-mono text-sm"
+                  className="w-full bg-bg border border-border rounded-lg p-2.5 focus:outline-none focus:border-primary transition-colors font-mono text-sm"
                 >
                   {categories.map((cat) => (
                     <option key={cat} value={cat}>{cat}</option>
@@ -200,7 +200,7 @@ export function SkillsTab({ token, setMessage }: Readonly<SkillsTabProps>) {
               </div>
 
               <div className="space-y-1">
-                <label className="text-xs font-mono text-[var(--color-text-muted)] uppercase">Proficiency (%)</label>
+                <label className="text-xs font-mono text-text-muted uppercase">Proficiency (%)</label>
                 <input 
                   type="number" 
                   required
@@ -208,37 +208,37 @@ export function SkillsTab({ token, setMessage }: Readonly<SkillsTabProps>) {
                   max="100"
                   value={skillForm.proficiency}
                   onChange={(e) => setSkillForm({...skillForm, proficiency: parseInt(e.target.value) || 0})}
-                  className="w-full bg-[var(--color-bg)] border border-[var(--color-border)] rounded-lg p-2.5 focus:outline-none focus:border-[var(--color-primary)] transition-colors font-mono text-sm"
+                  className="w-full bg-bg border border-border rounded-lg p-2.5 focus:outline-none focus:border-primary transition-colors font-mono text-sm"
                 />
               </div>
 
               <div className="space-y-1">
-                <label className="text-xs font-mono text-[var(--color-text-muted)] uppercase flex items-center justify-between">
+                <label className="text-xs font-mono text-text-muted uppercase flex items-center justify-between">
                   <span>SimpleIcon Slug</span>
-                  <span className="text-[9px] text-[var(--color-text-muted)] lowercase">e.g. react, node-dot-js</span>
+                  <span className="text-[9px] text-text-muted lowercase">e.g. react, node-dot-js</span>
                 </label>
                 <input 
                   type="text" 
                   value={skillForm.icon}
                   onChange={(e) => setSkillForm({...skillForm, icon: e.target.value})}
-                  className="w-full bg-[var(--color-bg)] border border-[var(--color-border)] rounded-lg p-2.5 focus:outline-none focus:border-[var(--color-primary)] transition-colors font-mono text-sm"
+                  className="w-full bg-bg border border-border rounded-lg p-2.5 focus:outline-none focus:border-primary transition-colors font-mono text-sm"
                 />
               </div>
 
               <div className="space-y-1">
-                <label className="text-xs font-mono text-[var(--color-text-muted)] uppercase">Documentation / Search URL</label>
+                <label className="text-xs font-mono text-text-muted uppercase">Documentation / Search URL</label>
                 <input 
                   type="url" 
                   value={skillForm.url}
                   onChange={(e) => setSkillForm({...skillForm, url: e.target.value})}
-                  className="w-full bg-[var(--color-bg)] border border-[var(--color-border)] rounded-lg p-2.5 focus:outline-none focus:border-[var(--color-primary)] transition-colors font-mono text-sm"
+                  className="w-full bg-bg border border-border rounded-lg p-2.5 focus:outline-none focus:border-primary transition-colors font-mono text-sm"
                 />
               </div>
 
               <button 
                 type="submit"
                 disabled={isPending}
-                className="w-full flex items-center justify-center gap-2 bg-[var(--color-primary)] text-white font-mono py-2.5 rounded-lg hover:bg-[var(--color-primary-dim)] transition-all disabled:opacity-50 cursor-pointer shadow-md text-sm"
+                className="w-full flex items-center justify-center gap-2 bg-primary text-white font-mono py-2.5 rounded-lg hover:bg-primary-dim transition-all disabled:opacity-50 cursor-pointer shadow-md text-sm"
               >
                 <Code size={16} />
                 {isPending ? 'Saving...' : 'Save Skill'}
