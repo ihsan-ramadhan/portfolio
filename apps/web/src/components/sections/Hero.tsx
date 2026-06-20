@@ -1,11 +1,12 @@
 import AsciiLogo from '../ui/AsciiLogo';
+import AnimatedSection from '../ui/AnimatedSection';
 import GitHubActivity from './GitHubActivity';
 import type { Profile } from '../../types';
 
 export default function Hero({ profile }: { profile?: Profile; isLoading?: boolean }) {
   return (
-    <section className="min-h-[85vh] flex flex-col justify-center items-start w-full py-12">
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center w-full">
+    <section id="hero" className="min-h-[85vh] flex flex-col justify-center items-start w-full py-12">
+      <AnimatedSection className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center w-full">
         {/* Left Side: Text Content */}
         <div className="flex flex-col items-start w-full">
           {profile?.statusBadge && (
@@ -37,7 +38,7 @@ export default function Hero({ profile }: { profile?: Profile; isLoading?: boole
         <div className="hidden lg:block relative">
           <AsciiLogo />
         </div>
-      </div>
+      </AnimatedSection>
     </section>
   );
 }
