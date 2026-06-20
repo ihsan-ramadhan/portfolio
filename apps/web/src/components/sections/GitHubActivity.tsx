@@ -1,38 +1,8 @@
 import { useEffect, useState } from 'react';
 import { GitCommit, GitPullRequest, GitBranch, FolderPlus, Eye } from 'lucide-react';
 import ErrorState from '../ui/ErrorState';
-
-interface ContributionRepoEntry {
-  name: string;
-  count: number;
-}
-
-interface GitHubContributions {
-  period: string;
-  commits: {
-    total: number;
-    repoCount: number;
-    topRepos: ContributionRepoEntry[];
-  };
-  pullRequests: {
-    opened: number;
-    merged: number;
-  };
-  reviews: number;
-  reposCreated: number;
-}
-
-interface GitHubStats {
-  publicRepos: number;
-  totalStars: number;
-  totalContributions: number;
-}
-
-interface GitHubActivityData {
-  stats: GitHubStats;
-  contributions: GitHubContributions;
-  syncTime: string;
-}
+import Skeleton from '../ui/Skeleton';
+import { useGitHubActivity } from '../../hooks/use-github-activity';
 
 function getRelativeTime(date: Date): string {
   const now = new Date();
@@ -53,59 +23,20 @@ function getRelativeTime(date: Date): string {
 }
 
 export default function GitHubActivity() {
-  const [data, setData] = useState<GitHubActivityData | null>(null);
-  const [syncTime, setSyncTime] = useState<Date | null>(null);
+  const { data, isLoading, isError } = useGitHubActivity();
+
+  const syncTime = data?.syncTime ? new Date(data.syncTime) : null;
   const [relativeSyncStr, setRelativeSyncStr] = useState<string>('just now');
-  const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<boolean>(false);
-
-  useEffect(() => {
-    let isMounted = true;
-
-    async function fetchGitHubData() {
-      try {
-        setLoading(true);
-        setError(false);
-
-        const response = await fetch(`${import.meta.env.VITE_API_URL}/github/activity`);
-        if (!response.ok) {
-          throw new Error('Failed to fetch from backend API');
-        }
-
-        const json = await response.json();
-        const payload = json.data;
-
-        if (isMounted) {
-          setData(payload ?? null);
-          setSyncTime(payload?.syncTime ? new Date(payload.syncTime) : null);
-          setLoading(false);
-        }
-      } catch {
-        if (isMounted) {
-          setError(true);
-          setLoading(false);
-        }
-      }
-    }
-
-    fetchGitHubData();
-
-    return () => {
-      isMounted = false;
-    };
-  }, []);
 
   useEffect(() => {
     if (!syncTime) return;
-    const updateRelative = () => {
-      setRelativeSyncStr(getRelativeTime(syncTime));
-    };
+    const updateRelative = () => setRelativeSyncStr(getRelativeTime(syncTime));
     updateRelative();
     const interval = setInterval(updateRelative, 30000);
     return () => clearInterval(interval);
   }, [syncTime]);
 
-  if (error) {
+  if (isError) {
     return (
       <ErrorState
         message="GitHub activity data is temporarily unavailable."
@@ -114,18 +45,18 @@ export default function GitHubActivity() {
     );
   }
 
-  if (loading) {
+  if (isLoading) {
     return (
-      <div className="w-full max-w-2xl bg-terminal border border-border rounded-md px-4 py-3 font-mono animate-pulse">
+      <div className="w-full max-w-2xl bg-terminal border border-border rounded-md px-4 py-3 font-mono">
         <div className="space-y-2">
-          <div className="h-4 bg-bg-subtle rounded w-3/4"></div>
-          <div className="h-4 bg-bg-subtle rounded w-1/2"></div>
+          <Skeleton className="h-4 w-3/4" />
+          <Skeleton className="h-4 w-1/2" />
         </div>
         <div className="mt-3 border-t border-border pt-3 space-y-2">
-          <div className="h-3 bg-bg-subtle rounded w-5/6"></div>
-          <div className="h-3 bg-bg-subtle rounded w-2/3"></div>
-          <div className="h-3 bg-bg-subtle rounded w-3/4"></div>
-          <div className="h-3 bg-bg-subtle rounded w-1/2"></div>
+          <Skeleton className="h-3 w-5/6" />
+          <Skeleton className="h-3 w-2/3" />
+          <Skeleton className="h-3 w-3/4" />
+          <Skeleton className="h-3 w-1/2" />
         </div>
       </div>
     );
@@ -206,7 +137,7 @@ export default function GitHubActivity() {
                 {contributions.pullRequests.merged > 0 && (
                   <span className="text-text-muted opacity-70">
                     {' '}·{' '}
-                    <span className="text-emerald-600 dark:text-green-400 font-semibold">{contributions.pullRequests.merged}</span>
+                    <span className="text-secondary font-semibold">{contributions.pullRequests.merged}</span>
                     {' '}merged
                   </span>
                 )}
