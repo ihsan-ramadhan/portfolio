@@ -62,7 +62,7 @@ export default function Navbar() {
           }}
           className="font-mono font-bold text-xl tracking-tighter z-50 group hover:opacity-95 transition-opacity"
         >
-          ihsan<span className="text-[var(--color-primary)] group-hover:text-[var(--color-secondary)] transition-colors duration-300">.dev</span>
+          ihsan<span className="text-[var(--color-primary)] group-hover:text-[var(--color-secondary)] transition-colors duration-300">.is-a.dev</span>
         </a>
 
         <div className="hidden md:flex items-center gap-8">

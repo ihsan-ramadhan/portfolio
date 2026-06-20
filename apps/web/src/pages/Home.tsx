@@ -1,4 +1,4 @@
-import React from 'react';
+import { Fragment, type ReactNode } from 'react';
 import Navbar from '../components/layout/Navbar';
 import Hero from '../components/sections/Hero';
 import About from '../components/sections/About';
@@ -12,23 +12,23 @@ import Footer from '../components/layout/Footer';
 import { useProfile } from '../hooks/use-profile';
 import { useSections } from '../hooks/use-sections';
 
+const defaultSections = [
+  { name: 'hero', isEnabled: true },
+  { name: 'about', isEnabled: true },
+  { name: 'education', isEnabled: true },
+  { name: 'experience', isEnabled: true },
+  { name: 'skills', isEnabled: true },
+  { name: 'projects', isEnabled: true },
+  { name: 'contact', isEnabled: true },
+];
+
 export default function Home() {
   const { data: profile, isLoading: isProfileLoading } = useProfile();
   const { data: sections = [] } = useSections();
 
-  const defaultSections = [
-    { name: 'hero', isEnabled: true },
-    { name: 'about', isEnabled: true },
-    { name: 'education', isEnabled: true },
-    { name: 'experience', isEnabled: true },
-    { name: 'skills', isEnabled: true },
-    { name: 'projects', isEnabled: true },
-    { name: 'contact', isEnabled: true },
-  ];
-
   const activeSections = sections.length > 0 ? sections : defaultSections;
 
-  const sectionRenderer: Record<string, React.ReactNode> = {
+  const sectionRenderer: Record<string, ReactNode> = {
     hero: <Hero profile={profile} isLoading={isProfileLoading} />,
     about: <About profile={profile} isLoading={isProfileLoading} />,
     skills: <Skills />,
@@ -44,9 +44,7 @@ export default function Home() {
         {activeSections
           .filter((sec) => sec.isEnabled && sectionRenderer[sec.name])
           .map((sec) => (
-            <React.Fragment key={sec.name}>
-              {sectionRenderer[sec.name]}
-            </React.Fragment>
+            <Fragment key={sec.name}>{sectionRenderer[sec.name]}</Fragment>
           ))}
       </main>
       <Footer />

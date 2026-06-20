@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { Github, Terminal} from 'lucide-react';
+import { Github, Terminal } from 'lucide-react';
 import SectionHeader from '../ui/SectionHeader';
 import AnimatedSection from '../ui/AnimatedSection';
 import ErrorState from '../ui/ErrorState';
