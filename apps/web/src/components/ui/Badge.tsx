@@ -1,5 +1,7 @@
+import { type ReactNode } from 'react';
+
 interface BadgeProps {
-  children: React.ReactNode;
+  children: ReactNode;
   variant?: 'outline' | 'ghost' | 'primary';
   className?: string;
 }

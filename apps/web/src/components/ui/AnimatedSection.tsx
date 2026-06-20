@@ -1,7 +1,8 @@
+import { type ReactNode } from 'react';
 import { motion, type HTMLMotionProps } from 'framer-motion';
 
 interface AnimatedSectionProps extends HTMLMotionProps<'div'> {
-  children: React.ReactNode;
+  children: ReactNode;
   className?: string;
   delay?: number;
 }
