@@ -35,7 +35,7 @@ export default function Skills() {
               ))}
             </div>
           ) : skills.length === 0 ? (
-            <ErrorState message="Tech stack information is temporarily unavailable." />
+            <ErrorState message="Tech stack data is temporarily unavailable." />
           ) : (
             <div className="animate-marquee pt-4 pb-10">
               {duplicatedStack.map((tech, index) => (

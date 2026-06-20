@@ -41,7 +41,7 @@ export default function Projects() {
               );
             })
           ) : projects.length === 0 ? (
-            <ErrorState message="Projects are temporarily unavailable." />
+            <ErrorState message="Projects data is temporarily unavailable." />
           ) : (
             projects.map((project, index) => {
               const isEven = index % 2 === 0;
