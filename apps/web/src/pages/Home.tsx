@@ -28,14 +28,14 @@ export default function Home() {
 
   const activeSections = sections.length > 0 ? sections : defaultSections;
 
-  const sectionRenderer: Record<string, ReactNode> = {
-    hero: <Hero profile={profile} isLoading={isProfileLoading} />,
-    about: <About profile={profile} isLoading={isProfileLoading} />,
-    skills: <Skills />,
-    projects: <Projects />,
-    experience: <Experience />,
-    education: <Education />,
-    contact: <Contact />,
+  const sectionRenderer: Record<string, () => ReactNode> = {
+    hero: () => <Hero profile={profile} isLoading={isProfileLoading} />,
+    about: () => <About profile={profile} isLoading={isProfileLoading} />,
+    skills: () => <Skills />,
+    projects: () => <Projects />,
+    experience: () => <Experience />,
+    education: () => <Education />,
+    contact: () => <Contact />,
   };
   return (
     <>
@@ -44,7 +44,7 @@ export default function Home() {
         {activeSections
           .filter((sec) => sec.isEnabled && sectionRenderer[sec.name])
           .map((sec) => (
-            <Fragment key={sec.name}>{sectionRenderer[sec.name]}</Fragment>
+            <Fragment key={sec.name}>{sectionRenderer[sec.name]()}</Fragment>
           ))}
       </main>
       <Footer />
