@@ -25,16 +25,16 @@ function getRelativeTime(date: Date): string {
 export default function GitHubActivity() {
   const { data, isLoading, isError } = useGitHubActivity();
 
-  const syncTime = data?.syncTime ? new Date(data.syncTime) : null;
   const [relativeSyncStr, setRelativeSyncStr] = useState<string>('just now');
 
   useEffect(() => {
-    if (!syncTime) return;
+    if (!data?.syncTime) return;
+    const syncTime = new Date(data.syncTime);
     const updateRelative = () => setRelativeSyncStr(getRelativeTime(syncTime));
     updateRelative();
     const interval = setInterval(updateRelative, 30000);
     return () => clearInterval(interval);
-  }, [syncTime]);
+  }, [data?.syncTime]);
 
   if (isError) {
     return (
