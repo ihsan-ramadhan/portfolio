@@ -80,10 +80,10 @@ html {
 
 @keyframes ascii-glow {
   0%, 100% {
-    filter: drop-shadow(0 0 10px rgba(59, 130, 246, 0.4));
+    filter: drop-shadow(0 0 10px color-mix(in srgb, var(--color-primary) 40%, transparent));
   }
   50% {
-    filter: drop-shadow(0 0 18px rgba(59, 130, 246, 0.75));
+    filter: drop-shadow(0 0 18px color-mix(in srgb, var(--color-primary) 75%, transparent));
   }
 }
 
@@ -138,13 +138,13 @@ html {
 .glass-panel {
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  background-color: rgba(248, 250, 252, 0.7);
+  background-color: color-mix(in srgb, var(--color-bg-subtle) 70%, transparent);
   border: 1px solid var(--color-border);
 }
 
 .dark .glass-panel {
-  background-color: rgba(11, 15, 25, 0.65);
-  border-color: rgba(30, 41, 59, 0.5);
+  background-color: color-mix(in srgb, var(--color-bg-subtle) 65%, transparent);
+  border-color: color-mix(in srgb, var(--color-border) 50%, transparent);
 }
 
 .hover-glow {
@@ -153,5 +153,5 @@ html {
 
 .hover-glow:hover {
   border-color: var(--color-primary-dim);
-  box-shadow: 0 10px 30px -10px rgba(59, 130, 246, 0.15), 0 1px 15px -5px rgba(16, 185, 129, 0.1);
+  box-shadow: 0 10px 30px -10px color-mix(in srgb, var(--color-primary) 15%, transparent), 0 1px 15px -5px color-mix(in srgb, var(--color-secondary) 10%, transparent);
 }

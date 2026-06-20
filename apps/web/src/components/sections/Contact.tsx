@@ -123,7 +123,7 @@ export default function Contact() {
             
             {submitted ? (
               <div className="p-8 text-center space-y-4 relative z-10 flex flex-col items-center justify-center min-h-[300px]">
-                <CheckCircle size={64} className="text-green-500 mx-auto animate-bounce" />
+                <CheckCircle size={64} className="text-secondary mx-auto animate-bounce" />
                 <h4 className="text-xl font-bold font-mono text-text">MESSAGE_SENT</h4>
                 <p className="text-sm text-text-muted font-mono">Thank you for reaching out! I will get back to you as soon as possible.</p>
                 <button 

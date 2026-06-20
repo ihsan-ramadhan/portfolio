@@ -50,7 +50,7 @@ export default function Navbar() {
   return (
     <nav className={`sticky top-0 z-50 w-full border-b transition-all duration-300 ${
       scrolled 
-      ? "bg-white/70 dark:bg-[#0B0F19]/65 backdrop-blur-md border-border py-3 shadow-sm shadow-border/10" 
+      ? "bg-bg-subtle/65 backdrop-blur-md border-border py-3 shadow-sm shadow-border/10"
       : "bg-transparent border-transparent py-4"
     }`}>
       <div className="w-full px-4 md:px-8 lg:px-16 flex items-center justify-between">
