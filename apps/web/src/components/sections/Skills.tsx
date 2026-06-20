@@ -45,7 +45,7 @@ export default function Skills() {
                   target="_blank"
                   rel="noopener noreferrer"
                   className="group relative flex flex-col items-center justify-center transition-transform hover:scale-110 mr-16"
-                  title={tech.name}
+                  aria-label={tech.name}
                 >
                   <div className="w-14 h-14 md:w-16 md:h-16 flex items-center justify-center p-3 rounded-xl glass-panel group-hover:border-primary group-hover:shadow-[0_0_20px_rgba(59,130,246,0.15)] transition-all duration-300">
                     <img

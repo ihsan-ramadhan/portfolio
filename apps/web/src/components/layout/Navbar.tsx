@@ -99,6 +99,9 @@ export default function Navbar() {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: '100vh' }}
             exit={{ opacity: 0, height: 0 }}
+            role="dialog"
+            aria-modal="true"
+            aria-label="Navigation menu"
             className="fixed inset-0 bg-bg z-40 flex flex-col items-center justify-center gap-8 md:hidden"
           >
             {navLinks.map((link, idx) => (

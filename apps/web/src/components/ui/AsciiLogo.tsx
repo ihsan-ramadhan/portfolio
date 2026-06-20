@@ -43,7 +43,8 @@ export default function AsciiLogo() {
   }, [isHovered]);
 
   return (
-    <div 
+    <div
+      aria-hidden="true"
       className="relative w-full h-[450px] hidden lg:flex flex-col items-center justify-center select-none"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
@@ -62,7 +63,7 @@ export default function AsciiLogo() {
           scale: { duration: 0.15, ease: 'easeInOut' },
           default: { duration: 0.8, ease: 'easeOut' }
         }}
-        className="relative p-0 cursor-pointer group transition-transform duration-300"
+        className="relative p-0 group transition-transform duration-300"
       >
         <pre className="font-mono text-2xl sm:text-3xl md:text-4xl leading-none text-transparent bg-clip-text bg-gradient-to-r from-blue-500 via-primary-dim to-blue-400 animate-ascii-glow select-none drop-shadow-[0_0_12px_rgba(59,130,246,0.4)] transition-all duration-300">
           {glitchedLogo}

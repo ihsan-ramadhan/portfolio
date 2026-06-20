@@ -48,11 +48,6 @@ export default function Contact() {
     mutation.mutate({ name, email, message });
   };
 
-  const handleCopyEmail = () => {
-    navigator.clipboard.writeText('m.ihsan.r30@gmail.com');
-    toast.success('Email copied to clipboard!');
-  };
-
   return (
     <section id="contact" className="py-20 w-full border-t border-border">
       <AnimatedSection>
@@ -71,9 +66,10 @@ export default function Contact() {
             </div>
 
             <div className="space-y-4">
-              <button 
-                onClick={handleCopyEmail}
-                className="w-full text-left flex items-center gap-4 p-4 rounded-xl glass-panel hover-glow transition-all group cursor-pointer"
+              <a
+                href="mailto:m.ihsan.r30@gmail.com"
+                aria-label="Send email to m.ihsan.r30@gmail.com"
+                className="w-full text-left flex items-center gap-4 p-4 rounded-xl glass-panel hover-glow transition-all group"
               >
                 <div className="p-3 rounded-lg bg-bg text-primary group-hover:bg-primary group-hover:text-white transition-colors">
                   <Mail size={20} />
@@ -82,7 +78,7 @@ export default function Contact() {
                   <p className="text-xs font-mono text-text-muted">Email</p>
                   <p className="font-mono text-sm">m.ihsan.r30@gmail.com</p>
                 </div>
-              </button>
+              </a>
 
               <a 
                 href="https://linkedin.com/in/m-ihsan-r" 
