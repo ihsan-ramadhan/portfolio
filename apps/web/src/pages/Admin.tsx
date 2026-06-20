@@ -221,17 +221,17 @@ export default function Admin() {
   };
 
   if (loading) return (
-    <div className="min-h-screen flex items-center justify-center font-mono text-[var(--color-text-muted)] animate-pulse">
+    <div className="min-h-screen flex items-center justify-center font-mono text-text-muted animate-pulse">
       Initialising Admin Environment...
     </div>
   );
 
   if (!profile) return (
-    <div className="min-h-screen flex flex-col items-center justify-center font-mono gap-4 text-[var(--color-text-muted)]">
+    <div className="min-h-screen flex flex-col items-center justify-center font-mono gap-4 text-text-muted">
       <div className="text-red-500 font-bold">[ERROR]: Failed to load profile data</div>
       <button 
         onClick={fetchProfile}
-        className="px-4 py-2 bg-[var(--color-bg)] border border-[var(--color-border)] rounded-lg text-xs text-[var(--color-text)] hover:border-[var(--color-primary)] transition-colors cursor-pointer"
+        className="px-4 py-2 bg-bg border border-border rounded-lg text-xs text-text hover:border-primary transition-colors cursor-pointer"
       >
         RETRY_FETCH
       </button>
@@ -241,21 +241,21 @@ export default function Admin() {
   return (
     <div className="min-h-screen p-4 md:p-8 max-w-6xl mx-auto space-y-8">
       {/* Header */}
-      <header className="flex justify-between items-center bg-[var(--color-bg-subtle)] p-6 rounded-xl border border-[var(--color-border)]">
+      <header className="flex justify-between items-center bg-bg-subtle p-6 rounded-xl border border-border">
         <div className="flex items-center gap-4">
-          <div className="w-12 h-12 bg-[var(--color-primary)] rounded-lg flex items-center justify-center text-white">
+          <div className="w-12 h-12 bg-primary rounded-lg flex items-center justify-center text-white">
             <Layout size={24} />
           </div>
           <div>
             <h1 className="text-xl font-bold font-mono">Admin Control Panel</h1>
-            <p className="text-xs text-[var(--color-text-muted)] font-mono">Portfolio Management System</p>
+            <p className="text-xs text-text-muted font-mono">Portfolio Management System</p>
           </div>
         </div>
 
         <div className="flex items-center gap-4">
           <button
             onClick={handleLogout}
-            className="flex items-center gap-2 px-4 py-2 bg-[var(--color-bg)] border border-[var(--color-border)] rounded-lg text-xs font-mono text-[var(--color-text)] hover:bg-red-500 hover:text-white hover:border-red-500 transition-all cursor-pointer shadow-sm"
+            className="flex items-center gap-2 px-4 py-2 bg-bg border border-border rounded-lg text-xs font-mono text-text hover:bg-red-500 hover:text-white hover:border-red-500 transition-all cursor-pointer shadow-sm"
           >
             <LogOut size={16} /> Logout
           </button>
@@ -276,13 +276,13 @@ export default function Admin() {
         </div>
       )}
 
-      <div className="flex gap-2 border-b border-[var(--color-border)] pb-4 overflow-x-auto">
+      <div className="flex gap-2 border-b border-border pb-4 overflow-x-auto">
         <button
           onClick={() => setActiveTab('profile')}
           className={`flex items-center gap-2 px-4 py-2 rounded-lg font-mono text-sm transition-all cursor-pointer whitespace-nowrap ${
             activeTab === 'profile'
-              ? 'bg-[var(--color-primary)] text-white font-bold shadow-lg'
-              : 'bg-[var(--color-bg-subtle)] text-[var(--color-text-muted)] hover:text-[var(--color-text)] border border-[var(--color-border)]'
+              ? 'bg-primary text-white font-bold shadow-lg'
+              : 'bg-bg-subtle text-text-muted hover:text-text border border-border'
           }`}
         >
           <User size={16} /> Profile Details
@@ -291,8 +291,8 @@ export default function Admin() {
           onClick={() => setActiveTab('sections')}
           className={`flex items-center gap-2 px-4 py-2 rounded-lg font-mono text-sm transition-all cursor-pointer whitespace-nowrap ${
             activeTab === 'sections'
-              ? 'bg-[var(--color-primary)] text-white font-bold shadow-lg'
-              : 'bg-[var(--color-bg-subtle)] text-[var(--color-text-muted)] hover:text-[var(--color-text)] border border-[var(--color-border)]'
+              ? 'bg-primary text-white font-bold shadow-lg'
+              : 'bg-bg-subtle text-text-muted hover:text-text border border-border'
           }`}
         >
           <Layout size={16} /> Site Sections
@@ -301,8 +301,8 @@ export default function Admin() {
           onClick={() => setActiveTab('skills')}
           className={`flex items-center gap-2 px-4 py-2 rounded-lg font-mono text-sm transition-all cursor-pointer whitespace-nowrap ${
             activeTab === 'skills'
-              ? 'bg-[var(--color-primary)] text-white font-bold shadow-lg'
-              : 'bg-[var(--color-bg-subtle)] text-[var(--color-text-muted)] hover:text-[var(--color-text)] border border-[var(--color-border)]'
+              ? 'bg-primary text-white font-bold shadow-lg'
+              : 'bg-bg-subtle text-text-muted hover:text-text border border-border'
           }`}
         >
           <Code size={16} /> Tech Stack & Skills
@@ -311,8 +311,8 @@ export default function Admin() {
           onClick={() => setActiveTab('projects')}
           className={`flex items-center gap-2 px-4 py-2 rounded-lg font-mono text-sm transition-all cursor-pointer whitespace-nowrap ${
             activeTab === 'projects'
-              ? 'bg-[var(--color-primary)] text-white font-bold shadow-lg'
-              : 'bg-[var(--color-bg-subtle)] text-[var(--color-text-muted)] hover:text-[var(--color-text)] border border-[var(--color-border)]'
+              ? 'bg-primary text-white font-bold shadow-lg'
+              : 'bg-bg-subtle text-text-muted hover:text-text border border-border'
           }`}
         >
           <FolderGit2 size={16} /> Project Customizations
@@ -321,8 +321,8 @@ export default function Admin() {
           onClick={() => setActiveTab('experience')}
           className={`flex items-center gap-2 px-4 py-2 rounded-lg font-mono text-sm transition-all cursor-pointer whitespace-nowrap ${
             activeTab === 'experience'
-              ? 'bg-[var(--color-primary)] text-white font-bold shadow-lg'
-              : 'bg-[var(--color-bg-subtle)] text-[var(--color-text-muted)] hover:text-[var(--color-text)] border border-[var(--color-border)]'
+              ? 'bg-primary text-white font-bold shadow-lg'
+              : 'bg-bg-subtle text-text-muted hover:text-text border border-border'
           }`}
         >
           <Briefcase size={16} /> Work Experience
@@ -331,8 +331,8 @@ export default function Admin() {
           onClick={() => setActiveTab('education')}
           className={`flex items-center gap-2 px-4 py-2 rounded-lg font-mono text-sm transition-all cursor-pointer whitespace-nowrap ${
             activeTab === 'education'
-              ? 'bg-[var(--color-primary)] text-white font-bold shadow-lg'
-              : 'bg-[var(--color-bg-subtle)] text-[var(--color-text-muted)] hover:text-[var(--color-text)] border border-[var(--color-border)]'
+              ? 'bg-primary text-white font-bold shadow-lg'
+              : 'bg-bg-subtle text-text-muted hover:text-text border border-border'
           }`}
         >
           <GraduationCap size={16} /> Academic History
@@ -341,8 +341,8 @@ export default function Admin() {
           onClick={() => setActiveTab('interests')}
           className={`flex items-center gap-2 px-4 py-2 rounded-lg font-mono text-sm transition-all cursor-pointer whitespace-nowrap ${
             activeTab === 'interests'
-              ? 'bg-[var(--color-primary)] text-white font-bold shadow-lg'
-              : 'bg-[var(--color-bg-subtle)] text-[var(--color-text-muted)] hover:text-[var(--color-text)] border border-[var(--color-border)]'
+              ? 'bg-primary text-white font-bold shadow-lg'
+              : 'bg-bg-subtle text-text-muted hover:text-text border border-border'
           }`}
         >
           <Sparkles size={16} /> Interests
@@ -351,8 +351,8 @@ export default function Admin() {
           onClick={() => setActiveTab('inbox')}
           className={`flex items-center gap-2 px-4 py-2 rounded-lg font-mono text-sm transition-all cursor-pointer whitespace-nowrap ${
             activeTab === 'inbox'
-              ? 'bg-[var(--color-primary)] text-white font-bold shadow-lg'
-              : 'bg-[var(--color-bg-subtle)] text-[var(--color-text-muted)] hover:text-[var(--color-text)] border border-[var(--color-border)]'
+              ? 'bg-primary text-white font-bold shadow-lg'
+              : 'bg-bg-subtle text-text-muted hover:text-text border border-border'
           }`}
         >
           <Mail size={16} /> Contact Inbox
@@ -367,31 +367,31 @@ export default function Admin() {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         {/* Left Sidebar Profile Overview */}
         <div className="space-y-6">
-          <div className="bg-[var(--color-bg-subtle)] p-6 rounded-xl border border-[var(--color-border)] text-center space-y-4">
+          <div className="bg-bg-subtle p-6 rounded-xl border border-border text-center space-y-4">
             <div className="relative w-24 h-24 mx-auto group">
               <img 
                 src={profile.photoUrl || 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&q=80&w=200'} 
                 alt={profile.headline}
-                className="w-24 h-24 rounded-full object-cover border-2 border-[var(--color-primary)] shadow-lg group-hover:scale-105 transition-transform"
+                className="w-24 h-24 rounded-full object-cover border-2 border-primary shadow-lg group-hover:scale-105 transition-transform"
               />
               <button 
                 type="button"
                 onClick={() => setIsPhotoModalOpen(true)}
-                className="absolute bottom-0 right-0 p-2 bg-[var(--color-primary)] rounded-full text-white cursor-pointer hover:scale-110 transition-transform shadow-lg"
+                className="absolute bottom-0 right-0 p-2 bg-primary rounded-full text-white cursor-pointer hover:scale-110 transition-transform shadow-lg"
               >
                 <Camera size={16} />
               </button>
             </div>
             <h2 className="font-bold font-mono">{profile.headline}</h2>
-            <p className="text-sm text-[var(--color-text-muted)] font-mono">{profile.location}</p>
+            <p className="text-sm text-text-muted font-mono">{profile.location}</p>
           </div>
 
-          <div className="bg-[var(--color-bg-subtle)] p-6 rounded-xl border border-[var(--color-border)] shadow-sm">
-            <h3 className="text-xs font-mono text-[var(--color-text)] font-bold uppercase tracking-widest mb-4">Quick Actions</h3>
+          <div className="bg-bg-subtle p-6 rounded-xl border border-border shadow-sm">
+            <h3 className="text-xs font-mono text-text font-bold uppercase tracking-widest mb-4">Quick Actions</h3>
             <button 
               onClick={handleSyncGitHub}
               disabled={syncing}
-              className="w-full flex items-center justify-between p-3 bg-[var(--color-bg)] border border-[var(--color-border)] rounded-lg text-sm font-mono text-[var(--color-text)] hover:border-[var(--color-primary)] hover:text-[var(--color-primary)] transition-all disabled:opacity-50 shadow-sm"
+              className="w-full flex items-center justify-between p-3 bg-bg border border-border rounded-lg text-sm font-mono text-text hover:border-primary hover:text-primary transition-all disabled:opacity-50 shadow-sm"
             >
               <div className="flex items-center gap-3">
                 <Github size={18} />

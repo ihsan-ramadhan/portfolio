@@ -43,11 +43,11 @@ export default function Login() {
       <motion.div 
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="w-full max-w-md bg-[var(--color-bg-subtle)] border border-[var(--color-border)] rounded-xl overflow-hidden shadow-2xl"
+        className="w-full max-w-md bg-bg-subtle border border-border rounded-xl overflow-hidden shadow-2xl"
       >
-        <div className="bg-[var(--color-bg)] p-6 border-b border-[var(--color-border)] flex items-center gap-2">
-          <Terminal size={18} className="text-[var(--color-primary)] animate-pulse" />
-          <span className="font-mono text-sm text-[var(--color-text)] font-bold tracking-wide">sudo auth login</span>
+        <div className="bg-bg p-6 border-b border-border flex items-center gap-2">
+          <Terminal size={18} className="text-primary animate-pulse" />
+          <span className="font-mono text-sm text-text font-bold tracking-wide">sudo auth login</span>
         </div>
 
         <form onSubmit={handleSubmit} className="p-8 space-y-6">
@@ -58,30 +58,30 @@ export default function Login() {
           )}
 
           <div className="space-y-2">
-            <label className="text-xs font-mono text-[var(--color-text-muted)] uppercase tracking-wider">Email Address</label>
+            <label className="text-xs font-mono text-text-muted uppercase tracking-wider">Email Address</label>
             <div className="relative">
-              <Mail className="absolute left-3 top-1/2 -translate-y-1/2 text-[var(--color-text-muted)]" size={18} />
+              <Mail className="absolute left-3 top-1/2 -translate-y-1/2 text-text-muted" size={18} />
               <input 
                 type="email" 
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
-                className="w-full bg-[var(--color-bg)] border border-[var(--color-border)] rounded-lg py-3 pl-10 pr-4 focus:outline-none focus:border-[var(--color-primary)] transition-colors font-mono text-sm text-[var(--color-text)]"
+                className="w-full bg-bg border border-border rounded-lg py-3 pl-10 pr-4 focus:outline-none focus:border-primary transition-colors font-mono text-sm text-text"
                 placeholder="admin@example.com"
               />
             </div>
           </div>
 
           <div className="space-y-2">
-            <label className="text-xs font-mono text-[var(--color-text-muted)] uppercase tracking-wider">Password</label>
+            <label className="text-xs font-mono text-text-muted uppercase tracking-wider">Password</label>
             <div className="relative">
-              <Lock className="absolute left-3 top-1/2 -translate-y-1/2 text-[var(--color-text-muted)]" size={18} />
+              <Lock className="absolute left-3 top-1/2 -translate-y-1/2 text-text-muted" size={18} />
               <input 
                 type="password" 
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
-                className="w-full bg-[var(--color-bg)] border border-[var(--color-border)] rounded-lg py-3 pl-10 pr-4 focus:outline-none focus:border-[var(--color-primary)] transition-colors font-mono text-sm text-[var(--color-text)]"
+                className="w-full bg-bg border border-border rounded-lg py-3 pl-10 pr-4 focus:outline-none focus:border-primary transition-colors font-mono text-sm text-text"
                 placeholder="••••••••"
               />
             </div>
@@ -90,15 +90,15 @@ export default function Login() {
           <button 
             type="submit" 
             disabled={loading}
-            className="w-full bg-[var(--color-primary)] hover:bg-[var(--color-primary-dim)] text-white font-mono font-bold py-4 rounded-lg flex items-center justify-center gap-2 transition-all active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer shadow-lg"
+            className="w-full bg-primary hover:bg-primary-dim text-white font-mono font-bold py-4 rounded-lg flex items-center justify-center gap-2 transition-all active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer shadow-lg"
           >
             {loading ? 'Authenticating...' : 'Access Granted'}
             {!loading && <ArrowRight size={18} />}
           </button>
         </form>
 
-        <div className="p-6 bg-[var(--color-bg)] border-t border-[var(--color-border)] text-center">
-          <a href="/" className="text-xs font-mono text-[var(--color-text-muted)] hover:text-[var(--color-primary)] transition-colors inline-flex items-center gap-2 font-bold tracking-wide">
+        <div className="p-6 bg-bg border-t border-border text-center">
+          <a href="/" className="text-xs font-mono text-text-muted hover:text-primary transition-colors inline-flex items-center gap-2 font-bold tracking-wide">
             &larr; Back to Portfolio
           </a>
         </div>

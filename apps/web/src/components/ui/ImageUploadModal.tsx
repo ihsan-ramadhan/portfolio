@@ -109,18 +109,18 @@ export function ImageUploadModal({
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.95 }}
-            className="bg-[var(--color-bg-subtle)] border border-[var(--color-border)] rounded-2xl w-full max-w-md shadow-2xl overflow-hidden flex flex-col"
+            className="bg-bg-subtle border border-border rounded-2xl w-full max-w-md shadow-2xl overflow-hidden flex flex-col"
           >
-            <div className="flex justify-between items-center px-6 py-4 border-b border-[var(--color-border)]">
-              <h3 className="font-mono font-bold text-lg text-[var(--color-text)] flex items-center gap-2">
-                <ImageIcon size={18} className="text-[var(--color-primary)]" />
+            <div className="flex justify-between items-center px-6 py-4 border-b border-border">
+              <h3 className="font-mono font-bold text-lg text-text flex items-center gap-2">
+                <ImageIcon size={18} className="text-primary" />
                 {title}
               </h3>
               <button
                 type="button"
                 onClick={closeAndClear}
                 disabled={isPending || isOptimizing}
-                className="text-[var(--color-text-muted)] hover:text-[var(--color-text)] transition-colors cursor-pointer disabled:opacity-50"
+                className="text-text-muted hover:text-text transition-colors cursor-pointer disabled:opacity-50"
               >
                 <X size={20} />
               </button>
@@ -129,7 +129,7 @@ export function ImageUploadModal({
             <div className="p-6 space-y-6">
               {/* Display Current or Preview Image */}
               {(previewUrl || currentImageUrl) && (
-                <div className="relative w-full h-48 rounded-xl overflow-hidden border border-[var(--color-border)] bg-[var(--color-bg)] flex items-center justify-center group">
+                <div className="relative w-full h-48 rounded-xl overflow-hidden border border-border bg-bg flex items-center justify-center group">
                   <img
                     src={previewUrl || currentImageUrl || ''}
                     alt="Preview"
@@ -157,8 +157,8 @@ export function ImageUploadModal({
                   onDrop={handleDrop}
                   className={`border-2 border-dashed rounded-xl p-8 text-center transition-all ${
                     dragActive
-                      ? 'border-[var(--color-primary)] bg-[var(--color-primary)]/5'
-                      : 'border-[var(--color-border)] bg-[var(--color-bg)] hover:border-[var(--color-primary)]/50'
+                      ? 'border-primary bg-primary/5'
+                      : 'border-border bg-bg hover:border-primary/50'
                   }`}
                 >
                   <input
@@ -173,14 +173,14 @@ export function ImageUploadModal({
                     htmlFor="image-upload-input"
                     className="flex flex-col items-center justify-center cursor-pointer gap-3"
                   >
-                    <div className="w-12 h-12 rounded-full bg-[var(--color-bg-subtle)] flex items-center justify-center text-[var(--color-text-muted)]">
+                    <div className="w-12 h-12 rounded-full bg-bg-subtle flex items-center justify-center text-text-muted">
                       <UploadCloud size={24} />
                     </div>
                     <div>
-                      <p className="font-mono text-sm text-[var(--color-text)]">
-                        <span className="text-[var(--color-primary)] font-bold">Click to upload</span> or drag and drop
+                      <p className="font-mono text-sm text-text">
+                        <span className="text-primary font-bold">Click to upload</span> or drag and drop
                       </p>
-                      <p className="font-mono text-xs text-[var(--color-text-muted)] mt-1">
+                      <p className="font-mono text-xs text-text-muted mt-1">
                         SVG, PNG, JPG or GIF (max. 5MB)
                       </p>
                     </div>
@@ -190,12 +190,12 @@ export function ImageUploadModal({
 
               {/* Actions */}
               {selectedFile && (
-                <div className="flex flex-col gap-3 pt-4 border-t border-[var(--color-border)]">
+                <div className="flex flex-col gap-3 pt-4 border-t border-border">
                   <button
                     type="button"
                     onClick={handleConfirmUpload}
                     disabled={isPending || isOptimizing}
-                    className="w-full py-2.5 bg-[var(--color-primary)] text-white rounded-lg font-mono text-sm hover:bg-[var(--color-primary-dim)] transition-all active:scale-95 disabled:opacity-50 cursor-pointer flex justify-center items-center gap-2"
+                    className="w-full py-2.5 bg-primary text-white rounded-lg font-mono text-sm hover:bg-primary-dim transition-all active:scale-95 disabled:opacity-50 cursor-pointer flex justify-center items-center gap-2"
                   >
                     {isOptimizing ? 'Optimizing...' : isPending ? 'Uploading...' : 'Confirm Upload'}
                   </button>

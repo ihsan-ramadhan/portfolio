@@ -75,22 +75,22 @@ export function SectionsTab({ token, setMessage }: Readonly<SectionsTabProps>) {
   };
 
   if (isLoading) {
-    return <div className="font-mono text-[var(--color-text-muted)] animate-pulse">Loading sections data...</div>;
+    return <div className="font-mono text-text-muted animate-pulse">Loading sections data...</div>;
   }
 
   return (
     <div className="space-y-6">
-      <div className="bg-[var(--color-bg-subtle)] p-8 rounded-xl border border-[var(--color-border)]">
+      <div className="bg-bg-subtle p-8 rounded-xl border border-border">
         <div className="flex items-center justify-between mb-6">
           <div className="flex items-center gap-2">
-            <Layout size={18} className="text-[var(--color-primary)]" />
+            <Layout size={18} className="text-primary" />
             <h3 className="font-mono font-bold">Manage Site Sections</h3>
           </div>
           {hasChanges && (
             <button
               onClick={handleSaveOrder}
               disabled={reorderSectionsMut.isPending}
-              className="flex items-center gap-2 bg-[var(--color-primary)] hover:bg-[var(--color-primary-dim)] text-white text-xs font-mono px-4 py-2 rounded-lg cursor-pointer transition-all"
+              className="flex items-center gap-2 bg-primary hover:bg-primary-dim text-white text-xs font-mono px-4 py-2 rounded-lg cursor-pointer transition-all"
             >
               <Save size={14} />
               Save New Order
@@ -102,10 +102,10 @@ export function SectionsTab({ token, setMessage }: Readonly<SectionsTabProps>) {
           {localSections.map((section, idx) => (
             <div
               key={section.id}
-              className="flex items-center justify-between bg-[var(--color-bg)] p-4 rounded-lg border border-[var(--color-border)] hover:border-[var(--color-primary)]/40 transition-colors"
+              className="flex items-center justify-between bg-bg p-4 rounded-lg border border-border hover:border-primary/40 transition-colors"
             >
               <div className="flex items-center gap-4">
-                <span className="font-mono text-xs text-[var(--color-text-muted)]">
+                <span className="font-mono text-xs text-text-muted">
                   #{section.order}
                 </span>
                 <span className="font-mono font-bold capitalize text-sm">
@@ -114,11 +114,11 @@ export function SectionsTab({ token, setMessage }: Readonly<SectionsTabProps>) {
               </div>
 
               <div className="flex items-center gap-3">
-                <div className="flex items-center gap-1 border-r border-[var(--color-border)] pr-3">
+                <div className="flex items-center gap-1 border-r border-border pr-3">
                   <button
                     onClick={() => moveSection(idx, 'up')}
                     disabled={idx === 0}
-                    className="p-1.5 hover:bg-[var(--color-bg-subtle)] rounded text-[var(--color-text-muted)] hover:text-[var(--color-primary)] disabled:opacity-30 cursor-pointer"
+                    className="p-1.5 hover:bg-bg-subtle rounded text-text-muted hover:text-primary disabled:opacity-30 cursor-pointer"
                     title="Move Up"
                   >
                     <ArrowUp size={14} />
@@ -126,7 +126,7 @@ export function SectionsTab({ token, setMessage }: Readonly<SectionsTabProps>) {
                   <button
                     onClick={() => moveSection(idx, 'down')}
                     disabled={idx === localSections.length - 1}
-                    className="p-1.5 hover:bg-[var(--color-bg-subtle)] rounded text-[var(--color-text-muted)] hover:text-[var(--color-primary)] disabled:opacity-30 cursor-pointer"
+                    className="p-1.5 hover:bg-bg-subtle rounded text-text-muted hover:text-primary disabled:opacity-30 cursor-pointer"
                     title="Move Down"
                   >
                     <ArrowDown size={14} />

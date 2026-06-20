@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { Github, Terminal} from 'lucide-react';
+import { Github, Terminal } from 'lucide-react';
 import SectionHeader from '../ui/SectionHeader';
 import AnimatedSection from '../ui/AnimatedSection';
 import ErrorState from '../ui/ErrorState';
@@ -11,7 +11,7 @@ export default function Projects() {
   const { data: projects = [], isLoading: loading } = useProjects();
 
   return (
-    <section id="projects" className="py-20 w-full border-t border-[var(--color-border)]">
+    <section id="projects" className="py-20 w-full border-t border-border">
       <AnimatedSection>
         <SectionHeader 
           icon={Terminal} 
@@ -41,7 +41,7 @@ export default function Projects() {
               );
             })
           ) : projects.length === 0 ? (
-            <ErrorState message="Projects are temporarily unavailable." />
+            <ErrorState message="Projects data is temporarily unavailable." />
           ) : (
             projects.map((project, index) => {
               const isEven = index % 2 === 0;
@@ -55,7 +55,7 @@ export default function Projects() {
                   transition={{ duration: 0.6 }}
                   className={`flex flex-col ${isEven ? 'lg:flex-row' : 'lg:flex-row-reverse'} gap-8 lg:gap-16 items-center w-full group py-4`}
                 >
-                  <div className="w-full lg:w-[45%] aspect-video glass-panel hover-glow rounded-xl overflow-hidden flex-shrink-0 relative shadow-xl">
+                  <div className="w-full lg:w-[45%] aspect-video glass-panel hover-glow rounded-xl overflow-hidden shrink-0 relative shadow-xl">
                     {project.imageUrl ? (
                       <img
                         src={project.imageUrl}
@@ -63,9 +63,9 @@ export default function Projects() {
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                       />
                     ) : (
-                      <div className="w-full h-full flex flex-col p-4 font-mono text-xs text-[var(--color-text-muted)] justify-between select-none">
-                        <div className="flex flex-col items-center justify-center flex-grow gap-3 opacity-30 group-hover:opacity-60 group-hover:text-[var(--color-primary)] transition-all duration-300">
-                          <Terminal size={48} className="text-[var(--color-primary)]" />
+                      <div className="w-full h-full flex flex-col p-4 font-mono text-xs text-text-muted justify-between select-none">
+                        <div className="flex flex-col items-center justify-center grow gap-3 opacity-30 group-hover:opacity-60 group-hover:text-primary transition-all duration-300">
+                          <Terminal size={48} className="text-primary" />
                           <span className="font-bold tracking-widest text-xs uppercase">{project.language || 'source-code'}</span>
                         </div>
                       </div>
@@ -73,15 +73,15 @@ export default function Projects() {
                   </div>
 
                   <div className="w-full lg:w-[55%] flex flex-col">
-                    <div className="font-mono text-xs md:text-sm text-[var(--color-primary)] font-bold mb-2 tracking-widest">
+                    <div className="font-mono text-xs md:text-sm text-primary font-bold mb-2 tracking-widest">
                       {projectNum}.
                     </div>
                     
-                    <h3 className="text-2xl md:text-3xl font-extrabold mb-4 group-hover:text-[var(--color-primary)] transition-colors font-mono tracking-tight text-[var(--color-text)]">
+                    <h3 className="text-2xl md:text-3xl font-extrabold mb-4 group-hover:text-primary transition-colors font-mono tracking-tight text-text">
                       {project.name}
                     </h3>
 
-                    <p className="text-sm text-[var(--color-text-muted)] mb-6 leading-relaxed font-mono whitespace-pre-wrap">
+                    <p className="text-sm text-text-muted mb-6 leading-relaxed font-mono whitespace-pre-wrap">
                       {project.customDesc || project.description || 'No description provided.'}
                     </p>
 
@@ -89,19 +89,19 @@ export default function Projects() {
                       {[project.language, ...(project.tags || [])].filter(Boolean).map((tag) => (
                         <span
                           key={tag}
-                          className="px-3 py-1 text-[10px] font-mono font-bold bg-[var(--color-bg-subtle)] text-[var(--color-primary)] border border-[var(--color-border)] rounded-md uppercase tracking-wider shadow-sm"
+                          className="px-3 py-1 text-[10px] font-mono font-bold bg-bg-subtle text-primary border border-border rounded-md uppercase tracking-wider shadow-sm"
                         >
                           {tag}
                         </span>
                       ))}
                     </div>
 
-                    <div className="flex items-center gap-4 pt-6 border-t border-[var(--color-border)]/60 w-fit">
+                    <div className="flex items-center gap-4 pt-6 border-t border-border/60 w-fit">
                       <a
                         href={project.url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-[var(--color-text-muted)] hover:text-[var(--color-text)] transition-colors flex items-center gap-2 text-xs font-mono group/btn"
+                        className="text-text-muted hover:text-text transition-colors flex items-center gap-2 text-xs font-mono group/btn"
                       >
                         <Github size={18} className="group-hover/btn:rotate-12 transition-transform duration-300" /> 
                         <span>View Code</span>

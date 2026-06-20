@@ -3,7 +3,7 @@ import { sectionsApi } from '../services/api.service';
 import type { SiteSection } from '../types';
 
 export function useSections() {
-  return useQuery({
+  return useQuery<SiteSection[], Error>({
     queryKey: ['sections'],
     queryFn: sectionsApi.getSections,
     staleTime: 5 * 60 * 1000,
