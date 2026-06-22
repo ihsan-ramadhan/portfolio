@@ -11,7 +11,7 @@ interface ProfileTabProps {
 
 export function ProfileTab({ profile, setProfile, saving, handleUpdateProfile }: ProfileTabProps) {
   return (
-    <form onSubmit={handleUpdateProfile} className="bg-bg-subtle p-8 rounded-xl border border-border space-y-6">
+    <form onSubmit={handleUpdateProfile} className="bg-bg-subtle p-8 rounded-md border border-border space-y-6">
       <div className="flex items-center gap-2 mb-4">
         <User size={18} className="text-primary" />
         <h3 className="font-mono font-bold">Edit Profile Details</h3>
@@ -25,7 +25,7 @@ export function ProfileTab({ profile, setProfile, saving, handleUpdateProfile }:
           type="text" 
           value={profile.headline || ''}
           onChange={(e) => setProfile({...profile, headline: e.target.value})}
-          className="w-full bg-bg border border-border rounded-lg p-3 focus:outline-none focus:border-primary transition-colors font-mono"
+          className="w-full bg-bg border border-border rounded-md p-3 focus:outline-none focus:border-primary transition-colors font-mono"
         />
       </div>
 
@@ -38,7 +38,7 @@ export function ProfileTab({ profile, setProfile, saving, handleUpdateProfile }:
           placeholder="Leave empty to hide tagline"
           value={profile.tagline || ''}
           onChange={(e) => setProfile({...profile, tagline: e.target.value})}
-          className="w-full bg-bg border border-border rounded-lg p-3 focus:outline-none focus:border-primary transition-colors font-mono"
+          className="w-full bg-bg border border-border rounded-md p-3 focus:outline-none focus:border-primary transition-colors font-mono"
         />
       </div>
 
@@ -50,7 +50,7 @@ export function ProfileTab({ profile, setProfile, saving, handleUpdateProfile }:
           type="text" 
           value={profile.location || ''}
           onChange={(e) => setProfile({...profile, location: e.target.value})}
-          className="w-full bg-bg border border-border rounded-lg p-3 focus:outline-none focus:border-primary transition-colors font-mono"
+          className="w-full bg-bg border border-border rounded-md p-3 focus:outline-none focus:border-primary transition-colors font-mono"
         />
       </div>
 
@@ -63,7 +63,7 @@ export function ProfileTab({ profile, setProfile, saving, handleUpdateProfile }:
           placeholder="Leave empty to hide badge"
           value={profile.statusBadge || ''}
           onChange={(e) => setProfile({...profile, statusBadge: e.target.value})}
-          className="w-full bg-bg border border-border rounded-lg p-3 focus:outline-none focus:border-primary transition-colors font-mono"
+          className="w-full bg-bg border border-border rounded-md p-3 focus:outline-none focus:border-primary transition-colors font-mono"
         />
       </div>
 
@@ -75,14 +75,14 @@ export function ProfileTab({ profile, setProfile, saving, handleUpdateProfile }:
           rows={4}
           value={profile.bio || ''}
           onChange={(e) => setProfile({...profile, bio: e.target.value})}
-          className="w-full bg-bg border border-border rounded-lg p-3 focus:outline-none focus:border-primary transition-colors font-mono resize-none"
+          className="w-full bg-bg border border-border rounded-md p-3 focus:outline-none focus:border-primary transition-colors font-mono resize-none"
         />
       </div>
 
       <button 
         type="submit"
         disabled={saving}
-        className="flex items-center gap-2 bg-primary text-white font-mono px-6 py-3 rounded-lg hover:bg-primary-dim transition-all active:scale-95 disabled:opacity-50 cursor-pointer shadow-md"
+        className="flex items-center gap-2 bg-primary text-white font-mono px-6 py-3 rounded-md hover:bg-primary-dim transition-all active:scale-95 disabled:opacity-50 cursor-pointer shadow-md"
       >
         <Save size={18} />
         {saving ? 'Saving Changes...' : 'Save Profile'}

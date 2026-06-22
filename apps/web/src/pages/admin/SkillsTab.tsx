@@ -88,7 +88,7 @@ export function SkillsTab({ token, setMessage }: Readonly<SkillsTabProps>) {
 
   return (
     <div className="space-y-6">
-      <div className="bg-bg-subtle p-8 rounded-xl border border-border">
+      <div className="bg-bg-subtle p-8 rounded-md border border-border">
         <div className="flex items-center justify-between mb-6">
           <div className="flex items-center gap-2">
             <Code size={18} className="text-primary" />
@@ -96,7 +96,7 @@ export function SkillsTab({ token, setMessage }: Readonly<SkillsTabProps>) {
           </div>
           <button 
             onClick={handleOpenAddSkill}
-            className="flex items-center gap-2 bg-primary hover:bg-primary-dim text-white text-xs font-mono px-4 py-2 rounded-lg cursor-pointer transition-all"
+            className="flex items-center gap-2 bg-primary hover:bg-primary-dim text-white text-xs font-mono px-4 py-2 rounded-md cursor-pointer transition-all"
           >
             <Plus size={14} /> Add Skill
           </button>
@@ -114,11 +114,11 @@ export function SkillsTab({ token, setMessage }: Readonly<SkillsTabProps>) {
                   {catSkills.map((skill) => (
                     <div 
                       key={skill.id} 
-                      className="bg-bg p-4 rounded-lg border border-border hover:border-primary/40 transition-colors flex justify-between items-center"
+                      className="bg-bg p-4 rounded-md border border-border hover:border-primary/40 transition-colors flex justify-between items-center"
                     >
                       <div className="flex items-center gap-3">
                         {skill.icon && (
-                          <div className="w-8 h-8 rounded-lg bg-bg-subtle border border-border p-1.5 flex items-center justify-center">
+                          <div className="w-8 h-8 rounded-md bg-bg-subtle border border-border p-1.5 flex items-center justify-center">
                             <img 
                               src={`https://cdn.simpleicons.org/${skill.icon}/3b82f6`} 
                               alt={skill.name} 
@@ -160,7 +160,7 @@ export function SkillsTab({ token, setMessage }: Readonly<SkillsTabProps>) {
           <motion.div 
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
-            className="bg-bg-subtle w-full max-w-md rounded-xl border border-border overflow-hidden shadow-2xl"
+            className="bg-bg-subtle w-full max-w-md rounded-md border border-border overflow-hidden shadow-2xl"
           >
             <div className="flex items-center justify-between px-6 py-4 border-b border-border bg-bg">
               <h3 className="font-mono font-bold text-sm">
@@ -182,7 +182,7 @@ export function SkillsTab({ token, setMessage }: Readonly<SkillsTabProps>) {
                   required
                   value={skillForm.name}
                   onChange={(e) => setSkillForm({...skillForm, name: e.target.value})}
-                  className="w-full bg-bg border border-border rounded-lg p-2.5 focus:outline-none focus:border-primary transition-colors font-mono text-sm"
+                  className="w-full bg-bg border border-border rounded-md p-2.5 focus:outline-none focus:border-primary transition-colors font-mono text-sm"
                 />
               </div>
 
@@ -191,7 +191,7 @@ export function SkillsTab({ token, setMessage }: Readonly<SkillsTabProps>) {
                 <select 
                   value={skillForm.category}
                   onChange={(e) => setSkillForm({...skillForm, category: e.target.value as Skill['category']})}
-                  className="w-full bg-bg border border-border rounded-lg p-2.5 focus:outline-none focus:border-primary transition-colors font-mono text-sm"
+                  className="w-full bg-bg border border-border rounded-md p-2.5 focus:outline-none focus:border-primary transition-colors font-mono text-sm"
                 >
                   {categories.map((cat) => (
                     <option key={cat} value={cat}>{cat}</option>
@@ -208,7 +208,7 @@ export function SkillsTab({ token, setMessage }: Readonly<SkillsTabProps>) {
                   max="100"
                   value={skillForm.proficiency}
                   onChange={(e) => setSkillForm({...skillForm, proficiency: parseInt(e.target.value) || 0})}
-                  className="w-full bg-bg border border-border rounded-lg p-2.5 focus:outline-none focus:border-primary transition-colors font-mono text-sm"
+                  className="w-full bg-bg border border-border rounded-md p-2.5 focus:outline-none focus:border-primary transition-colors font-mono text-sm"
                 />
               </div>
 
@@ -221,7 +221,7 @@ export function SkillsTab({ token, setMessage }: Readonly<SkillsTabProps>) {
                   type="text" 
                   value={skillForm.icon}
                   onChange={(e) => setSkillForm({...skillForm, icon: e.target.value})}
-                  className="w-full bg-bg border border-border rounded-lg p-2.5 focus:outline-none focus:border-primary transition-colors font-mono text-sm"
+                  className="w-full bg-bg border border-border rounded-md p-2.5 focus:outline-none focus:border-primary transition-colors font-mono text-sm"
                 />
               </div>
 
@@ -231,14 +231,14 @@ export function SkillsTab({ token, setMessage }: Readonly<SkillsTabProps>) {
                   type="url" 
                   value={skillForm.url}
                   onChange={(e) => setSkillForm({...skillForm, url: e.target.value})}
-                  className="w-full bg-bg border border-border rounded-lg p-2.5 focus:outline-none focus:border-primary transition-colors font-mono text-sm"
+                  className="w-full bg-bg border border-border rounded-md p-2.5 focus:outline-none focus:border-primary transition-colors font-mono text-sm"
                 />
               </div>
 
               <button 
                 type="submit"
                 disabled={isPending}
-                className="w-full flex items-center justify-center gap-2 bg-primary text-white font-mono py-2.5 rounded-lg hover:bg-primary-dim transition-all disabled:opacity-50 cursor-pointer shadow-md text-sm"
+                className="w-full flex items-center justify-center gap-2 bg-primary text-white font-mono py-2.5 rounded-md hover:bg-primary-dim transition-all disabled:opacity-50 cursor-pointer shadow-md text-sm"
               >
                 <Code size={16} />
                 {isPending ? 'Saving...' : 'Save Skill'}

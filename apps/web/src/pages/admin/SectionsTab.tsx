@@ -80,7 +80,7 @@ export function SectionsTab({ token, setMessage }: Readonly<SectionsTabProps>) {
 
   return (
     <div className="space-y-6">
-      <div className="bg-bg-subtle p-8 rounded-xl border border-border">
+      <div className="bg-bg-subtle p-8 rounded-md border border-border">
         <div className="flex items-center justify-between mb-6">
           <div className="flex items-center gap-2">
             <Layout size={18} className="text-primary" />
@@ -90,7 +90,7 @@ export function SectionsTab({ token, setMessage }: Readonly<SectionsTabProps>) {
             <button
               onClick={handleSaveOrder}
               disabled={reorderSectionsMut.isPending}
-              className="flex items-center gap-2 bg-primary hover:bg-primary-dim text-white text-xs font-mono px-4 py-2 rounded-lg cursor-pointer transition-all"
+              className="flex items-center gap-2 bg-primary hover:bg-primary-dim text-white text-xs font-mono px-4 py-2 rounded-md cursor-pointer transition-all"
             >
               <Save size={14} />
               Save New Order
@@ -102,7 +102,7 @@ export function SectionsTab({ token, setMessage }: Readonly<SectionsTabProps>) {
           {localSections.map((section, idx) => (
             <div
               key={section.id}
-              className="flex items-center justify-between bg-bg p-4 rounded-lg border border-border hover:border-primary/40 transition-colors"
+              className="flex items-center justify-between bg-bg p-4 rounded-md border border-border hover:border-primary/40 transition-colors"
             >
               <div className="flex items-center gap-4">
                 <span className="font-mono text-xs text-text-muted">
@@ -118,7 +118,7 @@ export function SectionsTab({ token, setMessage }: Readonly<SectionsTabProps>) {
                   <button
                     onClick={() => moveSection(idx, 'up')}
                     disabled={idx === 0}
-                    className="p-1.5 hover:bg-bg-subtle rounded text-text-muted hover:text-primary disabled:opacity-30 cursor-pointer"
+                    className="p-1.5 hover:bg-bg-subtle rounded-md text-text-muted hover:text-primary disabled:opacity-30 cursor-pointer"
                     title="Move Up"
                   >
                     <ArrowUp size={14} />
@@ -126,7 +126,7 @@ export function SectionsTab({ token, setMessage }: Readonly<SectionsTabProps>) {
                   <button
                     onClick={() => moveSection(idx, 'down')}
                     disabled={idx === localSections.length - 1}
-                    className="p-1.5 hover:bg-bg-subtle rounded text-text-muted hover:text-primary disabled:opacity-30 cursor-pointer"
+                    className="p-1.5 hover:bg-bg-subtle rounded-md text-text-muted hover:text-primary disabled:opacity-30 cursor-pointer"
                     title="Move Down"
                   >
                     <ArrowDown size={14} />
@@ -136,7 +136,7 @@ export function SectionsTab({ token, setMessage }: Readonly<SectionsTabProps>) {
                 <button
                   onClick={() => handleToggle(section)}
                   disabled={updateSectionMut.isPending}
-                  className={`flex items-center gap-1.5 font-mono text-xs px-3 py-1.5 rounded-lg border cursor-pointer transition-colors ${
+                  className={`flex items-center gap-1.5 font-mono text-xs px-3 py-1.5 rounded-md border cursor-pointer transition-colors ${
                     section.isEnabled
                       ? 'bg-green-500/10 border-green-500/30 text-green-400 hover:bg-green-500/20'
                       : 'bg-red-500/10 border-red-500/30 text-red-400 hover:bg-red-500/20'

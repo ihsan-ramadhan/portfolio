@@ -6,7 +6,7 @@ export default function NotFound() {
   return (
     <div className="min-h-screen flex items-center justify-center p-4 relative z-10">
       <AnimatedSection>
-        <div className="max-w-md w-full bg-bg-subtle border border-border rounded-2xl p-8 shadow-2xl relative overflow-hidden">
+        <div className="max-w-md w-full bg-bg-subtle border border-border rounded-md p-8 shadow-2xl relative overflow-hidden">
           <div className="absolute top-0 right-0 p-4 opacity-5 pointer-events-none">
             <Terminal size={120} />
           </div>
@@ -27,7 +27,7 @@ export default function NotFound() {
             
             <Link 
               to="/"
-              className="mt-4 w-full py-4 rounded-lg bg-primary text-white font-bold font-mono hover:opacity-90 transition-opacity flex items-center justify-center gap-2"
+              className="mt-4 w-full py-4 rounded-md bg-primary text-white font-bold font-mono hover:opacity-90 transition-opacity flex items-center justify-center gap-2"
             >
               <Home size={18} />
               RETURN_HOME

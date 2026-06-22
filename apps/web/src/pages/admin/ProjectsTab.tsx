@@ -212,7 +212,7 @@ export function ProjectsTab({ token, setMessage }: Readonly<ProjectsTabProps>) {
     }
     if (projects.length === 0) {
       return (
-        <div className="py-12 text-center font-mono text-text-muted border border-dashed border-border rounded-xl p-8">
+        <div className="py-12 text-center font-mono text-text-muted border border-dashed border-border rounded-md p-8">
           No projects found. Click "GitHub Sync" in the sidebar to fetch repositories.
         </div>
       );
@@ -222,7 +222,7 @@ export function ProjectsTab({ token, setMessage }: Readonly<ProjectsTabProps>) {
         {projects.map((project) => (
           <div
             key={project.id}
-            className={`p-6 rounded-xl border transition-all ${
+            className={`p-6 rounded-md border transition-all ${
               !project.isVisible
                 ? 'bg-bg border-dashed border-border opacity-60'
                 : 'bg-bg border-border hover:border-primary shadow-sm'
@@ -234,7 +234,7 @@ export function ProjectsTab({ token, setMessage }: Readonly<ProjectsTabProps>) {
                   <img
                     src={project.imageUrl}
                     alt={project.name}
-                    className="w-16 h-16 rounded-lg object-cover border border-border shadow-sm flex-shrink-0"
+                    className="w-16 h-16 rounded-md object-cover border border-border shadow-sm flex-shrink-0"
                   />
                 )}
                 <div className="space-y-1">
@@ -261,7 +261,7 @@ export function ProjectsTab({ token, setMessage }: Readonly<ProjectsTabProps>) {
                 <button
                   onClick={() => handleTogglePin(project)}
                   disabled={isPending}
-                  className={`p-2 rounded-lg border font-mono text-xs flex items-center gap-1 transition-all cursor-pointer ${
+                  className={`p-2 rounded-md border font-mono text-xs flex items-center gap-1 transition-all cursor-pointer ${
                     project.isPinned
                       ? 'bg-primary text-white border-primary'
                       : 'bg-bg-subtle text-text-muted border-border hover:border-primary'
@@ -274,7 +274,7 @@ export function ProjectsTab({ token, setMessage }: Readonly<ProjectsTabProps>) {
                 <button
                   onClick={() => handleToggleVisibility(project)}
                   disabled={isPending}
-                  className={`p-2 rounded-lg border font-mono text-xs flex items-center gap-1 transition-all cursor-pointer ${
+                  className={`p-2 rounded-md border font-mono text-xs flex items-center gap-1 transition-all cursor-pointer ${
                     project.isVisible
                       ? 'bg-bg-subtle text-text-muted border-border hover:border-red-500 hover:text-red-500'
                       : 'bg-red-500 text-white border-red-500'
@@ -287,7 +287,7 @@ export function ProjectsTab({ token, setMessage }: Readonly<ProjectsTabProps>) {
                 <button
                   onClick={() => handleOpenEditProject(project)}
                   disabled={isPending}
-                  className="p-2 bg-bg-subtle text-text-muted hover:text-primary border border-border hover:border-primary rounded-lg transition-all cursor-pointer"
+                  className="p-2 bg-bg-subtle text-text-muted hover:text-primary border border-border hover:border-primary rounded-md transition-all cursor-pointer"
                   title="Customize Project"
                 >
                   <Edit size={16} />
@@ -316,7 +316,7 @@ export function ProjectsTab({ token, setMessage }: Readonly<ProjectsTabProps>) {
   };
 
   return (
-    <div className="bg-bg-subtle p-8 rounded-xl border border-border space-y-6 shadow-sm">
+    <div className="bg-bg-subtle p-8 rounded-md border border-border space-y-6 shadow-sm">
       <div className="flex items-center justify-between mb-6 border-b border-border pb-4">
         <div className="flex items-center gap-2">
           <FolderGit2 size={18} className="text-primary" />
@@ -335,7 +335,7 @@ export function ProjectsTab({ token, setMessage }: Readonly<ProjectsTabProps>) {
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
-            className="bg-bg-subtle border border-border rounded-2xl p-6 w-full max-w-lg space-y-6 shadow-2xl relative max-h-[90vh] overflow-y-auto"
+            className="bg-bg-subtle border border-border rounded-md p-6 w-full max-w-lg space-y-6 shadow-2xl relative max-h-[90vh] overflow-y-auto"
           >
             <div className="flex justify-between items-center border-b border-border pb-4">
               <h3 className="font-mono font-bold text-lg flex items-center gap-2 text-text">
@@ -360,7 +360,7 @@ export function ProjectsTab({ token, setMessage }: Readonly<ProjectsTabProps>) {
                   value={projectForm.name}
                   onChange={(e) => setProjectForm({ ...projectForm, name: e.target.value })}
                   required
-                  className="w-full bg-bg border border-border rounded-lg p-3 focus:outline-none focus:border-primary transition-colors font-mono text-sm text-text"
+                  className="w-full bg-bg border border-border rounded-md p-3 focus:outline-none focus:border-primary transition-colors font-mono text-sm text-text"
                 />
               </div>
 
@@ -374,19 +374,19 @@ export function ProjectsTab({ token, setMessage }: Readonly<ProjectsTabProps>) {
                     value={projectForm.imageUrl}
                     onChange={(e) => setProjectForm({ ...projectForm, imageUrl: e.target.value })}
                     placeholder="https://... or choose local file"
-                    className="w-full bg-bg border border-border rounded-lg p-3 focus:outline-none focus:border-primary transition-colors font-mono text-sm text-text"
+                    className="w-full bg-bg border border-border rounded-md p-3 focus:outline-none focus:border-primary transition-colors font-mono text-sm text-text"
                   />
                   <button
                     type="button"
                     onClick={() => setIsImageModalOpen(true)}
-                    className="flex items-center gap-2 bg-bg-subtle border border-border hover:border-primary px-4 py-2 rounded-lg text-xs font-mono text-text cursor-pointer transition-all flex-shrink-0"
+                    className="flex items-center gap-2 bg-bg-subtle border border-border hover:border-primary px-4 py-2 rounded-md text-xs font-mono text-text cursor-pointer transition-all flex-shrink-0"
                   >
                     <Camera size={16} className="text-primary" />
                     <span>Upload Image</span>
                   </button>
                 </div>
                 {projectForm.imageUrl && (
-                  <div className="mt-2 relative w-32 h-20 rounded-lg overflow-hidden border border-border group">
+                  <div className="mt-2 relative w-32 h-20 rounded-md overflow-hidden border border-border group">
                     <img src={projectForm.imageUrl} alt="Preview" className="w-full h-full object-cover" />
                     <button
                       type="button"
@@ -409,7 +409,7 @@ export function ProjectsTab({ token, setMessage }: Readonly<ProjectsTabProps>) {
                   value={projectForm.customDesc}
                   onChange={(e) => setProjectForm({ ...projectForm, customDesc: e.target.value })}
                   placeholder={editingProject.description || 'Enter custom description...'}
-                  className="w-full bg-bg border border-border rounded-lg p-3 focus:outline-none focus:border-primary transition-colors font-mono text-sm text-text resize-none"
+                  className="w-full bg-bg border border-border rounded-md p-3 focus:outline-none focus:border-primary transition-colors font-mono text-sm text-text resize-none"
                 />
               </div>
 
@@ -422,7 +422,7 @@ export function ProjectsTab({ token, setMessage }: Readonly<ProjectsTabProps>) {
                   value={projectForm.language}
                   onChange={(e) => setProjectForm({ ...projectForm, language: e.target.value })}
                   placeholder="e.g. TypeScript, Python"
-                  className="w-full bg-bg border border-border rounded-lg p-3 focus:outline-none focus:border-primary transition-colors font-mono text-sm text-text"
+                  className="w-full bg-bg border border-border rounded-md p-3 focus:outline-none focus:border-primary transition-colors font-mono text-sm text-text"
                 />
               </div>
 
@@ -435,26 +435,26 @@ export function ProjectsTab({ token, setMessage }: Readonly<ProjectsTabProps>) {
                   value={projectForm.tags.join(', ')}
                   onChange={(e) => setProjectForm({ ...projectForm, tags: e.target.value.split(',').map(t => t.trim()).filter(Boolean) })}
                   placeholder="e.g. React, NestJS, Supabase"
-                  className="w-full bg-bg border border-border rounded-lg p-3 focus:outline-none focus:border-primary transition-colors font-mono text-sm text-text"
+                  className="w-full bg-bg border border-border rounded-md p-3 focus:outline-none focus:border-primary transition-colors font-mono text-sm text-text"
                 />
               </div>
 
               <div className="grid grid-cols-2 gap-4 pt-2 border-t border-border">
-                <label className="flex items-center gap-2 cursor-pointer p-3 bg-bg border border-border rounded-lg hover:border-primary transition-all">
+                <label className="flex items-center gap-2 cursor-pointer p-3 bg-bg border border-border rounded-md hover:border-primary transition-all">
                   <input
                     type="checkbox"
                     checked={projectForm.isPinned}
                     onChange={(e) => setProjectForm({ ...projectForm, isPinned: e.target.checked })}
-                    className="rounded border-border text-primary focus:ring-primary"
+                    className="rounded-md border-border text-primary focus:ring-primary"
                   />
                   <span className="text-xs font-mono text-text">Pin (Featured)</span>
                 </label>
-                <label className="flex items-center gap-2 cursor-pointer p-3 bg-bg border border-border rounded-lg hover:border-primary transition-all">
+                <label className="flex items-center gap-2 cursor-pointer p-3 bg-bg border border-border rounded-md hover:border-primary transition-all">
                   <input
                     type="checkbox"
                     checked={projectForm.isVisible}
                     onChange={(e) => setProjectForm({ ...projectForm, isVisible: e.target.checked })}
-                    className="rounded border-border text-primary focus:ring-primary"
+                    className="rounded-md border-border text-primary focus:ring-primary"
                   />
                   <span className="text-xs font-mono text-text">Visible to Public</span>
                 </label>
@@ -464,14 +464,14 @@ export function ProjectsTab({ token, setMessage }: Readonly<ProjectsTabProps>) {
                 <button
                   type="button"
                   onClick={handleCloseAttempt}
-                  className="px-4 py-2 bg-bg border border-border rounded-lg font-mono text-sm text-text hover:bg-bg-subtle hover:border-text-muted transition-all cursor-pointer"
+                  className="px-4 py-2 bg-bg border border-border rounded-md font-mono text-sm text-text hover:bg-bg-subtle hover:border-text-muted transition-all cursor-pointer"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
                   disabled={isPending}
-                  className="px-6 py-2 bg-primary text-white rounded-lg font-mono text-sm hover:bg-primary-dim transition-all active:scale-95 cursor-pointer disabled:opacity-50"
+                  className="px-6 py-2 bg-primary text-white rounded-md font-mono text-sm hover:bg-primary-dim transition-all active:scale-95 cursor-pointer disabled:opacity-50"
                 >
                   {isPending ? 'Saving...' : 'Save Changes'}
                 </button>
@@ -486,7 +486,7 @@ export function ProjectsTab({ token, setMessage }: Readonly<ProjectsTabProps>) {
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
-            className="bg-bg-subtle border border-border rounded-2xl p-6 w-full max-w-sm space-y-4 shadow-2xl relative text-center"
+            className="bg-bg-subtle border border-border rounded-md p-6 w-full max-w-sm space-y-4 shadow-2xl relative text-center"
           >
             <h4 className="font-mono font-bold text-base text-text">
               Discard Changes?
@@ -498,14 +498,14 @@ export function ProjectsTab({ token, setMessage }: Readonly<ProjectsTabProps>) {
               <button
                 type="button"
                 onClick={() => setShowCloseConfirm(false)}
-                className="px-4 py-2 bg-bg border border-border rounded-lg font-mono text-xs text-text hover:bg-bg-subtle hover:border-text-muted transition-all cursor-pointer"
+                className="px-4 py-2 bg-bg border border-border rounded-md font-mono text-xs text-text hover:bg-bg-subtle hover:border-text-muted transition-all cursor-pointer"
               >
                 Keep Editing
               </button>
               <button
                 type="button"
                 onClick={handleClose}
-                className="px-4 py-2 bg-red-600 text-white rounded-lg font-mono text-xs hover:bg-red-500 transition-all cursor-pointer shadow-md"
+                className="px-4 py-2 bg-red-600 text-white rounded-md font-mono text-xs hover:bg-red-500 transition-all cursor-pointer shadow-md"
               >
                 Discard Changes
               </button>

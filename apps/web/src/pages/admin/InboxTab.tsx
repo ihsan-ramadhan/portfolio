@@ -42,7 +42,7 @@ export function InboxTab({ token, setMessage }: Readonly<InboxTabProps>) {
     }
     if (messages.length === 0) {
       return (
-        <div className="py-12 text-center font-mono text-text-muted border border-dashed border-border rounded-xl p-8">
+        <div className="py-12 text-center font-mono text-text-muted border border-dashed border-border rounded-md p-8">
           No contact messages found. Your inbox is clean!
         </div>
       );
@@ -52,7 +52,7 @@ export function InboxTab({ token, setMessage }: Readonly<InboxTabProps>) {
         {messages.map((msg) => (
           <div
             key={msg.id}
-            className={`p-6 rounded-xl border transition-all ${
+            className={`p-6 rounded-md border transition-all ${
               !msg.isRead
                 ? 'bg-bg-subtle border-2 border-primary shadow-[0_0_15px_rgba(59,130,246,0.15)]'
                 : 'bg-bg border-border opacity-80 hover:opacity-100'
@@ -80,7 +80,7 @@ export function InboxTab({ token, setMessage }: Readonly<InboxTabProps>) {
                   <button
                     onClick={() => handleMarkAsRead(msg.id)}
                     disabled={isPending}
-                    className="flex items-center gap-1 bg-primary text-white text-xs font-mono px-3 py-1.5 rounded-lg hover:bg-primary-dim transition-all active:scale-95 cursor-pointer disabled:opacity-50"
+                    className="flex items-center gap-1 bg-primary text-white text-xs font-mono px-3 py-1.5 rounded-md hover:bg-primary-dim transition-all active:scale-95 cursor-pointer disabled:opacity-50"
                     title="Mark as Read"
                   >
                     <CheckCheck size={14} />
@@ -90,7 +90,7 @@ export function InboxTab({ token, setMessage }: Readonly<InboxTabProps>) {
                 <button
                   onClick={() => handleDeleteMessage(msg.id)}
                   disabled={isPending}
-                  className="p-1.5 text-text-muted hover:text-red-500 hover:bg-red-500/10 rounded-lg transition-all active:scale-95 cursor-pointer disabled:opacity-50"
+                  className="p-1.5 text-text-muted hover:text-red-500 hover:bg-red-500/10 rounded-md transition-all active:scale-95 cursor-pointer disabled:opacity-50"
                   title="Delete Message"
                 >
                   <Trash2 size={16} />
@@ -107,7 +107,7 @@ export function InboxTab({ token, setMessage }: Readonly<InboxTabProps>) {
   };
 
   return (
-    <div className="bg-bg-subtle p-8 rounded-xl border border-border space-y-6">
+    <div className="bg-bg-subtle p-8 rounded-md border border-border space-y-6">
       <div className="flex items-center justify-between mb-6 border-b border-border pb-4">
         <div className="flex items-center gap-2">
           <Mail size={18} className="text-primary" />

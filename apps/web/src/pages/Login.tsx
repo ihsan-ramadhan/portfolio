@@ -43,7 +43,7 @@ export default function Login() {
       <motion.div 
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="w-full max-w-md bg-bg-subtle border border-border rounded-xl overflow-hidden shadow-2xl"
+        className="w-full max-w-md bg-bg-subtle border border-border rounded-md overflow-hidden shadow-2xl"
       >
         <div className="bg-bg p-6 border-b border-border flex items-center gap-2">
           <Terminal size={18} className="text-primary animate-pulse" />
@@ -52,7 +52,7 @@ export default function Login() {
 
         <form onSubmit={handleSubmit} className="p-8 space-y-6">
           {error && (
-            <div className="p-3 bg-red-500/10 border border-red-500/20 rounded text-red-500 text-sm font-mono">
+            <div className="p-3 bg-red-500/10 border border-red-500/20 rounded-md text-red-500 text-sm font-mono">
               [ERROR]: {error}
             </div>
           )}
@@ -66,7 +66,7 @@ export default function Login() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
-                className="w-full bg-bg border border-border rounded-lg py-3 pl-10 pr-4 focus:outline-none focus:border-primary transition-colors font-mono text-sm text-text"
+                className="w-full bg-bg border border-border rounded-md py-3 pl-10 pr-4 focus:outline-none focus:border-primary transition-colors font-mono text-sm text-text"
                 placeholder="admin@example.com"
               />
             </div>
@@ -81,7 +81,7 @@ export default function Login() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
-                className="w-full bg-bg border border-border rounded-lg py-3 pl-10 pr-4 focus:outline-none focus:border-primary transition-colors font-mono text-sm text-text"
+                className="w-full bg-bg border border-border rounded-md py-3 pl-10 pr-4 focus:outline-none focus:border-primary transition-colors font-mono text-sm text-text"
                 placeholder="••••••••"
               />
             </div>
@@ -90,7 +90,7 @@ export default function Login() {
           <button 
             type="submit" 
             disabled={loading}
-            className="w-full bg-primary hover:bg-primary-dim text-white font-mono font-bold py-4 rounded-lg flex items-center justify-center gap-2 transition-all active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer shadow-lg"
+            className="w-full bg-primary hover:bg-primary-dim text-white font-mono font-bold py-4 rounded-md flex items-center justify-center gap-2 transition-all active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer shadow-lg"
           >
             {loading ? 'Authenticating...' : 'Access Granted'}
             {!loading && <ArrowRight size={18} />}

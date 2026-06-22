@@ -61,7 +61,7 @@ export default function Contact() {
                 Let's Connect
               </h3>
               <p className="text-text-muted leading-relaxed">
-                I read every message. Whether it's an internship offer, collab idea, or just a question, reach out!
+                I read every message. Whether it's an project offer, collab idea, or just a question, reach out!
               </p>
             </div>
 
@@ -69,9 +69,9 @@ export default function Contact() {
               <a
                 href="mailto:m.ihsan.r30@gmail.com"
                 aria-label="Send email to m.ihsan.r30@gmail.com"
-                className="w-full text-left flex items-center gap-4 p-4 rounded-xl glass-panel hover-glow transition-all group"
+                className="w-full text-left flex items-center gap-4 p-4 rounded-md glass-panel hover-glow transition-all group"
               >
-                <div className="p-3 rounded-lg bg-bg text-primary group-hover:bg-primary group-hover:text-white transition-colors">
+                <div className="p-3 rounded-md bg-bg text-primary group-hover:bg-primary group-hover:text-white transition-colors">
                   <Mail size={20} />
                 </div>
                 <div>
@@ -84,9 +84,9 @@ export default function Contact() {
                 href="https://linkedin.com/in/m-ihsan-r" 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="flex items-center gap-4 p-4 rounded-xl glass-panel hover-glow transition-all group"
+                className="flex items-center gap-4 p-4 rounded-md glass-panel hover-glow transition-all group"
               >
-                <div className="p-3 rounded-lg bg-bg text-primary group-hover:bg-primary group-hover:text-white transition-colors">
+                <div className="p-3 rounded-md bg-bg text-primary group-hover:bg-primary group-hover:text-white transition-colors">
                   <Linkedin size={20} />
                 </div>
                 <div>
@@ -99,9 +99,9 @@ export default function Contact() {
                 href="https://github.com/ihsan-ramadhan" 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="flex items-center gap-4 p-4 rounded-xl glass-panel hover-glow transition-all group"
+                className="flex items-center gap-4 p-4 rounded-md glass-panel hover-glow transition-all group"
               >
-                <div className="p-3 rounded-lg bg-bg text-primary group-hover:bg-primary group-hover:text-white transition-colors">
+                <div className="p-3 rounded-md bg-bg text-primary group-hover:bg-primary group-hover:text-white transition-colors">
                   <Github size={20} />
                 </div>
                 <div>
@@ -112,7 +112,7 @@ export default function Contact() {
             </div>
           </div>
 
-          <div className="p-8 rounded-2xl glass-panel hover-glow relative overflow-hidden">
+          <div className="p-8 rounded-md glass-panel hover-glow relative overflow-hidden">
             <div className="absolute top-0 right-0 p-4 opacity-5 pointer-events-none">
               <Send size={120} />
             </div>
@@ -124,7 +124,7 @@ export default function Contact() {
                 <p className="text-sm text-text-muted font-mono">Thank you for reaching out! I will get back to you as soon as possible.</p>
                 <button 
                   onClick={() => setSubmitted(false)}
-                  className="mt-4 px-6 py-2 rounded-lg bg-terminal text-text-muted hover:text-text border border-border font-mono text-xs uppercase tracking-wider cursor-pointer"
+                  className="mt-4 px-6 py-2 rounded-md bg-terminal text-text-muted hover:text-text border border-border font-mono text-xs uppercase tracking-wider cursor-pointer"
                 >
                   SEND_ANOTHER
                 </button>
@@ -141,7 +141,7 @@ export default function Contact() {
                     onChange={(e) => setName(e.target.value)}
                     placeholder="John Doe"
                     disabled={mutation.isPending}
-                    className="w-full p-3 rounded-lg bg-bg border border-border focus:border-primary outline-none transition-colors font-mono text-sm disabled:opacity-50"
+                    className="w-full p-3 rounded-md bg-bg border border-border focus:border-primary outline-none transition-colors font-mono text-sm disabled:opacity-50"
                   />
                 </div>
                 <div>
@@ -154,7 +154,7 @@ export default function Contact() {
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="john@example.com"
                     disabled={mutation.isPending}
-                    className="w-full p-3 rounded-lg bg-bg border border-border focus:border-primary outline-none transition-colors font-mono text-sm disabled:opacity-50"
+                    className="w-full p-3 rounded-md bg-bg border border-border focus:border-primary outline-none transition-colors font-mono text-sm disabled:opacity-50"
                   />
                 </div>
                 <div>
@@ -167,13 +167,13 @@ export default function Contact() {
                     onChange={(e) => setMessage(e.target.value)}
                     placeholder="Hello, Ihsan..."
                     disabled={mutation.isPending}
-                    className="w-full p-3 rounded-lg bg-bg border border-border focus:border-primary outline-none transition-colors font-mono text-sm resize-none disabled:opacity-50"
+                    className="w-full p-3 rounded-md bg-bg border border-border focus:border-primary outline-none transition-colors font-mono text-sm resize-none disabled:opacity-50"
                   ></textarea>
                 </div>
                 <button 
                   type="submit"
                   disabled={mutation.isPending}
-                  className="w-full py-4 rounded-lg bg-primary text-white font-bold font-mono hover:opacity-90 transition-opacity flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
+                  className="w-full py-4 rounded-md bg-primary text-white font-bold font-mono hover:opacity-90 transition-opacity flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
                 >
                   <Send size={18} className={mutation.isPending ? "animate-pulse" : ""} /> 
                   {mutation.isPending ? "SENDING..." : "SEND_MESSAGE"}

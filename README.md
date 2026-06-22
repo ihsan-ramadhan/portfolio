@@ -26,14 +26,6 @@ portfolio/
 
 ---
 
-## Features
-
-- Admin dashboard - manage profile, projects, skills, and view contact messages
-- Contact form - messages stored in DB and viewable in admin inbox
-- Dark/light mode - follows system preference, user-toggleable
-
----
-
 ## Local Development
 
 ### Prerequisites
@@ -53,9 +45,9 @@ pnpm install
 cp apps/api/.env.example apps/api/.env
 cp apps/web/.env.example apps/web/.env
 
-pnpm --filter api prisma generate
-pnpm --filter api prisma migrate dev
-pnpm --filter api prisma db seed
+pnpm --filter api exec prisma generate
+pnpm --filter api exec prisma migrate dev
+pnpm --filter api exec prisma db seed
 ```
 
 ### Running
@@ -82,49 +74,47 @@ Base URL: `/api/v1`
 | `GET` | `/projects` | All visible projects |
 | `GET` | `/projects/featured` | Pinned/featured projects |
 | `GET` | `/skills` | Skills list |
+| `GET` | `/experience` | Work experience |
+| `GET` | `/education` | Education history |
+| `GET` | `/interests` | Interests list |
+| `GET` | `/sections` | Section visibility and order |
+| `GET` | `/github/activity` | GitHub contribution activity |
 | `POST` | `/contact` | Submit contact form |
 
 **Admin** (requires JWT)
 
 | Method | Endpoint | Description |
 |---|---|---|
-| `POST` | `/admin/auth/login` | Get JWT token |
+| `POST` | `/auth/login` | Get JWT token |
 | `PATCH` | `/admin/profile` | Update bio, headline |
 | `POST` | `/admin/profile/photo` | Upload profile photo |
 | `DELETE` | `/admin/profile/photo` | Delete profile photo |
 | `GET` | `/admin/projects` | All projects (including hidden) |
+| `POST` | `/projects` | Create project |
+| `PATCH` | `/projects/:id` | Update project |
+| `DELETE` | `/projects/:id` | Delete project |
 | `PATCH` | `/admin/projects/:id` | Customize project data |
 | `POST` | `/admin/projects/upload-image` | Upload project preview image |
 | `DELETE` | `/admin/projects/image` | Delete project image |
 | `POST` | `/admin/skills` | Add skill |
 | `PATCH` | `/admin/skills/:id` | Update skill |
 | `DELETE` | `/admin/skills/:id` | Delete skill |
+| `POST` | `/admin/experience` | Add experience |
+| `PATCH` | `/admin/experience/:id` | Update experience |
+| `DELETE` | `/admin/experience/:id` | Delete experience |
+| `POST` | `/admin/education` | Add education |
+| `PATCH` | `/admin/education/:id` | Update education |
+| `DELETE` | `/admin/education/:id` | Delete education |
+| `POST` | `/admin/interests` | Add interest |
+| `PATCH` | `/admin/interests/:id` | Update interest |
+| `DELETE` | `/admin/interests/:id` | Delete interest |
+| `PATCH` | `/admin/sections/:id` | Toggle section visibility |
+| `PUT` | `/admin/sections/reorder` | Reorder sections |
 | `POST` | `/admin/sync/trigger` | Trigger GitHub sync |
 | `GET` | `/admin/sync/status` | Last sync status |
 | `GET` | `/admin/sync/history` | Sync history |
 | `GET` | `/admin/messages` | View contact inbox |
 | `PATCH` | `/admin/messages/:id/read` | Mark message as read |
 | `DELETE` | `/admin/messages/:id` | Delete message |
-
----
-
-## Deployment
-
-| App | Platform | Domain |
-|---|---|---|
-| `apps/web` | Vercel | `ihsan.is-a.dev` |
-| `apps/api` | Render | `api.ihsan.is-a.dev` |
-
----
-
-## Branch Strategy
-
-```
-main       ← production
-└── develop
-    ├── feat/*
-    ├── fix/*
-    └── perf/*
-```
 
 Commits follow [Conventional Commits](https://www.conventionalcommits.org).

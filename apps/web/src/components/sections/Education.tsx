@@ -20,7 +20,7 @@ export default function Education() {
                 <span className="absolute -left-1.25 top-1.5 flex h-2.5 w-2.5 items-center justify-center">
                   <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-border"></span>
                 </span>
-                <Skeleton className="h-22.5 rounded-xl w-full" />
+                <Skeleton className="h-22.5 rounded-md w-full" />
               </div>
             ))}
           </div>
@@ -34,7 +34,7 @@ export default function Education() {
                   <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-primary"></span>
                 </span>
 
-                <div className="glass-panel hover-glow p-6 rounded-xl shadow-md">
+                <div className="glass-panel hover-glow p-6 rounded-md shadow-md">
                   <div className="flex flex-col md:flex-row md:items-center justify-between gap-2">
                     <div>
                       <h3 className="text-lg font-bold text-text font-sans">

@@ -29,7 +29,7 @@ export default function Skills() {
             <div className="flex gap-8 py-4 overflow-hidden w-full justify-center flex-wrap md:flex-nowrap">
               {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14].map((i) => (
                 <div key={i} className="flex flex-col items-center gap-2 shrink-0">
-                  <Skeleton className="w-14 h-14 md:w-16 md:h-16 rounded-xl" />
+                  <Skeleton className="w-14 h-14 md:w-16 md:h-16 rounded-md" />
                   <Skeleton className="w-12 h-3" />
                 </div>
               ))}
@@ -47,7 +47,7 @@ export default function Skills() {
                   className="group relative flex flex-col items-center justify-center transition-transform hover:scale-110 mr-16"
                   aria-label={tech.name}
                 >
-                  <div className="w-14 h-14 md:w-16 md:h-16 flex items-center justify-center p-3 rounded-xl glass-panel group-hover:border-primary group-hover:shadow-[0_0_20px_rgba(59,130,246,0.15)] transition-all duration-300">
+                  <div className="w-14 h-14 md:w-16 md:h-16 flex items-center justify-center p-3 rounded-md glass-panel group-hover:border-primary group-hover:shadow-[0_0_20px_rgba(59,130,246,0.15)] transition-all duration-300">
                     <img
                       src={`https://cdn.simpleicons.org/${tech.icon}/3b82f6`}
                       alt={tech.name}

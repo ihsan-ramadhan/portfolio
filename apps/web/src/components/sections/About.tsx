@@ -55,11 +55,11 @@ export default function About({
         <AnimatedSection>
           <SectionHeader icon={Terminal} title="whoami" />
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 auto-rows-[minmax(120px,auto)]">
-            <Skeleton className="md:col-span-2 md:row-span-2 rounded-xl w-full min-h-65" />
-            <Skeleton className="md:col-span-1 md:row-span-2 rounded-xl w-full min-h-65" />
-            <Skeleton className="h-30 rounded-xl w-full" />
-            <Skeleton className="h-30 rounded-xl w-full" />
-            <Skeleton className="h-30 rounded-xl w-full" />
+            <Skeleton className="md:col-span-2 md:row-span-2 rounded-md w-full min-h-65" />
+            <Skeleton className="md:col-span-1 md:row-span-2 rounded-md w-full min-h-65" />
+            <Skeleton className="h-30 rounded-md w-full" />
+            <Skeleton className="h-30 rounded-md w-full" />
+            <Skeleton className="h-30 rounded-md w-full" />
           </div>
         </AnimatedSection>
       </section>
@@ -94,7 +94,7 @@ export default function About({
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 auto-rows-[minmax(120px,auto)]">
           {/* CARD 1: Bio / Introduction (Spans 2 cols, 2 rows) */}
-          <div className="md:col-span-2 md:row-span-2 glass-panel hover-glow p-6 rounded-xl shadow-md flex flex-col justify-between">
+          <div className="md:col-span-2 md:row-span-2 glass-panel hover-glow p-6 rounded-md shadow-md flex flex-col justify-between">
             <div>
               <div className="flex items-center gap-2 mb-4">
                 <Terminal size={16} className="text-primary" />
@@ -113,8 +113,8 @@ export default function About({
           </div>
 
           {/* CARD 2: Profile Photo (Spans 1 col, 2 rows) */}
-          <div className="md:col-span-1 md:row-span-2 glass-panel hover-glow p-4 rounded-xl shadow-md flex flex-col justify-between">
-            <div className="relative aspect-square w-full rounded-lg overflow-hidden flex items-center justify-center">
+          <div className="md:col-span-1 md:row-span-2 glass-panel hover-glow p-4 rounded-md shadow-md flex flex-col justify-between">
+            <div className="relative aspect-square w-full rounded-md overflow-hidden flex items-center justify-center">
               {profile.photoUrl ? (
                 <img
                   src={profile.photoUrl}
@@ -123,10 +123,10 @@ export default function About({
                   decoding="async"
                   width={400}
                   height={400}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 rounded-lg"
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 rounded-md"
                 />
               ) : (
-                <div className="w-full h-full flex flex-col items-center justify-center text-text-muted bg-bg border border-border rounded-lg">
+                <div className="w-full h-full flex flex-col items-center justify-center text-text-muted bg-bg border border-border rounded-md">
                   <ImageIcon
                     size={40}
                     className="mb-2 opacity-40 animate-pulse"
@@ -145,7 +145,7 @@ export default function About({
             </div>
           </div>
 
-          <div className="glass-panel hover-glow p-6 rounded-xl shadow-md flex flex-col gap-3">
+          <div className="glass-panel hover-glow p-6 rounded-md shadow-md flex flex-col gap-3">
             <div className="flex items-center justify-between">
               <span className="font-mono text-xs text-text-muted">
                 /location
@@ -184,7 +184,7 @@ export default function About({
           </div>
 
           {/* CARD 4: Core Tech Highlights (Spans 1 col) */}
-          <div className="glass-panel hover-glow p-6 rounded-xl shadow-md flex flex-col gap-3">
+          <div className="glass-panel hover-glow p-6 rounded-md shadow-md flex flex-col gap-3">
             <div className="flex items-center justify-between">
               <span className="font-mono text-xs text-text-muted">
                 /stack.quick
@@ -224,7 +224,7 @@ export default function About({
           </div>
 
           {/* CARD 5: Interests / Hobbies (Spans 1 col) */}
-          <div className="glass-panel hover-glow p-6 rounded-xl shadow-md flex flex-col gap-3">
+          <div className="glass-panel hover-glow p-6 rounded-md shadow-md flex flex-col gap-3">
             <div className="flex items-center justify-between">
               <span className="font-mono text-xs text-text-muted">
                 /interests
@@ -246,7 +246,7 @@ export default function About({
                   {interests.map((interest) => (
                     <span
                       key={interest.id}
-                      className="px-2 py-0.5 rounded bg-bg text-[10px] font-mono text-text-muted border border-border hover:border-primary hover:text-text transition-colors duration-300"
+                      className="px-2 py-0.5 rounded-md bg-bg text-[10px] font-mono text-text-muted border border-border hover:border-primary hover:text-text transition-colors duration-300"
                     >
                       {interest.name}
                     </span>

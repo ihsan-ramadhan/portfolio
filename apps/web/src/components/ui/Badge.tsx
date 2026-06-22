@@ -18,7 +18,7 @@ export default function Badge({
   };
 
   return (
-    <span className={`text-[10px] font-mono px-2 py-0.5 rounded border uppercase transition-colors ${variants[variant]} ${className}`}>
+    <span className={`text-[10px] font-mono px-2 py-0.5 rounded-md border uppercase transition-colors ${variants[variant]} ${className}`}>
       {children}
     </span>
   );
