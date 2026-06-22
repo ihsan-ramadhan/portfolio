@@ -86,7 +86,7 @@ export function EducationTab({ token, setMessage }: Readonly<EducationTabProps>)
 
   return (
     <div className="space-y-6">
-      <div className="bg-bg-subtle p-8 rounded-xl border border-border">
+      <div className="bg-bg-subtle p-8 rounded-md border border-border">
         <div className="flex items-center justify-between mb-6">
           <div className="flex items-center gap-2">
             <GraduationCap size={18} className="text-primary" />
@@ -94,14 +94,14 @@ export function EducationTab({ token, setMessage }: Readonly<EducationTabProps>)
           </div>
           <button 
             onClick={handleOpenAdd}
-            className="flex items-center gap-2 bg-primary hover:bg-primary-dim text-white text-xs font-mono px-4 py-2 rounded-lg cursor-pointer transition-all"
+            className="flex items-center gap-2 bg-primary hover:bg-primary-dim text-white text-xs font-mono px-4 py-2 rounded-md cursor-pointer transition-all"
           >
             <Plus size={14} /> Add Education
           </button>
         </div>
 
         {educations.length === 0 ? (
-          <div className="text-center py-8 text-text-muted font-mono text-sm border border-dashed border-border rounded-xl">
+          <div className="text-center py-8 text-text-muted font-mono text-sm border border-dashed border-border rounded-md">
             No education records found.
           </div>
         ) : (
@@ -109,7 +109,7 @@ export function EducationTab({ token, setMessage }: Readonly<EducationTabProps>)
             {educations.map((edu) => (
               <div 
                 key={edu.id} 
-                className="bg-bg p-5 rounded-lg border border-border hover:border-primary/40 transition-colors flex justify-between items-start gap-4"
+                className="bg-bg p-5 rounded-md border border-border hover:border-primary/40 transition-colors flex justify-between items-start gap-4"
               >
                 <div className="space-y-2">
                   <h4 className="font-bold font-sans text-base">{edu.institution}</h4>
@@ -122,13 +122,13 @@ export function EducationTab({ token, setMessage }: Readonly<EducationTabProps>)
                 <div className="flex items-center gap-2">
                   <button 
                     onClick={() => handleOpenEdit(edu)}
-                    className="p-2 hover:bg-bg-subtle rounded-lg text-text-muted hover:text-primary transition-colors cursor-pointer"
+                    className="p-2 hover:bg-bg-subtle rounded-md text-text-muted hover:text-primary transition-colors cursor-pointer"
                   >
                     <Edit size={16} />
                   </button>
                   <button 
                     onClick={() => handleDelete(edu.id!)}
-                    className="p-2 hover:bg-bg-subtle rounded-lg text-text-muted hover:text-red-400 transition-colors cursor-pointer"
+                    className="p-2 hover:bg-bg-subtle rounded-md text-text-muted hover:text-red-400 transition-colors cursor-pointer"
                   >
                     <Trash2 size={16} />
                   </button>
@@ -144,7 +144,7 @@ export function EducationTab({ token, setMessage }: Readonly<EducationTabProps>)
           <motion.div 
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
-            className="bg-bg-subtle w-full max-w-lg rounded-xl border border-border overflow-hidden shadow-2xl"
+            className="bg-bg-subtle w-full max-w-lg rounded-md border border-border overflow-hidden shadow-2xl"
           >
             <div className="flex items-center justify-between px-6 py-4 border-b border-border bg-bg">
               <h3 className="font-mono font-bold text-sm">
@@ -166,7 +166,7 @@ export function EducationTab({ token, setMessage }: Readonly<EducationTabProps>)
                   required
                   value={form.institution}
                   onChange={(e) => setForm({...form, institution: e.target.value})}
-                  className="w-full bg-bg border border-border rounded-lg p-2.5 focus:outline-none focus:border-primary transition-colors font-mono text-sm"
+                  className="w-full bg-bg border border-border rounded-md p-2.5 focus:outline-none focus:border-primary transition-colors font-mono text-sm"
                 />
               </div>
 
@@ -177,7 +177,7 @@ export function EducationTab({ token, setMessage }: Readonly<EducationTabProps>)
                   required
                   value={form.major}
                   onChange={(e) => setForm({...form, major: e.target.value})}
-                  className="w-full bg-bg border border-border rounded-lg p-2.5 focus:outline-none focus:border-primary transition-colors font-mono text-sm"
+                  className="w-full bg-bg border border-border rounded-md p-2.5 focus:outline-none focus:border-primary transition-colors font-mono text-sm"
                 />
               </div>
 
@@ -189,7 +189,7 @@ export function EducationTab({ token, setMessage }: Readonly<EducationTabProps>)
                     required
                     value={form.startYear}
                     onChange={(e) => setForm({...form, startYear: parseInt(e.target.value) || new Date().getFullYear()})}
-                    className="w-full bg-bg border border-border rounded-lg p-2.5 focus:outline-none focus:border-primary transition-colors font-mono text-sm"
+                    className="w-full bg-bg border border-border rounded-md p-2.5 focus:outline-none focus:border-primary transition-colors font-mono text-sm"
                   />
                 </div>
 
@@ -200,7 +200,7 @@ export function EducationTab({ token, setMessage }: Readonly<EducationTabProps>)
                     required
                     value={form.endYear}
                     onChange={(e) => setForm({...form, endYear: parseInt(e.target.value) || new Date().getFullYear()})}
-                    className="w-full bg-bg border border-border rounded-lg p-2.5 focus:outline-none focus:border-primary transition-colors font-mono text-sm"
+                    className="w-full bg-bg border border-border rounded-md p-2.5 focus:outline-none focus:border-primary transition-colors font-mono text-sm"
                   />
                 </div>
               </div>
@@ -212,14 +212,14 @@ export function EducationTab({ token, setMessage }: Readonly<EducationTabProps>)
                   required
                   value={form.order}
                   onChange={(e) => setForm({...form, order: parseInt(e.target.value) || 1})}
-                  className="w-full bg-bg border border-border rounded-lg p-2.5 focus:outline-none focus:border-primary transition-colors font-mono text-sm"
+                  className="w-full bg-bg border border-border rounded-md p-2.5 focus:outline-none focus:border-primary transition-colors font-mono text-sm"
                 />
               </div>
 
               <button 
                 type="submit"
                 disabled={isPending}
-                className="w-full flex items-center justify-center gap-2 bg-primary text-white font-mono py-2.5 rounded-lg hover:bg-primary-dim transition-all disabled:opacity-50 cursor-pointer shadow-md text-sm"
+                className="w-full flex items-center justify-center gap-2 bg-primary text-white font-mono py-2.5 rounded-md hover:bg-primary-dim transition-all disabled:opacity-50 cursor-pointer shadow-md text-sm"
               >
                 <Save size={16} />
                 {isPending ? 'Saving...' : 'Save Education'}

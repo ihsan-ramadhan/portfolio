@@ -27,7 +27,7 @@ export default function Projects() {
                   key={i} 
                   className={`flex flex-col ${isEven ? 'lg:flex-row' : 'lg:flex-row-reverse'} gap-8 lg:gap-16 items-center w-full`}
                 >
-                  <Skeleton className="w-full lg:w-[45%] aspect-video rounded-xl" />
+                  <Skeleton className="w-full lg:w-[45%] aspect-video rounded-md" />
                   <div className="w-full lg:w-[55%] space-y-4">
                     <Skeleton className="h-5 w-12" />
                     <Skeleton className="h-8 w-1/2" />
@@ -55,7 +55,7 @@ export default function Projects() {
                   transition={{ duration: 0.6 }}
                   className={`flex flex-col ${isEven ? 'lg:flex-row' : 'lg:flex-row-reverse'} gap-8 lg:gap-16 items-center w-full group py-4`}
                 >
-                  <div className="w-full lg:w-[45%] aspect-video glass-panel hover-glow rounded-xl overflow-hidden shrink-0 relative shadow-xl">
+                  <div className="w-full lg:w-[45%] aspect-video glass-panel hover-glow rounded-md overflow-hidden shrink-0 relative shadow-xl">
                     {project.imageUrl ? (
                       <img
                         src={project.imageUrl}

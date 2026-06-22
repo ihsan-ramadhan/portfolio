@@ -88,7 +88,7 @@ export function ExperienceTab({ token, setMessage }: Readonly<ExperienceTabProps
 
   return (
     <div className="space-y-6">
-      <div className="bg-bg-subtle p-8 rounded-xl border border-border">
+      <div className="bg-bg-subtle p-8 rounded-md border border-border">
         <div className="flex items-center justify-between mb-6">
           <div className="flex items-center gap-2">
             <Briefcase size={18} className="text-primary" />
@@ -96,14 +96,14 @@ export function ExperienceTab({ token, setMessage }: Readonly<ExperienceTabProps
           </div>
           <button 
             onClick={handleOpenAdd}
-            className="flex items-center gap-2 bg-primary hover:bg-primary-dim text-white text-xs font-mono px-4 py-2 rounded-lg cursor-pointer transition-all"
+            className="flex items-center gap-2 bg-primary hover:bg-primary-dim text-white text-xs font-mono px-4 py-2 rounded-md cursor-pointer transition-all"
           >
             <Plus size={14} /> Add Experience
           </button>
         </div>
 
         {experiences.length === 0 ? (
-          <div className="text-center py-8 text-text-muted font-mono text-sm border border-dashed border-border rounded-xl">
+          <div className="text-center py-8 text-text-muted font-mono text-sm border border-dashed border-border rounded-md">
             No experience records found.
           </div>
         ) : (
@@ -111,7 +111,7 @@ export function ExperienceTab({ token, setMessage }: Readonly<ExperienceTabProps
             {experiences.map((exp) => (
               <div 
                 key={exp.id} 
-                className="bg-bg p-5 rounded-lg border border-border hover:border-primary/40 transition-colors flex justify-between items-start gap-4"
+                className="bg-bg p-5 rounded-md border border-border hover:border-primary/40 transition-colors flex justify-between items-start gap-4"
               >
                 <div className="space-y-2">
                   <h4 className="font-bold font-sans text-base">{exp.position}</h4>
@@ -127,13 +127,13 @@ export function ExperienceTab({ token, setMessage }: Readonly<ExperienceTabProps
                 <div className="flex items-center gap-2">
                   <button 
                     onClick={() => handleOpenEdit(exp)}
-                    className="p-2 hover:bg-bg-subtle rounded-lg text-text-muted hover:text-primary transition-colors cursor-pointer"
+                    className="p-2 hover:bg-bg-subtle rounded-md text-text-muted hover:text-primary transition-colors cursor-pointer"
                   >
                     <Edit size={16} />
                   </button>
                   <button 
                     onClick={() => handleDelete(exp.id!)}
-                    className="p-2 hover:bg-bg-subtle rounded-lg text-text-muted hover:text-red-400 transition-colors cursor-pointer"
+                    className="p-2 hover:bg-bg-subtle rounded-md text-text-muted hover:text-red-400 transition-colors cursor-pointer"
                   >
                     <Trash2 size={16} />
                   </button>
@@ -149,7 +149,7 @@ export function ExperienceTab({ token, setMessage }: Readonly<ExperienceTabProps
           <motion.div 
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
-            className="bg-bg-subtle w-full max-w-lg rounded-xl border border-border overflow-hidden shadow-2xl"
+            className="bg-bg-subtle w-full max-w-lg rounded-md border border-border overflow-hidden shadow-2xl"
           >
             <div className="flex items-center justify-between px-6 py-4 border-b border-border bg-bg">
               <h3 className="font-mono font-bold text-sm">
@@ -171,7 +171,7 @@ export function ExperienceTab({ token, setMessage }: Readonly<ExperienceTabProps
                   required
                   value={form.company}
                   onChange={(e) => setForm({...form, company: e.target.value})}
-                  className="w-full bg-bg border border-border rounded-lg p-2.5 focus:outline-none focus:border-primary transition-colors font-mono text-sm"
+                  className="w-full bg-bg border border-border rounded-md p-2.5 focus:outline-none focus:border-primary transition-colors font-mono text-sm"
                 />
               </div>
 
@@ -182,7 +182,7 @@ export function ExperienceTab({ token, setMessage }: Readonly<ExperienceTabProps
                   required
                   value={form.position}
                   onChange={(e) => setForm({...form, position: e.target.value})}
-                  className="w-full bg-bg border border-border rounded-lg p-2.5 focus:outline-none focus:border-primary transition-colors font-mono text-sm"
+                  className="w-full bg-bg border border-border rounded-md p-2.5 focus:outline-none focus:border-primary transition-colors font-mono text-sm"
                 />
               </div>
 
@@ -195,7 +195,7 @@ export function ExperienceTab({ token, setMessage }: Readonly<ExperienceTabProps
                     required
                     value={form.startDate}
                     onChange={(e) => setForm({...form, startDate: e.target.value})}
-                    className="w-full bg-bg border border-border rounded-lg p-2.5 focus:outline-none focus:border-primary transition-colors font-mono text-sm"
+                    className="w-full bg-bg border border-border rounded-md p-2.5 focus:outline-none focus:border-primary transition-colors font-mono text-sm"
                   />
                 </div>
 
@@ -207,7 +207,7 @@ export function ExperienceTab({ token, setMessage }: Readonly<ExperienceTabProps
                     required
                     value={form.endDate}
                     onChange={(e) => setForm({...form, endDate: e.target.value})}
-                    className="w-full bg-bg border border-border rounded-lg p-2.5 focus:outline-none focus:border-primary transition-colors font-mono text-sm"
+                    className="w-full bg-bg border border-border rounded-md p-2.5 focus:outline-none focus:border-primary transition-colors font-mono text-sm"
                   />
                 </div>
               </div>
@@ -218,7 +218,7 @@ export function ExperienceTab({ token, setMessage }: Readonly<ExperienceTabProps
                   rows={4}
                   value={form.description}
                   onChange={(e) => setForm({...form, description: e.target.value})}
-                  className="w-full bg-bg border border-border rounded-lg p-2.5 focus:outline-none focus:border-primary transition-colors font-mono text-sm resize-none"
+                  className="w-full bg-bg border border-border rounded-md p-2.5 focus:outline-none focus:border-primary transition-colors font-mono text-sm resize-none"
                 />
               </div>
 
@@ -229,14 +229,14 @@ export function ExperienceTab({ token, setMessage }: Readonly<ExperienceTabProps
                   required
                   value={form.order}
                   onChange={(e) => setForm({...form, order: parseInt(e.target.value) || 1})}
-                  className="w-full bg-bg border border-border rounded-lg p-2.5 focus:outline-none focus:border-primary transition-colors font-mono text-sm"
+                  className="w-full bg-bg border border-border rounded-md p-2.5 focus:outline-none focus:border-primary transition-colors font-mono text-sm"
                 />
               </div>
 
               <button 
                 type="submit"
                 disabled={isPending}
-                className="w-full flex items-center justify-center gap-2 bg-primary text-white font-mono py-2.5 rounded-lg hover:bg-primary-dim transition-all disabled:opacity-50 cursor-pointer shadow-md text-sm"
+                className="w-full flex items-center justify-center gap-2 bg-primary text-white font-mono py-2.5 rounded-md hover:bg-primary-dim transition-all disabled:opacity-50 cursor-pointer shadow-md text-sm"
               >
                 <Save size={16} />
                 {isPending ? 'Saving...' : 'Save Experience'}

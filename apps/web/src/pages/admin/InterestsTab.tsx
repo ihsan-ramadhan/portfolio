@@ -65,7 +65,7 @@ export function InterestsTab({ token, setMessage }: Readonly<InterestsTabProps>)
     return (
       <div className="space-y-3 animate-pulse">
         {[1, 2, 3].map((i) => (
-          <div key={i} className="h-12 bg-bg-subtle rounded-lg border border-border" />
+          <div key={i} className="h-12 bg-bg-subtle rounded-md border border-border" />
         ))}
       </div>
     );
@@ -73,7 +73,7 @@ export function InterestsTab({ token, setMessage }: Readonly<InterestsTabProps>)
 
   return (
     <div className="space-y-6">
-      <div className="bg-bg-subtle p-8 rounded-xl border border-border">
+      <div className="bg-bg-subtle p-8 rounded-md border border-border">
         <div className="flex items-center justify-between mb-6">
           <div className="flex items-center gap-2">
             <Sparkles size={18} className="text-primary" />
@@ -85,14 +85,14 @@ export function InterestsTab({ token, setMessage }: Readonly<InterestsTabProps>)
           </div>
           <button
             onClick={handleOpenAdd}
-            className="flex items-center gap-2 bg-primary hover:bg-primary-dim text-white text-xs font-mono px-4 py-2 rounded-lg cursor-pointer transition-all shadow-md"
+            className="flex items-center gap-2 bg-primary hover:bg-primary-dim text-white text-xs font-mono px-4 py-2 rounded-md cursor-pointer transition-all shadow-md"
           >
             <Plus size={14} /> Add Interest
           </button>
         </div>
 
         {interests.length === 0 ? (
-          <div className="text-center py-12 border border-dashed border-border rounded-xl">
+          <div className="text-center py-12 border border-dashed border-border rounded-md">
             <Sparkles size={32} className="mx-auto text-text-muted mb-3 opacity-40" />
             <p className="font-mono text-sm text-text-muted">No interests yet</p>
             <p className="font-mono text-xs text-text-muted mt-1 opacity-60">
@@ -109,7 +109,7 @@ export function InterestsTab({ token, setMessage }: Readonly<InterestsTabProps>)
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, scale: 0.95 }}
                   transition={{ duration: 0.2 }}
-                  className="group flex items-center justify-between gap-3 bg-bg border border-border hover:border-primary/50 rounded-lg px-4 py-3 transition-all"
+                  className="group flex items-center justify-between gap-3 bg-bg border border-border hover:border-primary/50 rounded-md px-4 py-3 transition-all"
                 >
                   <div className="flex items-center gap-3 min-w-0">
                     <GripVertical
@@ -153,7 +153,7 @@ export function InterestsTab({ token, setMessage }: Readonly<InterestsTabProps>)
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 16 }}
               transition={{ duration: 0.2 }}
-              className="bg-bg-subtle w-full max-w-sm rounded-xl border border-border overflow-hidden shadow-2xl"
+              className="bg-bg-subtle w-full max-w-sm rounded-md border border-border overflow-hidden shadow-2xl"
             >
               <div className="flex items-center justify-between px-6 py-4 border-b border-border bg-bg">
                 <div className="flex items-center gap-2">
@@ -182,7 +182,7 @@ export function InterestsTab({ token, setMessage }: Readonly<InterestsTabProps>)
                     placeholder="e.g. Open Source, System Design, Coffee..."
                     value={form.name}
                     onChange={(e) => setForm({ ...form, name: e.target.value })}
-                    className="w-full bg-bg border border-border rounded-lg p-2.5 focus:outline-none focus:border-primary transition-colors font-mono text-sm placeholder:text-text-muted/50"
+                    className="w-full bg-bg border border-border rounded-md p-2.5 focus:outline-none focus:border-primary transition-colors font-mono text-sm placeholder:text-text-muted/50"
                   />
                 </div>
 
@@ -195,7 +195,7 @@ export function InterestsTab({ token, setMessage }: Readonly<InterestsTabProps>)
                     min="0"
                     value={form.order}
                     onChange={(e) => setForm({ ...form, order: parseInt(e.target.value) || 0 })}
-                    className="w-full bg-bg border border-border rounded-lg p-2.5 focus:outline-none focus:border-primary transition-colors font-mono text-sm"
+                    className="w-full bg-bg border border-border rounded-md p-2.5 focus:outline-none focus:border-primary transition-colors font-mono text-sm"
                   />
                 </div>
 
@@ -203,14 +203,14 @@ export function InterestsTab({ token, setMessage }: Readonly<InterestsTabProps>)
                   <button
                     type="button"
                     onClick={() => setIsModalOpen(false)}
-                    className="flex-1 py-2.5 border border-border rounded-lg font-mono text-sm text-text-muted hover:text-text transition-colors cursor-pointer"
+                    className="flex-1 py-2.5 border border-border rounded-md font-mono text-sm text-text-muted hover:text-text transition-colors cursor-pointer"
                   >
                     Cancel
                   </button>
                   <button
                     type="submit"
                     disabled={isPending}
-                    className="flex-1 flex items-center justify-center gap-2 bg-primary text-white font-mono py-2.5 rounded-lg hover:bg-primary-dim transition-all disabled:opacity-50 cursor-pointer shadow-md text-sm"
+                    className="flex-1 flex items-center justify-center gap-2 bg-primary text-white font-mono py-2.5 rounded-md hover:bg-primary-dim transition-all disabled:opacity-50 cursor-pointer shadow-md text-sm"
                   >
                     <Sparkles size={14} />
                     {isPending ? 'Saving...' : editingInterest ? 'Update' : 'Add'}

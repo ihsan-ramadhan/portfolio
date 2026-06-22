@@ -109,7 +109,7 @@ export function ImageUploadModal({
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.95 }}
-            className="bg-bg-subtle border border-border rounded-2xl w-full max-w-md shadow-2xl overflow-hidden flex flex-col"
+            className="bg-bg-subtle border border-border rounded-md w-full max-w-md shadow-2xl overflow-hidden flex flex-col"
           >
             <div className="flex justify-between items-center px-6 py-4 border-b border-border">
               <h3 className="font-mono font-bold text-lg text-text flex items-center gap-2">
@@ -129,7 +129,7 @@ export function ImageUploadModal({
             <div className="p-6 space-y-6">
               {/* Display Current or Preview Image */}
               {(previewUrl || currentImageUrl) && (
-                <div className="relative w-full h-48 rounded-xl overflow-hidden border border-border bg-bg flex items-center justify-center group">
+                <div className="relative w-full h-48 rounded-md overflow-hidden border border-border bg-bg flex items-center justify-center group">
                   <img
                     src={previewUrl || currentImageUrl || ''}
                     alt="Preview"
@@ -155,7 +155,7 @@ export function ImageUploadModal({
                   onDragLeave={handleDrag}
                   onDragOver={handleDrag}
                   onDrop={handleDrop}
-                  className={`border-2 border-dashed rounded-xl p-8 text-center transition-all ${
+                  className={`border-2 border-dashed rounded-md p-8 text-center transition-all ${
                     dragActive
                       ? 'border-primary bg-primary/5'
                       : 'border-border bg-bg hover:border-primary/50'
@@ -195,7 +195,7 @@ export function ImageUploadModal({
                     type="button"
                     onClick={handleConfirmUpload}
                     disabled={isPending || isOptimizing}
-                    className="w-full py-2.5 bg-primary text-white rounded-lg font-mono text-sm hover:bg-primary-dim transition-all active:scale-95 disabled:opacity-50 cursor-pointer flex justify-center items-center gap-2"
+                    className="w-full py-2.5 bg-primary text-white rounded-md font-mono text-sm hover:bg-primary-dim transition-all active:scale-95 disabled:opacity-50 cursor-pointer flex justify-center items-center gap-2"
                   >
                     {isOptimizing ? 'Optimizing...' : isPending ? 'Uploading...' : 'Confirm Upload'}
                   </button>
