@@ -7,6 +7,5 @@ export function useInterests() {
     queryKey: ['interests'],
     queryFn: interestsApi.getInterests,
     staleTime: 5 * 60 * 1000,
-    retry: 2,
   });
 }
