@@ -60,6 +60,18 @@ pnpm --filter api run start:dev
 pnpm --filter web run dev
 ```
 
+### Testing
+
+```bash
+# API (Jest)
+pnpm --filter api run test
+pnpm --filter api run test:cov
+
+# Web (Vitest)
+pnpm --filter web run test
+pnpm --filter web run test:cov
+```
+
 ---
 
 ## API Reference

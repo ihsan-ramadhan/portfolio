@@ -7,6 +7,5 @@ export function useProjects() {
     queryKey: ['projects'],
     queryFn: projectsApi.getProjects,
     staleTime: 5 * 60 * 1000,
-    retry: 2,
   });
 }

@@ -42,6 +42,5 @@ export function useGitHubActivity() {
       return res.data.data;
     },
     staleTime: 5 * 60 * 1000,
-    retry: 2,
   });
 }

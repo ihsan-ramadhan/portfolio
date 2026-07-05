@@ -7,7 +7,6 @@ export function useSections() {
     queryKey: ['sections'],
     queryFn: sectionsApi.getSections,
     staleTime: 5 * 60 * 1000,
-    retry: 2,
   });
 }
 

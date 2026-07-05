@@ -7,6 +7,5 @@ export function useExperiences() {
     queryKey: ['experiences'],
     queryFn: experienceApi.getExperiences,
     staleTime: 5 * 60 * 1000,
-    retry: 2,
   });
 }

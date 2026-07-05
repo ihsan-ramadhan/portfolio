@@ -4,7 +4,7 @@
     "target": "es2023",
     "lib": ["ES2023", "DOM"],
     "module": "esnext",
-    "types": ["vite/client"],
+    "types": ["vite/client", "vitest/globals"],
     "skipLibCheck": true,
 
     /* Bundler mode */
@@ -27,5 +27,5 @@
       "shared-types": ["../../packages/shared-types/src/index.ts"]
     }
   },
-  "include": ["src"]
+  "include": ["src", "setupTests.ts"]
 }

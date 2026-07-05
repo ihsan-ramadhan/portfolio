@@ -7,6 +7,5 @@ export function useEducations() {
     queryKey: ['educations'],
     queryFn: educationApi.getEducations,
     staleTime: 5 * 60 * 1000,
-    retry: 2,
   });
 }
