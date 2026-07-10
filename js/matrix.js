@@ -1,0 +1,89 @@
+export function initDataRain() {
+  const canvas = document.getElementById('data-rain');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d', { alpha: false });
+  const glyphs = '01アイウエオカキクケコサシスセソ0123456789ABCDEF#$%&<>/\\';
+  const fontSize = 15;
+  let cols = 0;
+  let drops = [];
+  let dpr = Math.min(window.devicePixelRatio || 1, 2);
+  let animationFrameId = null;
+  let lastTime = 0;
+  const fpsInterval = 66;
+
+  function resize() {
+    dpr = Math.min(window.devicePixelRatio || 1, 2);
+    canvas.width = window.innerWidth * dpr;
+    canvas.height = window.innerHeight * dpr;
+    canvas.style.width = window.innerWidth + 'px';
+    canvas.style.height = window.innerHeight + 'px';
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    cols = Math.ceil(window.innerWidth / fontSize);
+    drops = new Array(cols).fill(0).map(() => Math.floor(Math.random() * -40));
+  }
+
+  function frame(timestamp) {
+    animationFrameId = requestAnimationFrame(frame);
+
+    const elapsed = timestamp - lastTime;
+    if (elapsed < fpsInterval) return;
+    lastTime = timestamp - (elapsed % fpsInterval);
+
+    if (document.hidden || document.getElementById('main-site').classList.contains('hidden')) {
+      return;
+    }
+
+    ctx.fillStyle = 'rgba(5, 6, 13, 0.18)';
+    ctx.fillRect(0, 0, window.innerWidth, window.innerHeight);
+    ctx.font = fontSize + 'px "Share Tech Mono", monospace';
+
+    ctx.fillStyle = 'rgba(100, 128, 192, 0.35)';
+    for (let i = 0; i < cols; i++) {
+      const x = i * fontSize;
+      const y = drops[i] * fontSize;
+      ctx.fillText(glyphs[Math.floor(Math.random() * glyphs.length)], x, y - fontSize);
+    }
+
+    ctx.fillStyle = 'rgba(219, 230, 255, 0.85)';
+    for (let i = 0; i < cols; i++) {
+      const char = glyphs[Math.floor(Math.random() * glyphs.length)];
+      const x = i * fontSize;
+      const y = drops[i] * fontSize;
+      ctx.fillText(char, x, y);
+
+      if (y > window.innerHeight && Math.random() > 0.975) {
+        drops[i] = Math.floor(Math.random() * -20);
+      }
+      drops[i]++;
+    }
+  }
+
+  resize();
+  let resizeTimer;
+  window.addEventListener('resize', () => {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(resize, 100);
+  });
+
+  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (!prefersReduced) {
+    animationFrameId = requestAnimationFrame(frame);
+
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) {
+        if (animationFrameId) {
+          cancelAnimationFrame(animationFrameId);
+          animationFrameId = null;
+        }
+      } else {
+        if (!animationFrameId) {
+          lastTime = performance.now();
+          animationFrameId = requestAnimationFrame(frame);
+        }
+      }
+    });
+  } else {
+    ctx.fillStyle = 'rgb(5, 6, 13)';
+    ctx.fillRect(0, 0, window.innerWidth, window.innerHeight);
+  }
+}

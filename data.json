@@ -1,0 +1,79 @@
+{
+  "config": {
+    "gistId": ""
+  },
+  "hero": {
+    "name": "M. Ihsan Ramadhan",
+    "subtitle": "FULLSTACK_DEVELOPER",
+    "socials": {
+      "github": "https://github.com/ihsan-ramadhan",
+      "linkedin": "https://www.linkedin.com/in/m-ihsan-r/",
+      "instagram": "https://www.instagram.com/ihsanmadhan"
+    }
+  },
+  "about": {
+    "whoami": [
+      "I'm Ihsan, a fullstack developer from Indonesia currently studying Informatics Engineering at Politeknik Negeri Bandung.",
+      "I'm an open source enthusiast and a builder at heart. I like exploring where code meets real-world problems.",
+      "When I'm not debugging, I'm probably learning new tech, tweaking my Linux setup, or touching grass."
+    ],
+    "info": {
+      "OS": "Linux",
+      "SHELL": "fish",
+      "EDITOR": "Zed / Terax",
+      "LOCATION": "Bandung, ID",
+      "REPOS": "27 PUBLIC"
+    }
+  },
+  "stack": [
+    "JavaScript",
+    "TypeScript",
+    "Go",
+    "PHP",
+    "SQL",
+    "React",
+    "Vue",
+    "Node.js",
+    "Laravel",
+    "Docker",
+    "Git",
+    "TailwindCSS"
+  ],
+  "projects": [
+    {
+      "name": "polban-dataview",
+      "description": "Cloud-native dashboard that visualizes Polban's institutional data through interactive, live-updating charts.",
+      "stack": ["Vue", "JavaScript"],
+      "url": "https://github.com/ihsan-ramadhan/polban-dataview",
+      "githubRepo": "ihsan-ramadhan/polban-dataview",
+      "stars": 1
+    },
+    {
+      "name": "tuckify",
+      "description": "Your Downloads folder is a graveyard. tuckify cleans it automatically. Organize files by rule, schedule it, manage multiple folders.",
+      "stack": ["Go", "Wails", "JavaScript"],
+      "url": "https://github.com/ihsan-ramadhan/tuckify",
+      "githubRepo": "ihsan-ramadhan/tuckify",
+      "stars": 0
+    },
+    {
+      "name": "Proyek2-C3",
+      "description": "Space Invaders 2D arcade game built with SDL3 library in C.",
+      "stack": ["C", "SDL3"],
+      "url": "https://github.com/rahmaattayat/Proyek2-C3",
+      "githubRepo": "rahmaattayat/Proyek2-C3",
+      "stars": 0
+    },
+    {
+      "name": "ReksaTani-App",
+      "description": "Offline-First mobile platform for agricultural transactions and supply chain management designed for remote areas.",
+      "stack": ["Flutter", "Dart"],
+      "url": "https://github.com/Umeem26/ReksaTani-App",
+      "githubRepo": "Umeem26/ReksaTani-App",
+      "stars": 2
+    }
+  ],
+  "contact": {
+    "email": "m.ihsan.r30@gmail.com"
+  }
+}
