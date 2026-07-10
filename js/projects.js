@@ -1,5 +1,5 @@
 export function renderProjects(portfolioData) {
-  if (!portfolioData || !portfolioData.projects) return;
+  if (!portfolioData?.projects) return;
 
   const projects = portfolioData.projects;
   document.getElementById('project-count-title').textContent = `${projects.length} OBJECTS`;
@@ -60,7 +60,7 @@ export function setupProjectInteractivity(portfolioData) {
 }
 
 export async function syncGitHubStars(portfolioData, onUpdate) {
-  if (!portfolioData || !portfolioData.projects) return;
+  if (!portfolioData?.projects) return;
 
   const fetches = portfolioData.projects.map(async (project, idx) => {
     if (!project.githubRepo) return;

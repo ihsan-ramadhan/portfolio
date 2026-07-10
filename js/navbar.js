@@ -5,7 +5,7 @@ export function initNavbarStatus() {
 
   function handleScrollClick(e) {
     const href = e.currentTarget.getAttribute('href');
-    if (!href || !href.startsWith('#')) return;
+    if (!href?.startsWith('#')) return;
     
     e.preventDefault();
     const target = document.querySelector(href);

@@ -11,6 +11,8 @@ export function initDataRain() {
   let lastTime = 0;
   const fpsInterval = 66;
 
+  const getRandom = () => window.crypto.getRandomValues(new Uint32Array(1))[0] / 4294967296;
+
   function resize() {
     dpr = Math.min(window.devicePixelRatio || 1, 2);
     canvas.width = window.innerWidth * dpr;
@@ -19,7 +21,7 @@ export function initDataRain() {
     canvas.style.height = window.innerHeight + 'px';
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     cols = Math.ceil(window.innerWidth / fontSize);
-    drops = new Array(cols).fill(0).map(() => Math.floor(Math.random() * -40));
+    drops = new Array(cols).fill(0).map(() => Math.floor(getRandom() * -40));
   }
 
   function frame(timestamp) {
@@ -41,18 +43,18 @@ export function initDataRain() {
     for (let i = 0; i < cols; i++) {
       const x = i * fontSize;
       const y = drops[i] * fontSize;
-      ctx.fillText(glyphs[Math.floor(Math.random() * glyphs.length)], x, y - fontSize);
+      ctx.fillText(glyphs[Math.floor(getRandom() * glyphs.length)], x, y - fontSize);
     }
 
     ctx.fillStyle = 'rgba(219, 230, 255, 0.85)';
     for (let i = 0; i < cols; i++) {
-      const char = glyphs[Math.floor(Math.random() * glyphs.length)];
+      const char = glyphs[Math.floor(getRandom() * glyphs.length)];
       const x = i * fontSize;
       const y = drops[i] * fontSize;
       ctx.fillText(char, x, y);
 
-      if (y > window.innerHeight && Math.random() > 0.975) {
-        drops[i] = Math.floor(Math.random() * -20);
+      if (y > window.innerHeight && getRandom() > 0.975) {
+        drops[i] = Math.floor(getRandom() * -20);
       }
       drops[i]++;
     }
@@ -70,16 +72,12 @@ export function initDataRain() {
     animationFrameId = requestAnimationFrame(frame);
 
     document.addEventListener('visibilitychange', () => {
-      if (document.hidden) {
-        if (animationFrameId) {
-          cancelAnimationFrame(animationFrameId);
-          animationFrameId = null;
-        }
-      } else {
-        if (!animationFrameId) {
-          lastTime = performance.now();
-          animationFrameId = requestAnimationFrame(frame);
-        }
+      if (document.hidden && animationFrameId) {
+        cancelAnimationFrame(animationFrameId);
+        animationFrameId = null;
+      } else if (!document.hidden && !animationFrameId) {
+        lastTime = performance.now();
+        animationFrameId = requestAnimationFrame(frame);
       }
     });
   } else {
