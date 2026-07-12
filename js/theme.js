@@ -1,7 +1,6 @@
 export function initThemeToggle() {
   const btn = document.getElementById('theme-switch');
-  const degauss = document.getElementById('crt-degauss');
-  if (!btn || !degauss) return;
+  if (!btn) return;
 
   const stored = localStorage.getItem('theme');
   if (stored === 'light') {
@@ -24,9 +23,6 @@ export function initThemeToggle() {
   btn.addEventListener('click', () => {
     const isDark = !document.documentElement.dataset.theme;
 
-    degauss.classList.add('sweep-active');
-    document.body.classList.add('theme-glitching');
-
     if (document.startViewTransition) {
       document.startViewTransition(() => {
         swapTheme(isDark);
@@ -34,10 +30,5 @@ export function initThemeToggle() {
     } else {
       swapTheme(isDark);
     }
-
-    setTimeout(() => {
-      degauss.classList.remove('sweep-active');
-      document.body.classList.remove('theme-glitching');
-    }, 420);
   });
 }
