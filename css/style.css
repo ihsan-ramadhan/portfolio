@@ -232,6 +232,7 @@ h1, h2, h3, .retro-title {
   max-width: calc(64rem - 2rem);
   z-index: 90;
   display: none;
+  view-transition-name: none !important;
 }
 .ascii-rule {
   color: var(--crt-dim);
@@ -273,33 +274,6 @@ h1, h2, h3, .retro-title {
   background: transparent;
   flex-shrink: 0;
 }
-#crt-degauss {
-  position: fixed;
-  left: 0;
-  right: 0;
-  top: 0;
-  height: 3px;
-  background: rgb(var(--crt-amber));
-  box-shadow: 0 0 8px 2px rgb(var(--crt-amber)), 0 0 15px 4px rgba(var(--crt-amber), 0.5);
-  z-index: 9999;
-  pointer-events: none;
-  opacity: 0;
-  transform: translateY(-10px);
-}
-#crt-degauss.sweep-active {
-  animation: lhci-bar-sweep 0.42s cubic-bezier(0.68, -0.15, 0.265, 1.35) forwards;
-}
-@keyframes lhci-bar-sweep {
-  0% {
-    opacity: 1;
-    transform: translateY(0vh);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(100vh);
-  }
-}
-/* Custom CRT Scanline Sweep View Transition */
 ::view-transition-old(root) {
   animation: none;
   mix-blend-mode: normal;
@@ -316,23 +290,8 @@ h1, h2, h3, .retro-title {
     clip-path: inset(0 0 0 0);
   }
 }
-body.theme-glitching {
-  animation: lhci-micro-jitter 0.12s steps(2) infinite;
-}
-@keyframes lhci-micro-jitter {
-  0%, 100% { transform: translateX(0); }
-  25% { transform: translateX(1.5px); filter: skewX(0.5deg); }
-  75% { transform: translateX(-1.5px); filter: skewX(-0.5deg); }
-}
 @media (prefers-reduced-motion: reduce) {
   ::view-transition-new(root) {
-    animation: none;
-  }
-  #crt-degauss.sweep-active {
-    animation: none;
-    opacity: 0;
-  }
-  body.theme-glitching {
     animation: none;
   }
 }
