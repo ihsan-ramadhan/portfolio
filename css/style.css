@@ -4,7 +4,7 @@
   --crt-accent: #3d54a6;
   --crt-bright: #dbe6ff;
   --crt-dim: #4c5a86;
-  --crt-amber: #ffb86c;
+  --crt-amber: 255, 184, 108;
   --crt-window-bg: rgba(5, 6, 13, 0.85);
   --crt-window-border: rgba(159, 184, 232, 0.3);
   --crt-titlebar-bg: rgba(159, 184, 232, 0.08);
@@ -31,7 +31,7 @@
   --crt-accent: #5566aa;
   --crt-bright: #151522;
   --crt-dim: #707088;
-  --crt-amber: #945200;
+  --crt-amber: 148, 82, 0;
   --crt-window-bg: rgba(232, 228, 216, 0.9);
   --crt-window-border: rgba(58, 58, 74, 0.25);
   --crt-titlebar-bg: rgba(58, 58, 74, 0.05);
@@ -142,9 +142,9 @@ h1, h2, h3, .retro-title {
   transform: translateY(-1px);
 }
 .retro-link {
-  color: var(--crt-amber);
+  color: rgb(var(--crt-amber));
   text-decoration: underline;
-  text-decoration-color: var(--crt-amber);
+  text-decoration-color: rgb(var(--crt-amber));
   text-underline-offset: 2px;
 }
 .retro-link:hover {
@@ -263,8 +263,8 @@ h1, h2, h3, .retro-title {
   border-color: var(--crt-amber);
 }
 .crt-power-switch.on .ps-led {
-  background: var(--crt-amber);
-  box-shadow: 0 0 4px var(--crt-amber);
+  background: rgb(var(--crt-amber));
+  box-shadow: 0 0 4px rgb(var(--crt-amber));
 }
 .crt-power-switch .ps-led {
   width: 6px;
