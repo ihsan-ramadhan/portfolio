@@ -3,6 +3,7 @@ import { startBootSequence } from './boot.js';
 import { initNavbarStatus } from './navbar.js';
 import { renderProjects, syncGitHubStars } from './projects.js';
 import { setupSubtitleGlitch, revealSections } from './ui.js';
+import { initThemeToggle } from './theme.js';
 
 let portfolioData = null;
 
@@ -119,6 +120,7 @@ async function loadData() {
 }
 
 window.addEventListener('DOMContentLoaded', () => {
+  initThemeToggle();
   initDataRain();
   initNavbarStatus();
   loadData();

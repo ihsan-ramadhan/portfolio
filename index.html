@@ -11,13 +11,13 @@
         extend: {
           colors: {
             ph: {
-              100: '#dbe6ff',
-              200: '#c1d1f2',
-              300: '#9fb8e8',
-              400: '#84a0d8',
-              500: '#6480c0',
-              600: '#495e93',
-              900: '#141b3d'
+              100: 'rgba(var(--ph-100), <alpha-value>)',
+              200: 'rgba(var(--ph-200), <alpha-value>)',
+              300: 'rgba(var(--ph-300), <alpha-value>)',
+              400: 'rgba(var(--ph-400), <alpha-value>)',
+              500: 'rgba(var(--ph-500), <alpha-value>)',
+              600: 'rgba(var(--ph-600), <alpha-value>)',
+              900: 'rgba(var(--ph-900), <alpha-value>)'
             }
           }
         }
@@ -28,16 +28,25 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=VT323&family=Share+Tech+Mono&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
+  <script>
+    if (localStorage.getItem('theme') === 'light') {
+      document.documentElement.dataset.theme = 'light';
+    }
+  </script>
 </head>
-<body class="scroll-retro min-h-screen relative overflow-x-hidden selection:bg-ph-400/30 selection:text-white">
+<body class="scroll-retro min-h-screen relative overflow-x-hidden">
 
   <canvas id="data-rain"></canvas>
   <div class="scanlines"></div>
   <div class="crt-flicker"></div>
+  <div id="crt-degauss"></div>
 
   <nav class="navbar-scroll window-chrome glow-border rounded-sm p-4 flex flex-col sm:flex-row justify-between sm:items-center gap-4 text-xs md:text-sm font-mono">
-    <div class="flex justify-between items-center w-full sm:w-auto">
+    <div class="flex justify-between items-center w-full sm:w-auto gap-3">
       <a href="#hero" class="text-ph-300 font-bold tracking-wider uppercase hover:text-amber-400 transition-colors" id="nav-system-status">IHSAN@PORTFOLIO:~$</a>
+      <button id="theme-switch" class="crt-power-switch on" title="Toggle theme" aria-label="Toggle light/dark mode">
+        <span class="ps-led"></span>POWER
+      </button>
       <button id="nav-toggle" class="sm:hidden text-amber-400 border border-amber-400/30 bg-amber-400/5 px-2 py-1 rounded-sm hover:bg-amber-400/20 active:bg-amber-400/30 transition-colors font-bold">
         [MENU]
       </button>
@@ -51,15 +60,11 @@
     </div>
   </nav>
 
-  <div id="boot-overlay" class="fixed inset-0 z-[100] bg-[#05060d] flex flex-col items-start justify-start p-8 md:p-16 text-sm md:text-base text-ph-400 font-mono">
+  <div id="boot-overlay" class="fixed inset-0 z-[100] flex flex-col items-start justify-start p-8 md:p-16 text-sm md:text-base font-mono" style="background-color: var(--crt-bg); color: var(--crt-phosphor);">
     <div id="boot-content"></div>
   </div>
 
   <main id="main-site" class="relative z-10 max-w-5xl mx-auto px-4 py-8 md:py-12 hidden">
-    <div class="hud-corner tl hidden md:block"></div>
-    <div class="hud-corner tr hidden md:block"></div>
-    <div class="hud-corner bl hidden md:block"></div>
-    <div class="hud-corner br hidden md:block"></div>
 
     <div class="h-16"></div>
 

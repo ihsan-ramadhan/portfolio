@@ -35,18 +35,24 @@ export function initDataRain() {
       return;
     }
 
-    ctx.fillStyle = 'rgba(5, 6, 13, 0.18)';
+    ctx.fillStyle = document.documentElement.dataset.theme === 'light'
+      ? 'rgba(232, 228, 216, 0.18)'
+      : 'rgba(5, 6, 13, 0.18)';
     ctx.fillRect(0, 0, window.innerWidth, window.innerHeight);
     ctx.font = fontSize + 'px "Share Tech Mono", monospace';
 
-    ctx.fillStyle = 'rgba(100, 128, 192, 0.35)';
+    ctx.fillStyle = document.documentElement.dataset.theme === 'light'
+      ? 'rgba(58, 58, 74, 0.28)'
+      : 'rgba(100, 128, 192, 0.35)';
     for (let i = 0; i < cols; i++) {
       const x = i * fontSize;
       const y = drops[i] * fontSize;
       ctx.fillText(glyphs[Math.floor(getRandom() * glyphs.length)], x, y - fontSize);
     }
 
-    ctx.fillStyle = 'rgba(219, 230, 255, 0.85)';
+    ctx.fillStyle = document.documentElement.dataset.theme === 'light'
+      ? 'rgba(42, 42, 58, 0.75)'
+      : 'rgba(219, 230, 255, 0.85)';
     for (let i = 0; i < cols; i++) {
       const char = glyphs[Math.floor(getRandom() * glyphs.length)];
       const x = i * fontSize;
@@ -81,7 +87,9 @@ export function initDataRain() {
       }
     });
   } else {
-    ctx.fillStyle = 'rgb(5, 6, 13)';
+    ctx.fillStyle = document.documentElement.dataset.theme === 'light'
+      ? 'rgb(232, 228, 216)'
+      : 'rgb(5, 6, 13)';
     ctx.fillRect(0, 0, window.innerWidth, window.innerHeight);
   }
 }
