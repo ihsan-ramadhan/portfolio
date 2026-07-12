@@ -10,8 +10,8 @@ export function renderProjects(portfolioData) {
       <td class="py-3 pr-4 font-bold text-ph-300">
         <a href="${p.url}" target="_blank" class="retro-link" aria-label="Visit ${p.name} repository on GitHub">${p.name}</a>
       </td>
-      <td class="py-3 pr-4 text-amber-400/80">${(p.stack || []).join(', ')}</td>
-      <td class="py-3 text-right text-amber-400">${p.stars !== undefined ? p.stars : '--'}</td>
+      <td class="py-3 pr-4 text-ph-amber">${(p.stack || []).join(', ')}</td>
+      <td class="py-3 text-right text-ph-amber">${p.stars !== undefined ? p.stars : '--'}</td>
     </tr>
   `).join('');
 
@@ -32,7 +32,7 @@ export function setupProjectInteractivity(portfolioData) {
       .join('');
 
     panel.innerHTML = `
-      <div class="text-amber-400/70 mb-3 text-[10px]">$ cat ${project.name}/README.md</div>
+      <div class="text-ph-amber mb-3 text-[10px]">$ cat ${project.name}/README.md</div>
       <h4 class="text-ph-100 font-bold text-sm mb-2 flex items-center gap-2">
         <span class="text-ph-500">▸</span> ${project.name}
       </h4>
@@ -41,7 +41,7 @@ export function setupProjectInteractivity(portfolioData) {
         ${stackHtml}
       </div>
       <div class="flex items-center justify-between text-[10px] text-ph-600 border-t border-ph-500/10 pt-3 mt-auto">
-        <span class="text-amber-400/80">★ ${project.stars !== undefined ? project.stars : '--'} stars</span>
+        <span class="text-ph-amber">★ ${project.stars !== undefined ? project.stars : '--'} stars</span>
         <a href="${project.url}" target="_blank" class="retro-link" aria-label="Open ${project.name} repository on GitHub">open repo -></a>
       </div>
     `;
