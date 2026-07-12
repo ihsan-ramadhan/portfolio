@@ -4,7 +4,7 @@
   --crt-accent: #3d54a6;
   --crt-bright: #dbe6ff;
   --crt-dim: #4c5a86;
-  --crt-amber: #ffb86c;
+  --crt-amber: 255, 184, 108;
   --crt-window-bg: rgba(5, 6, 13, 0.85);
   --crt-window-border: rgba(159, 184, 232, 0.3);
   --crt-titlebar-bg: rgba(159, 184, 232, 0.08);
@@ -31,7 +31,7 @@
   --crt-accent: #5566aa;
   --crt-bright: #151522;
   --crt-dim: #707088;
-  --crt-amber: #945200;
+  --crt-amber: 148, 82, 0;
   --crt-window-bg: rgba(232, 228, 216, 0.9);
   --crt-window-border: rgba(58, 58, 74, 0.25);
   --crt-titlebar-bg: rgba(58, 58, 74, 0.05);
@@ -142,9 +142,9 @@ h1, h2, h3, .retro-title {
   transform: translateY(-1px);
 }
 .retro-link {
-  color: var(--crt-amber);
+  color: rgb(var(--crt-amber));
   text-decoration: underline;
-  text-decoration-color: var(--crt-amber);
+  text-decoration-color: rgb(var(--crt-amber));
   text-underline-offset: 2px;
 }
 .retro-link:hover {
@@ -263,8 +263,8 @@ h1, h2, h3, .retro-title {
   border-color: var(--crt-amber);
 }
 .crt-power-switch.on .ps-led {
-  background: var(--crt-amber);
-  box-shadow: 0 0 4px var(--crt-amber);
+  background: rgb(var(--crt-amber));
+  box-shadow: 0 0 4px rgb(var(--crt-amber));
 }
 .crt-power-switch .ps-led {
   width: 6px;
@@ -275,24 +275,64 @@ h1, h2, h3, .retro-title {
 }
 #crt-degauss {
   position: fixed;
-  inset: 0;
-  z-index: 9997;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 3px;
+  background: rgb(var(--crt-amber));
+  box-shadow: 0 0 8px 2px rgb(var(--crt-amber)), 0 0 15px 4px rgba(var(--crt-amber), 0.5);
+  z-index: 9999;
   pointer-events: none;
   opacity: 0;
+  transform: translateY(-10px);
 }
-#crt-degauss.flash {
-  animation: crtPower 0.35s ease-out;
+#crt-degauss.sweep-active {
+  animation: lhci-bar-sweep 0.42s cubic-bezier(0.68, -0.15, 0.265, 1.35) forwards;
 }
-@keyframes crtPower {
-  0% { opacity: 1; background: #fff; }
-  20% { opacity: 1; transform: scaleY(0.005) scaleX(1); background: #fff; }
-  40% { opacity: 0.8; transform: scaleY(0.005) scaleX(1.2); background: var(--crt-amber); }
-  60% { opacity: 0.5; transform: scaleY(1) scaleX(1); }
-  100% { opacity: 0; transform: none; }
+@keyframes lhci-bar-sweep {
+  0% {
+    opacity: 1;
+    transform: translateY(0vh);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(100vh);
+  }
+}
+/* Custom CRT Scanline Sweep View Transition */
+::view-transition-old(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+::view-transition-new(root) {
+  animation: 0.42s cubic-bezier(0.68, -0.15, 0.265, 1.35) lhci-sweep forwards;
+  mix-blend-mode: normal;
+}
+@keyframes lhci-sweep {
+  0% {
+    clip-path: inset(0 0 100% 0);
+  }
+  100% {
+    clip-path: inset(0 0 0 0);
+  }
+}
+body.theme-glitching {
+  animation: lhci-micro-jitter 0.12s steps(2) infinite;
+}
+@keyframes lhci-micro-jitter {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(1.5px); filter: skewX(0.5deg); }
+  75% { transform: translateX(-1.5px); filter: skewX(-0.5deg); }
 }
 @media (prefers-reduced-motion: reduce) {
-  #crt-degauss.flash {
+  ::view-transition-new(root) {
+    animation: none;
+  }
+  #crt-degauss.sweep-active {
     animation: none;
     opacity: 0;
+  }
+  body.theme-glitching {
+    animation: none;
   }
 }
