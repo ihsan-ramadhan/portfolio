@@ -5,21 +5,21 @@ export function initThemeToggle() {
 
   const stored = localStorage.getItem('theme');
   if (stored === 'light') {
-    document.documentElement.setAttribute('data-theme', 'light');
+    document.documentElement.dataset.theme = 'light';
     btn.classList.remove('on');
   }
 
   btn.addEventListener('click', () => {
-    const isDark = !document.documentElement.getAttribute('data-theme');
+    const isDark = !document.documentElement.dataset.theme;
     degauss.classList.add('flash');
     setTimeout(() => degauss.classList.remove('flash'), 400);
 
     if (isDark) {
-      document.documentElement.setAttribute('data-theme', 'light');
+      document.documentElement.dataset.theme = 'light';
       btn.classList.remove('on');
       localStorage.setItem('theme', 'light');
     } else {
-      document.documentElement.removeAttribute('data-theme');
+      delete document.documentElement.dataset.theme;
       btn.classList.add('on');
       localStorage.setItem('theme', 'dark');
     }
