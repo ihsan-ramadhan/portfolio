@@ -3,7 +3,12 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Muhammad Ihsan Ramadhan's software engineering portfolio. A clean retro CRT terminal style website built with Tailwind CSS and vanilla Javascript." />
   <title>M. Ihsan Ramadhan</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="dns-prefetch" href="https://cdn.tailwindcss.com">
+  <link rel="dns-prefetch" href="https://api.github.com">
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
@@ -17,7 +22,8 @@
               400: 'rgba(var(--ph-400), <alpha-value>)',
               500: 'rgba(var(--ph-500), <alpha-value>)',
               600: 'rgba(var(--ph-600), <alpha-value>)',
-              900: 'rgba(var(--ph-900), <alpha-value>)'
+              900: 'rgba(var(--ph-900), <alpha-value>)',
+              amber: 'var(--crt-amber)'
             }
           }
         }
@@ -26,7 +32,10 @@
   </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=VT323&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=VT323&family=Share+Tech+Mono&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+  <noscript>
+    <link href="https://fonts.googleapis.com/css2?family=VT323&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  </noscript>
   <link rel="stylesheet" href="css/style.css">
   <script>
     if (localStorage.getItem('theme') === 'light') {
@@ -43,20 +52,20 @@
 
   <nav class="navbar-scroll window-chrome glow-border rounded-sm p-4 flex flex-col sm:flex-row justify-between sm:items-center gap-4 text-xs md:text-sm font-mono">
     <div class="flex justify-between items-center w-full sm:w-auto gap-3">
-      <a href="#hero" class="text-ph-300 font-bold tracking-wider uppercase hover:text-amber-400 transition-colors" id="nav-system-status">IHSAN@PORTFOLIO:~$</a>
+      <a href="#hero" class="text-ph-300 font-bold tracking-wider uppercase hover:text-ph-amber transition-colors" id="nav-system-status" aria-label="Go to home section">IHSAN@PORTFOLIO:~$</a>
       <button id="theme-switch" class="crt-power-switch on" title="Toggle theme" aria-label="Toggle light/dark mode">
         <span class="ps-led"></span>POWER
       </button>
-      <button id="nav-toggle" class="sm:hidden text-amber-400 border border-amber-400/30 bg-amber-400/5 px-2 py-1 rounded-sm hover:bg-amber-400/20 active:bg-amber-400/30 transition-colors font-bold">
+      <button id="nav-toggle" class="sm:hidden text-ph-amber border border-ph-amber/30 bg-ph-amber/5 px-2 py-1 rounded-sm hover:bg-ph-amber/20 active:bg-ph-amber/30 transition-colors font-bold" aria-label="Toggle navigation menu">
         [MENU]
       </button>
     </div>
     <div id="nav-links" class="hidden sm:flex flex-col sm:flex-row items-center justify-center gap-x-4 gap-y-2 text-ph-200 w-full sm:w-auto border-t border-ph-500/10 sm:border-t-0 pt-4 sm:pt-0">
-      <a href="#hero" class="hover:text-amber-400 transition-colors" data-scroll>[HOME]</a>
-      <a href="#about" class="hover:text-amber-400 transition-colors" data-scroll>[ABOUT]</a>
-      <a href="#stack" class="hover:text-amber-400 transition-colors" data-scroll>[STACK]</a>
-      <a href="#projects" class="hover:text-amber-400 transition-colors" data-scroll>[PROJECTS]</a>
-      <a href="#contact" class="hover:text-amber-400 transition-colors" data-scroll>[CONTACT]</a>
+      <a href="#hero" class="hover:text-ph-amber transition-colors" data-scroll>[HOME]</a>
+      <a href="#about" class="hover:text-ph-amber transition-colors" data-scroll>[ABOUT]</a>
+      <a href="#stack" class="hover:text-ph-amber transition-colors" data-scroll>[STACK]</a>
+      <a href="#projects" class="hover:text-ph-amber transition-colors" data-scroll>[PROJECTS]</a>
+      <a href="#contact" class="hover:text-ph-amber transition-colors" data-scroll>[CONTACT]</a>
     </div>
   </nav>
 
@@ -84,7 +93,7 @@
         </h1>
         <div class="ascii-rule mt-3 mb-1 hidden md:block">/* ==================================================== */</div>
         <div class="flex items-baseline gap-4 mt-2 mb-4 flex-wrap">
-          <span class="text-amber-400 text-lg md:text-xl glow-accent">▶</span>
+          <span class="text-ph-amber text-lg md:text-xl glow-accent">▶</span>
           <h2 class="text-xl md:text-2xl text-ph-300 font-bold tracking-wide typing-cursor" id="hero-subtitle">
             LOADING_SUBTITLE...
           </h2>
@@ -102,7 +111,7 @@
         <span class="text-[10px]">utf-8</span>
       </div>
       <div class="p-6 md:p-10">
-        <div class="mb-4 text-amber-400/80 text-sm">
+        <div class="mb-4 text-ph-amber/80 text-sm">
           &gt; $ whoami
         </div>
         <div class="md:flex gap-8">
@@ -122,7 +131,7 @@
         <span class="text-[10px]">readonly</span>
       </div>
       <div class="p-6 md:p-10">
-        <div class="mb-4 text-amber-400/80 text-sm">
+        <div class="mb-4 text-ph-amber/80 text-sm">
           &gt; $ ls /usr/local/stack/
         </div>
         <div class="grid grid-cols-2 md:grid-cols-4 gap-3 text-sm" id="stack-grid">
@@ -136,7 +145,7 @@
         <span class="text-[10px]" id="project-count-title">0 OBJECTS</span>
       </div>
       <div class="p-6 md:p-10">
-        <div class="mb-4 text-amber-400/80 text-sm">
+        <div class="mb-4 text-ph-amber/80 text-sm">
           &gt; $ git ls-tree --name-only HEAD
         </div>
         <div class="lg:flex lg:gap-6 lg:items-stretch">
@@ -156,7 +165,7 @@
           <div class="lg:w-2/5 mt-6 lg:mt-0">
             <div id="repo-detail" class="border border-ph-500/20 bg-ph-900/10 rounded-sm p-4 text-xs font-mono h-full min-h-[210px] flex flex-col justify-center transition-colors">
               <div>
-                <div class="text-amber-400/70 mb-2">$ cat README.md</div>
+                <div class="text-ph-amber/70 mb-2">$ cat README.md</div>
                 <p class="text-ph-500/70 leading-relaxed">Hover any project to view its details<span class="typing-cursor"></span></p>
               </div>
             </div>
@@ -176,7 +185,7 @@
         <span class="text-[10px]">executable</span>
       </div>
       <div class="p-6 md:p-10">
-        <div class="mb-4 text-amber-400/80 text-sm">
+        <div class="mb-4 text-ph-amber/80 text-sm">
           &gt; $ ssh ihsan@portfolio
         </div>
         <p class="text-sm md:text-base text-ph-100/70 mb-6">
@@ -191,7 +200,7 @@
       </div>
     </section>
 
-    <footer class="text-center text-ph-500/30 text-xs font-mono pb-8">
+    <footer class="text-center text-ph-400/80 text-xs font-mono pb-8">
       <p>© <span id="year"></span> <span id="footer-name">M. Ihsan Ramadhan</span></p>
     </footer>
 

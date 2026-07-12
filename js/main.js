@@ -35,7 +35,7 @@ function setupHero(hero) {
   if (hero.socials) {
     const socialsContainer = document.getElementById('hero-socials');
     socialsContainer.innerHTML = Object.entries(hero.socials)
-      .map(([key, url]) => `<a href="${url}" target="_blank" class="retro-btn px-4 py-2 rounded-sm text-ph-300 font-bold">[${key.toUpperCase()}]</a>`)
+      .map(([key, url]) => `<a href="${url}" target="_blank" class="retro-btn px-4 py-2 rounded-sm text-ph-300 font-bold" aria-label="${key.charAt(0).toUpperCase() + key.slice(1)} Profile">[${key.toUpperCase()}]</a>`)
       .join('');
   }
 }
@@ -51,7 +51,7 @@ function setupAbout(about) {
     infoContainer.innerHTML = Object.entries(about.info)
       .map(([key, val]) => `
         <div class="flex justify-between border-b border-ph-500/10 pb-1">
-          <span class="text-ph-500/60">${key.toUpperCase()}</span>
+          <span class="text-ph-400 font-bold">${key.toUpperCase()}</span>
           <span class="text-ph-300">${val}</span>
         </div>
       `).join('');
