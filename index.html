@@ -28,6 +28,11 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=VT323&family=Share+Tech+Mono&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
+  <script>
+    if (localStorage.getItem('theme') === 'light') {
+      document.documentElement.setAttribute('data-theme', 'light');
+    }
+  </script>
 </head>
 <body class="scroll-retro min-h-screen relative overflow-x-hidden">
 
@@ -55,7 +60,7 @@
     </div>
   </nav>
 
-  <div id="boot-overlay" class="fixed inset-0 z-[100] bg-[#05060d] flex flex-col items-start justify-start p-8 md:p-16 text-sm md:text-base text-ph-400 font-mono">
+  <div id="boot-overlay" class="fixed inset-0 z-[100] flex flex-col items-start justify-start p-8 md:p-16 text-sm md:text-base font-mono" style="background-color: var(--crt-bg); color: var(--crt-phosphor);">
     <div id="boot-content"></div>
   </div>
 
