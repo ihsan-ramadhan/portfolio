@@ -9,11 +9,7 @@ export function initThemeToggle() {
     btn.classList.remove('on');
   }
 
-  btn.addEventListener('click', () => {
-    const isDark = !document.documentElement.dataset.theme;
-    degauss.classList.add('flash');
-    setTimeout(() => degauss.classList.remove('flash'), 400);
-
+  function swapTheme(isDark) {
     if (isDark) {
       document.documentElement.dataset.theme = 'light';
       btn.classList.remove('on');
@@ -23,5 +19,25 @@ export function initThemeToggle() {
       btn.classList.add('on');
       localStorage.setItem('theme', 'dark');
     }
+  }
+
+  btn.addEventListener('click', () => {
+    const isDark = !document.documentElement.dataset.theme;
+
+    degauss.classList.add('sweep-active');
+    document.body.classList.add('theme-glitching');
+
+    if (document.startViewTransition) {
+      document.startViewTransition(() => {
+        swapTheme(isDark);
+      });
+    } else {
+      swapTheme(isDark);
+    }
+
+    setTimeout(() => {
+      degauss.classList.remove('sweep-active');
+      document.body.classList.remove('theme-glitching');
+    }, 420);
   });
 }
