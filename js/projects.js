@@ -8,7 +8,7 @@ export function renderProjects(portfolioData) {
   tbody.innerHTML = projects.map((p, idx) => `
     <tr class="repo-row border-b border-ph-500/10 transition-colors" data-index="${idx}">
       <td class="py-3 pr-4 font-bold text-ph-300">
-        <a href="${p.url}" target="_blank" class="retro-link">${p.name}</a>
+        <a href="${p.url}" target="_blank" class="retro-link" aria-label="Visit ${p.name} repository on GitHub">${p.name}</a>
       </td>
       <td class="py-3 pr-4 text-amber-400/80">${(p.stack || []).join(', ')}</td>
       <td class="py-3 text-right text-amber-400">${p.stars !== undefined ? p.stars : '--'}</td>
@@ -42,7 +42,7 @@ export function setupProjectInteractivity(portfolioData) {
       </div>
       <div class="flex items-center justify-between text-[10px] text-ph-600 border-t border-ph-500/10 pt-3 mt-auto">
         <span class="text-amber-400/80">★ ${project.stars !== undefined ? project.stars : '--'} stars</span>
-        <a href="${project.url}" target="_blank" class="retro-link">open repo -></a>
+        <a href="${project.url}" target="_blank" class="retro-link" aria-label="Open ${project.name} repository on GitHub">open repo -></a>
       </div>
     `;
     panel.className = "border border-ph-500/20 bg-ph-900/10 rounded-sm p-4 text-xs font-mono h-full min-h-[210px] flex flex-col justify-between transition-colors";

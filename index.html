@@ -3,7 +3,12 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Muhammad Ihsan Ramadhan's software engineering portfolio. A clean retro CRT terminal style website built with Tailwind CSS and vanilla Javascript." />
   <title>M. Ihsan Ramadhan</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="dns-prefetch" href="https://cdn.tailwindcss.com">
+  <link rel="dns-prefetch" href="https://api.github.com">
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
@@ -26,7 +31,10 @@
   </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=VT323&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=VT323&family=Share+Tech+Mono&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+  <noscript>
+    <link href="https://fonts.googleapis.com/css2?family=VT323&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  </noscript>
   <link rel="stylesheet" href="css/style.css">
   <script>
     if (localStorage.getItem('theme') === 'light') {
@@ -43,11 +51,11 @@
 
   <nav class="navbar-scroll window-chrome glow-border rounded-sm p-4 flex flex-col sm:flex-row justify-between sm:items-center gap-4 text-xs md:text-sm font-mono">
     <div class="flex justify-between items-center w-full sm:w-auto gap-3">
-      <a href="#hero" class="text-ph-300 font-bold tracking-wider uppercase hover:text-amber-400 transition-colors" id="nav-system-status">IHSAN@PORTFOLIO:~$</a>
+      <a href="#hero" class="text-ph-300 font-bold tracking-wider uppercase hover:text-amber-400 transition-colors" id="nav-system-status" aria-label="Go to home section">IHSAN@PORTFOLIO:~$</a>
       <button id="theme-switch" class="crt-power-switch on" title="Toggle theme" aria-label="Toggle light/dark mode">
         <span class="ps-led"></span>POWER
       </button>
-      <button id="nav-toggle" class="sm:hidden text-amber-400 border border-amber-400/30 bg-amber-400/5 px-2 py-1 rounded-sm hover:bg-amber-400/20 active:bg-amber-400/30 transition-colors font-bold">
+      <button id="nav-toggle" class="sm:hidden text-amber-400 border border-amber-400/30 bg-amber-400/5 px-2 py-1 rounded-sm hover:bg-amber-400/20 active:bg-amber-400/30 transition-colors font-bold" aria-label="Toggle navigation menu">
         [MENU]
       </button>
     </div>
@@ -191,7 +199,7 @@
       </div>
     </section>
 
-    <footer class="text-center text-ph-500/30 text-xs font-mono pb-8">
+    <footer class="text-center text-ph-400/80 text-xs font-mono pb-8">
       <p>© <span id="year"></span> <span id="footer-name">M. Ihsan Ramadhan</span></p>
     </footer>
 
