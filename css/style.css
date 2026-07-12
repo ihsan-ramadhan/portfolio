@@ -52,32 +52,6 @@
   --ph-600: 154, 154, 170;
   --ph-900: 216, 212, 200;
 }
-:root[data-theme="light"] {
-  --crt-bg: #e8e4d8;
-  --crt-phosphor: #3a3a4a;
-  --crt-accent: #5566aa;
-  --crt-bright: #2a2a3a;
-  --crt-dim: #8888aa;
-  --crt-amber: #9a6510;
-  --crt-window-bg: rgba(232, 228, 216, 0.9);
-  --crt-window-border: rgba(58, 58, 74, 0.35);
-  --crt-titlebar-bg: rgba(58, 58, 74, 0.08);
-  --crt-titlebar-border: rgba(58, 58, 74, 0.2);
-  --crt-glow-text: none;
-  --crt-glow-border: 0 0 4px rgba(58, 58, 74, 0.1);
-  --crt-glow-accent: none;
-  --crt-scanline-dark: rgba(0,0,0,0.06);
-  --crt-rain-opacity: 0.28;
-  --crt-selection-bg: rgba(58, 58, 74, 0.2);
-  --crt-selection-text: #2a2a3a;
-  --ph-100: 42, 42, 58;
-  --ph-200: 58, 58, 74;
-  --ph-300: 74, 74, 90;
-  --ph-400: 90, 90, 106;
-  --ph-500: 122, 122, 138;
-  --ph-600: 154, 154, 170;
-  --ph-900: 216, 212, 200;
-}
 html {
   scroll-behavior: smooth;
 }
