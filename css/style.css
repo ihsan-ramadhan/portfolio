@@ -233,6 +233,12 @@ h1, h2, h3, .retro-title {
   z-index: 90;
   display: none;
   view-transition-name: none !important;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+.navbar-scroll.navbar-hidden {
+  transform: translateX(-50%) translateY(-120%);
+  opacity: 0;
+  pointer-events: none;
 }
 .ascii-rule {
   color: var(--crt-dim);
