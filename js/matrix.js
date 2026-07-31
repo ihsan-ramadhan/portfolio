@@ -9,11 +9,14 @@ export function initDataRain() {
   let dpr = Math.min(window.devicePixelRatio || 1, 2);
   let animationFrameId = null;
   let lastTime = 0;
+  let lastWidth = 0;
   const fpsInterval = 66;
 
   const getRandom = () => window.crypto.getRandomValues(new Uint32Array(1))[0] / 4294967296;
 
   function resize() {
+    if (window.innerWidth === lastWidth && drops.length > 0) return;
+    lastWidth = window.innerWidth;
     dpr = Math.min(window.devicePixelRatio || 1, 2);
     canvas.width = window.innerWidth * dpr;
     canvas.height = window.innerHeight * dpr;
