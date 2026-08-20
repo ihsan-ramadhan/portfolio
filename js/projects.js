@@ -1,3 +1,28 @@
+const esc = (s) => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+const BLANK_REL = 'noopener noreferrer';
+
+const CACHE_KEY = 'gh_stars_cache';
+const CACHE_TTL = 1000 * 60 * 60; // 1 jam
+const CACHE_VERSION = 1;
+
+function loadStarsCache() {
+  try {
+    const raw = localStorage.getItem(CACHE_KEY);
+    if (!raw) return {};
+    const parsed = JSON.parse(raw);
+    if (parsed.v !== CACHE_VERSION || Date.now() - parsed.t > CACHE_TTL) return {};
+    return parsed.data || {};
+  } catch {
+    return {};
+  }
+}
+
+function saveStarsCache(data) {
+  try {
+    localStorage.setItem(CACHE_KEY, JSON.stringify({ v: CACHE_VERSION, t: Date.now(), data }));
+  } catch { /* storage unavailable */ }
+}
+
 export function renderProjects(portfolioData) {
   if (!portfolioData?.projects) return;
 
@@ -8,10 +33,10 @@ export function renderProjects(portfolioData) {
   tbody.innerHTML = projects.map((p, idx) => `
     <tr class="repo-row border-b border-ph-500/10 transition-colors" data-index="${idx}">
       <td class="py-3 pr-4 font-bold text-ph-300">
-        <a href="${p.url}" target="_blank" class="retro-link" aria-label="Visit ${p.name} repository on GitHub">${p.name}</a>
+        <a href="${esc(p.url)}" target="_blank" rel="${BLANK_REL}" class="retro-link" aria-label="Visit ${esc(p.name)} repository on GitHub">${esc(p.name)}</a>
       </td>
-      <td class="py-3 pr-4 text-ph-amber">${(p.stack || []).join(', ')}</td>
-      <td class="py-3 text-right text-ph-amber">${p.stars !== undefined ? p.stars : '--'}</td>
+      <td class="py-3 pr-4 text-ph-amber">${(p.stack || []).map(esc).join(', ')}</td>
+      <td class="py-3 text-right text-ph-amber">${p.stars !== undefined ? esc(p.stars) : '--'}</td>
     </tr>
   `).join('');
 
@@ -28,21 +53,21 @@ export function setupProjectInteractivity(portfolioData) {
     if (!project) return;
 
     const stackHtml = (project.stack || [])
-      .map(t => `<span class="border border-ph-500/20 bg-ph-500/5 px-2 py-0.5 text-[10px] text-ph-200">${t}</span>`)
+      .map(t => `<span class="border border-ph-500/20 bg-ph-500/5 px-2 py-0.5 text-[10px] text-ph-200">${esc(t)}</span>`)
       .join('');
 
     panel.innerHTML = `
-      <div class="text-ph-amber mb-3 text-[10px]">$ cat ${project.name}/README.md</div>
+      <div class="text-ph-amber mb-3 text-[10px]">$ cat ${esc(project.name)}/README.md</div>
       <h4 class="text-ph-100 font-bold text-sm mb-2 flex items-center gap-2">
-        <span class="text-ph-500">▸</span> ${project.name}
+        <span class="text-ph-500">▸</span> ${esc(project.name)}
       </h4>
-      <p class="text-ph-300/80 leading-relaxed mb-4">${project.description || 'No description available.'}</p>
+      <p class="text-ph-300/80 leading-relaxed mb-4">${esc(project.description || 'No description available.')}</p>
       <div class="flex flex-wrap gap-1.5 mb-4">
         ${stackHtml}
       </div>
       <div class="flex items-center justify-between text-[10px] text-ph-600 border-t border-ph-500/10 pt-3 mt-auto">
-        <span class="text-ph-amber">★ ${project.stars !== undefined ? project.stars : '--'} stars</span>
-        <a href="${project.url}" target="_blank" class="retro-link" aria-label="Open ${project.name} repository on GitHub">open repo -></a>
+        <span class="text-ph-amber">★ ${project.stars !== undefined ? esc(project.stars) : '--'} stars</span>
+        <a href="${esc(project.url)}" target="_blank" rel="${BLANK_REL}" class="retro-link" aria-label="Open ${esc(project.name)} repository on GitHub">open repo -></a>
       </div>
     `;
     panel.className = "border border-ph-500/20 bg-ph-900/10 rounded-sm p-4 text-xs font-mono h-full min-h-[210px] flex flex-col justify-between transition-colors";
@@ -62,16 +87,35 @@ export function setupProjectInteractivity(portfolioData) {
 export async function syncGitHubStars(portfolioData, onUpdate) {
   if (!portfolioData?.projects) return;
 
+  const cache = loadStarsCache();
+  let changed = false;
+
   const fetches = portfolioData.projects.map(async (project, idx) => {
     if (!project.githubRepo) return;
+    const cached = cache[project.githubRepo];
+    if (cached) {
+      portfolioData.projects[idx].stars = cached.stars;
+      if (!project.description && cached.description) {
+        portfolioData.projects[idx].description = cached.description;
+      }
+      changed = true;
+      return;
+    }
     try {
       const res = await fetch(`https://api.github.com/repos/${project.githubRepo}`);
       if (res.ok) {
         const repoInfo = await res.json();
+        cache[project.githubRepo] = {
+          stars: repoInfo.stargazers_count,
+          description: repoInfo.description || null
+        };
         portfolioData.projects[idx].stars = repoInfo.stargazers_count;
         if (!project.description && repoInfo.description) {
           portfolioData.projects[idx].description = repoInfo.description;
         }
+        changed = true;
+      } else if (res.status === 404) {
+        console.warn(`Repo not found for ${project.githubRepo} (404) — check data.json githubRepo`);
       }
     } catch (err) {
       console.warn(`Failed to fetch stars for ${project.githubRepo}:`, err);
@@ -79,5 +123,6 @@ export async function syncGitHubStars(portfolioData, onUpdate) {
   });
 
   await Promise.allSettled(fetches);
+  if (changed) saveStarsCache(cache);
   if (onUpdate) onUpdate();
 }

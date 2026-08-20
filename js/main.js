@@ -7,6 +7,10 @@ import { initThemeToggle } from './theme.js';
 
 let portfolioData = null;
 
+const esc = (s) => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+
+const BLANK_REL = 'noopener noreferrer';
+
 function setupHero(hero) {
   if (!hero) return;
   if (hero.name) {
@@ -35,7 +39,7 @@ function setupHero(hero) {
   if (hero.socials) {
     const socialsContainer = document.getElementById('hero-socials');
     socialsContainer.innerHTML = Object.entries(hero.socials)
-      .map(([key, url]) => `<a href="${url}" target="_blank" class="retro-btn px-4 py-2 rounded-sm text-ph-300 font-bold" aria-label="${key.charAt(0).toUpperCase() + key.slice(1)} Profile">[${key.toUpperCase()}]</a>`)
+      .map(([key, url]) => `<a href="${esc(url)}" target="_blank" rel="${BLANK_REL}" class="retro-btn px-4 py-2 rounded-sm text-ph-300 font-bold" aria-label="${esc(key.charAt(0).toUpperCase() + key.slice(1))} Profile">[${esc(key.toUpperCase())}]</a>`)
       .join('');
   }
 }
@@ -44,15 +48,15 @@ function setupAbout(about) {
   if (!about) return;
   if (about.whoami) {
     const whoamiContainer = document.getElementById('about-whoami');
-    whoamiContainer.innerHTML = about.whoami.map(para => `<p>${para}</p>`).join('');
+    whoamiContainer.innerHTML = about.whoami.map(para => `<p>${esc(para)}</p>`).join('');
   }
   if (about.info) {
     const infoContainer = document.getElementById('about-info-grid');
     infoContainer.innerHTML = Object.entries(about.info)
       .map(([key, val]) => `
         <div class="flex justify-between border-b border-ph-500/10 pb-1">
-          <span class="text-ph-400 font-bold">${key.toUpperCase()}</span>
-          <span class="text-ph-300">${val}</span>
+          <span class="text-ph-400 font-bold">${esc(key.toUpperCase())}</span>
+          <span class="text-ph-300">${esc(val)}</span>
         </div>
       `).join('');
   }
@@ -63,7 +67,7 @@ function setupStack(stack) {
   const stackGrid = document.getElementById('stack-grid');
   stackGrid.innerHTML = stack.map(item => `
     <div class="border border-ph-500/20 bg-ph-500/5 px-3 py-2 text-ph-200 flex items-center gap-2">
-      <span class="text-ph-600">⬡</span> ${item}
+      <span class="text-ph-600">⬡</span> ${esc(item)}
     </div>
   `).join('');
 }
@@ -82,8 +86,8 @@ function populateDOM() {
   const contact = portfolioData.contact;
   if (contact?.email) {
     const emailBtn = document.getElementById('contact-email-btn');
-    emailBtn.href = `mailto:${contact.email}`;
-    emailBtn.innerHTML = `<span>✉</span> ${contact.email}`;
+    emailBtn.href = `mailto:${esc(contact.email)}`;
+    emailBtn.innerHTML = `<span>✉</span> ${esc(contact.email)}`;
   }
 }
 

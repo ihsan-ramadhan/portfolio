@@ -3,7 +3,17 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#05060d" media="(prefers-color-scheme: dark)" />
+  <meta name="theme-color" content="#e8e4d8" media="(prefers-color-scheme: light)" />
   <meta name="description" content="Muhammad Ihsan Ramadhan's software engineering portfolio. A clean retro CRT terminal style website built with Tailwind CSS and vanilla Javascript." />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="M. Ihsan Ramadhan" />
+  <meta property="og:description" content="Fullstack developer & open source enthusiast. Retro CRT terminal portfolio." />
+  <meta property="og:url" content="https://ihsan.is-a.dev" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="M. Ihsan Ramadhan" />
+  <meta name="twitter:description" content="Fullstack developer & open source enthusiast." />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
   <title>M. Ihsan Ramadhan</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -45,9 +55,13 @@
 </head>
 <body class="scroll-retro min-h-screen relative overflow-x-hidden">
 
-  <canvas id="data-rain"></canvas>
-  <div class="scanlines"></div>
-  <div class="crt-flicker"></div>
+  <canvas id="data-rain" aria-hidden="true"></canvas>
+  <div class="scanlines" aria-hidden="true"></div>
+  <div class="crt-flicker" aria-hidden="true"></div>
+
+  <div id="boot-overlay" class="fixed inset-0 z-[100] flex flex-col items-start justify-start p-8 md:p-16 text-sm md:text-base font-mono" style="background-color: var(--crt-bg); color: var(--crt-phosphor);">
+    <div id="boot-content"></div>
+  </div>
 
   <nav class="navbar-scroll window-chrome glow-border rounded-sm p-4 flex flex-col sm:flex-row justify-between sm:items-center gap-4 text-xs md:text-sm font-mono">
     <div class="flex justify-between items-center w-full sm:w-auto gap-3">
@@ -55,7 +69,7 @@
       <button id="theme-switch" class="crt-power-switch on" title="Toggle theme" aria-label="Toggle light/dark mode">
         <span class="ps-led"></span>POWER
       </button>
-      <button id="nav-toggle" class="sm:hidden text-ph-amber border border-ph-amber/30 bg-ph-amber/5 px-2 py-1 rounded-sm hover:bg-ph-amber/20 active:bg-ph-amber/30 transition-colors font-bold" aria-label="Toggle navigation menu">
+      <button id="nav-toggle" class="sm:hidden text-ph-amber border border-ph-amber/30 bg-ph-amber/5 px-2 py-1 rounded-sm hover:bg-ph-amber/20 active:bg-ph-amber/30 transition-colors font-bold" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="nav-links">
         [MENU]
       </button>
     </div>
@@ -67,10 +81,6 @@
       <a href="#contact" class="hover:text-ph-amber transition-colors" data-scroll>[CONTACT]</a>
     </div>
   </nav>
-
-  <div id="boot-overlay" class="fixed inset-0 z-[100] flex flex-col items-start justify-start p-8 md:p-16 text-sm md:text-base font-mono" style="background-color: var(--crt-bg); color: var(--crt-phosphor);">
-    <div id="boot-content"></div>
-  </div>
 
   <main id="main-site" class="relative z-10 max-w-5xl mx-auto px-4 py-8 md:py-12 hidden">
 
@@ -171,7 +181,7 @@
           </div>
         </div>
         <div class="mt-6 text-center">
-          <a href="https://github.com/ihsan-ramadhan?tab=repositories" target="_blank" class="retro-btn inline-block px-6 py-2 rounded-sm text-ph-300 font-bold text-sm" id="view-all-repos-btn">
+          <a href="https://github.com/ihsan-ramadhan?tab=repositories" target="_blank" rel="noopener noreferrer" class="retro-btn inline-block px-6 py-2 rounded-sm text-ph-300 font-bold text-sm" id="view-all-repos-btn">
             [VIEW_ALL_REPOS -&gt;]
           </a>
         </div>
@@ -204,6 +214,12 @@
     </footer>
 
   </main>
+
+  <noscript>
+    <div style="position:fixed;inset:0;display:flex;align-items:center;justify-content:center;padding:1.5rem;text-align:center;background:#05060d;color:#9fb8e8;font-family:monospace">
+      <p>This portfolio is a JavaScript-driven terminal experience. Please enable JavaScript to boot it up.<br>Meanwhile, reach me at <a href="mailto:m.ihsan.r30@gmail.com" style="color:#ffb86c">m.ihsan.r30@gmail.com</a>.</p>
+    </div>
+  </noscript>
 
   <script type="module" src="js/main.js"></script>
 </body>

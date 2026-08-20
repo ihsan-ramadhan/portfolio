@@ -13,16 +13,16 @@
   },
   "about": {
     "whoami": [
-      "I'm Ihsan, a fullstack developer from Indonesia currently studying Informatics Engineering at Politeknik Negeri Bandung.",
-      "I'm an open source enthusiast and a builder at heart. I like exploring where code meets real-world problems.",
-      "When I'm not debugging, I'm probably learning new tech, tweaking my Linux setup, or touching grass."
+      "I'm Ihsan, a fullstack developer from Indonesia currently studying Informatics Engineering at Bandung State Polytechnic.",
+      "An open source enthusiast and a builder at heart. I like exploring where code meets real-world problems.",
+      "When I'm not debugging, I'm probably learning new tech, tweaking my linux setup, or touching grass."
     ],
     "info": {
       "OS": "Linux",
       "SHELL": "fish",
-      "EDITOR": "Zed / Terax",
+      "EDITOR": "Zed",
       "LOCATION": "Bandung, ID",
-      "REPOS": "27 PUBLIC"
+      "REPOS": "33"
     }
   },
   "stack": [
@@ -50,19 +50,19 @@
     },
     {
       "name": "tuckify",
-      "description": "Your Downloads folder is a graveyard. tuckify cleans it automatically. Organize files by rule, schedule it, manage multiple folders.",
+      "description": "Automatically organize your file/folder by extension, name, size, etc. Define rules in TOML, run once or schedule it.",
       "stack": ["Go", "Wails", "JavaScript"],
       "url": "https://github.com/ihsan-ramadhan/tuckify",
       "githubRepo": "ihsan-ramadhan/tuckify",
       "stars": 0
     },
     {
-      "name": "Proyek2-C3",
-      "description": "Space Invaders 2D arcade game built with SDL3 library in C.",
-      "stack": ["C", "SDL3"],
-      "url": "https://github.com/rahmaattayat/Proyek2-C3",
-      "githubRepo": "rahmaattayat/Proyek2-C3",
-      "stars": 0
+      "name": "bansos-router",
+      "description": "Free, keyless coding models routed to every coding harness through one local endpoint. No accounts, no keys, no cost.",
+      "stack": ["Typescript"],
+      "url": "https://github.com/ihsan-ramadhan/bansos-router",
+      "githubRepo": "ihsan-ramadhan/bansos-router",
+      "stars": 48
     },
     {
       "name": "ReksaTani-App",

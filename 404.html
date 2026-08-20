@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex" />
+  <meta name="theme-color" content="#05060d" />
+  <title>404 — SIGNAL LOST</title>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link href="https://fonts.googleapis.com/css2?family=VT323&family=Share+Tech+Mono&display=swap" rel="stylesheet" />
+  <script>
+    if (localStorage.getItem('theme') === 'light') {
+      document.documentElement.dataset.theme = 'light';
+    }
+  </script>
+  <style>
+    :root {
+      --bg: #05060d;
+      --ph: #9fb8e8;
+      --amber: #ffb86c;
+      --dim: #4c5a86;
+      --btn-border: rgba(159, 184, 232, 0.3);
+      --btn-bg: rgba(159, 184, 232, 0.06);
+      --btn-hover-bg: rgba(159, 184, 232, 0.15);
+      --btn-hover-text: #fff;
+      --btn-hover-shadow: 0 0 12px rgba(255, 184, 108, 0.25);
+      --scanline-dark: rgba(0, 0, 0, 0.15);
+    }
+    :root[data-theme="light"] {
+      --bg: #e8e4d8;
+      --ph: #2d2d38;
+      --amber: #945200;
+      --dim: #6b6860;
+      --btn-border: rgba(148, 82, 0, 0.3);
+      --btn-bg: rgba(148, 82, 0, 0.04);
+      --btn-hover-bg: rgba(148, 82, 0, 0.12);
+      --btn-hover-text: #151522;
+      --btn-hover-shadow: 0 0 8px rgba(148, 82, 0, 0.2);
+      --scanline-dark: rgba(0, 0, 0, 0.05);
+    }
+    * { box-sizing: border-box; }
+    html, body { height: 100%; margin: 0; }
+    body {
+      background: var(--bg);
+      color: var(--ph);
+      font-family: 'Share Tech Mono', 'Courier New', monospace;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 1.5rem;
+      text-align: center;
+      overflow: hidden;
+    }
+    .scanlines {
+      position: fixed; inset: 0; pointer-events: none; z-index: 2;
+      background: linear-gradient(to bottom, rgba(255,255,255,0) 50%, var(--scanline-dark) 50%);
+      background-size: 100% 4px;
+    }
+    .wrap { position: relative; z-index: 3; max-width: 560px; }
+    .code {
+      font-family: 'VT323', 'Courier New', monospace;
+      font-size: clamp(5rem, 22vw, 11rem);
+      line-height: 0.9;
+      color: var(--amber);
+      text-shadow: 0 0 8px rgba(255,184,108,0.4);
+      margin: 0;
+    }
+    :root[data-theme="light"] .code {
+      text-shadow: none;
+    }
+    .rule { color: var(--dim); letter-spacing: 2px; user-select: none; }
+    .msg { font-size: 1rem; margin: 1rem 0 2rem; color: var(--ph); }
+    .blink { animation: blink 1s step-end infinite; }
+    @keyframes blink { 0%,100% { opacity: 1; } 50% { opacity: 0; } }
+    a.btn {
+      display: inline-block;
+      border: 1px solid var(--btn-border);
+      background: var(--btn-bg);
+      color: var(--ph);
+      text-decoration: none;
+      padding: 0.6rem 1.4rem;
+      border-radius: 2px;
+      font-weight: bold;
+      transition: all 0.2s;
+    }
+    a.btn:hover {
+      background: var(--btn-hover-bg);
+      border-color: var(--amber);
+      color: var(--btn-hover-text);
+      box-shadow: var(--btn-hover-shadow);
+    }
+    @media (prefers-reduced-motion: reduce) { .blink { animation: none; } }
+  </style>
+</head>
+<body>
+  <div class="scanlines" aria-hidden="true"></div>
+  <div class="wrap">
+    <p class="rule">/* ==================================================== */</p>
+    <h1 class="code">404</h1>
+    <div class="rule">/* ==================================================== */</div>
+    <p class="msg">&gt; $ cat /requested/path<span class="blink">█</span><br>ERROR: file not found on host [ihsan.is-a.dev]</p>
+    <a class="btn" href="/">[ RETURN_HOME -&gt; ]</a>
+  </div>
+</body>
+</html>
