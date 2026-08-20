@@ -45,8 +45,10 @@ export function initNavbarStatus() {
 
   if (navToggle && navLinks) {
     navToggle.addEventListener('click', () => {
+      const willOpen = navLinks.classList.contains('hidden');
       navLinks.classList.toggle('hidden');
       navToggle.textContent = navLinks.classList.contains('hidden') ? '[MENU]' : '[CLOSE]';
+      navToggle.setAttribute('aria-expanded', String(!navLinks.classList.contains('hidden')));
     });
 
     navLinks.querySelectorAll('a').forEach(link => {
@@ -55,6 +57,7 @@ export function initNavbarStatus() {
         if (window.innerWidth < 640) {
           navLinks.classList.add('hidden');
           navToggle.textContent = '[MENU]';
+          navToggle.setAttribute('aria-expanded', 'false');
         }
       });
     });
