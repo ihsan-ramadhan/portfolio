@@ -1,5 +1,6 @@
 export function initThemeToggle() {
   const btn = document.getElementById('theme-switch');
+  const sweep = document.querySelector('.theme-sweep');
   if (!btn) return;
 
   const stored = localStorage.getItem('theme');
@@ -8,8 +9,16 @@ export function initThemeToggle() {
     btn.classList.remove('on');
   }
 
-  function swapTheme(isDark) {
-    if (isDark) {
+  function playSweep(targetTheme) {
+    if (!sweep || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    sweep.classList.remove('sweep-down', 'sweep-up');
+    void sweep.offsetWidth;
+    sweep.classList.add(targetTheme === 'light' ? 'sweep-down' : 'sweep-up');
+  }
+
+  function swapTheme(toLight) {
+    const target = toLight ? 'light' : 'dark';
+    if (toLight) {
       document.documentElement.dataset.theme = 'light';
       btn.classList.remove('on');
       localStorage.setItem('theme', 'light');
@@ -18,17 +27,11 @@ export function initThemeToggle() {
       btn.classList.add('on');
       localStorage.setItem('theme', 'dark');
     }
+    playSweep(target);
+    document.dispatchEvent(new CustomEvent('themechange', { detail: { theme: target } }));
   }
 
   btn.addEventListener('click', () => {
-    const isDark = !document.documentElement.dataset.theme;
-
-    if (document.startViewTransition) {
-      document.startViewTransition(() => {
-        swapTheme(isDark);
-      });
-    } else {
-      swapTheme(isDark);
-    }
+    swapTheme(document.documentElement.dataset.theme !== 'light');
   });
 }
