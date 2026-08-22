@@ -76,6 +76,14 @@ export function initDataRain() {
     resizeTimer = setTimeout(resize, 100);
   });
 
+  const clearCanvasOnTheme = () => {
+    ctx.fillStyle = document.documentElement.dataset.theme === 'light'
+      ? 'rgb(232, 228, 216)'
+      : 'rgb(5, 6, 13)';
+    ctx.fillRect(0, 0, window.innerWidth, window.innerHeight);
+  };
+  document.addEventListener('themechange', clearCanvasOnTheme);
+
   const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   if (!prefersReduced) {
     animationFrameId = requestAnimationFrame(frame);
@@ -90,9 +98,6 @@ export function initDataRain() {
       }
     });
   } else {
-    ctx.fillStyle = document.documentElement.dataset.theme === 'light'
-      ? 'rgb(232, 228, 216)'
-      : 'rgb(5, 6, 13)';
-    ctx.fillRect(0, 0, window.innerWidth, window.innerHeight);
+    clearCanvasOnTheme();
   }
 }

@@ -55,10 +55,25 @@
 html {
   scroll-behavior: smooth;
 }
+body,
+.window-chrome,
+.window-title-bar,
+#about-info-grid,
+#repo-detail,
+h1, h2, h3, p, span, td, th,
+.ascii-rule,
+.glow-text,
+.glow-accent {
+  transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease, text-shadow 0.3s ease;
+}
+
 body {
   background-color: var(--crt-bg);
   color: var(--crt-phosphor);
   font-family: 'Share Tech Mono', 'Courier New', monospace;
+}
+.retro-link {
+  transition: color 0.15s ease, text-decoration-color 0.15s ease;
 }
 ::selection {
   background: var(--crt-selection-bg);
@@ -186,7 +201,7 @@ h1, h2, h3, .retro-title {
 .section-fade {
   opacity: 0;
   transform: translateY(12px);
-  transition: all 0.7s ease-out;
+  transition: opacity 0.7s ease-out, transform 0.7s ease-out;
 }
 .section-fade.visible {
   opacity: 1;
@@ -246,8 +261,7 @@ h1, h2, h3, .retro-title {
   max-width: calc(64rem - 2rem);
   z-index: 90;
   display: none;
-  view-transition-name: none !important;
-  transition: transform 0.3s ease, opacity 0.3s ease;
+  transition: transform 0.3s ease, opacity 0.3s ease, background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
 }
 .navbar-scroll.navbar-hidden {
   transform: translateX(-50%) translateY(-120%);
@@ -294,24 +308,45 @@ h1, h2, h3, .retro-title {
   background: transparent;
   flex-shrink: 0;
 }
-::view-transition-old(root) {
-  animation: none;
-  mix-blend-mode: normal;
+
+.theme-sweep {
+  position: fixed;
+  left: 0;
+  width: 100vw;
+  height: 28vh;
+  top: 0;
+  z-index: 9997;
+  pointer-events: none;
+  opacity: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(var(--crt-amber), 0) 0%,
+    rgba(var(--crt-amber), 0.08) 50%,
+    rgba(var(--crt-amber), 0.35) 94%,
+    rgba(var(--crt-amber), 0.95) 98%,
+    rgba(var(--crt-amber), 0) 100%
+  );
 }
-::view-transition-new(root) {
-  animation: 0.42s cubic-bezier(0.68, -0.15, 0.265, 1.35) lhci-sweep forwards;
-  mix-blend-mode: normal;
+.theme-sweep.sweep-down {
+  animation: themeSweepDown 0.35s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
 }
-@keyframes lhci-sweep {
-  0% {
-    clip-path: inset(0 0 100% 0);
-  }
-  100% {
-    clip-path: inset(0 0 0 0);
-  }
+.theme-sweep.sweep-up {
+  animation: themeSweepUp 0.35s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+}
+@keyframes themeSweepDown {
+  0% { transform: translateY(-30vh); opacity: 0; }
+  15% { opacity: 1; }
+  85% { opacity: 1; }
+  100% { transform: translateY(105vh); opacity: 0; }
+}
+@keyframes themeSweepUp {
+  0% { transform: translateY(105vh); opacity: 0; }
+  15% { opacity: 1; }
+  85% { opacity: 1; }
+  100% { transform: translateY(-30vh); opacity: 0; }
 }
 @media (prefers-reduced-motion: reduce) {
-  ::view-transition-new(root) {
-    animation: none;
+  .theme-sweep {
+    display: none;
   }
 }
