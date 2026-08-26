@@ -53,7 +53,7 @@ export function setupProjectInteractivity(portfolioData) {
     if (!project) return;
 
     const stackHtml = (project.stack || [])
-      .map(t => `<span class="border border-ph-500/20 bg-ph-500/5 px-2 py-0.5 text-[10px] text-ph-200">${esc(t)}</span>`)
+      .map(t => `<span class="bg-ph-500/10 px-2 py-0.5 text-[10px] text-ph-200 rounded-sm">${esc(t)}</span>`)
       .join('');
 
     panel.innerHTML = `
@@ -70,7 +70,7 @@ export function setupProjectInteractivity(portfolioData) {
         <a href="${esc(project.url)}" target="_blank" rel="${BLANK_REL}" class="retro-link" aria-label="Open ${esc(project.name)} repository on GitHub">open repo -></a>
       </div>
     `;
-    panel.className = "border border-ph-500/20 bg-ph-900/10 rounded-sm p-4 text-xs font-mono h-full min-h-[210px] flex flex-col justify-between transition-colors";
+    panel.className = "border-l-2 border-ph-amber/40 p-4 text-xs font-mono h-full min-h-[210px] flex flex-col justify-between transition-colors";
   }
 
   rows.forEach(row => {

@@ -43,7 +43,7 @@
     <div id="boot-content"></div>
   </div>
 
-  <nav class="navbar-scroll window-chrome glow-border rounded-sm p-4 flex flex-col sm:flex-row justify-between sm:items-center gap-4 text-xs md:text-sm font-mono">
+  <nav class="navbar-scroll window-chrome rounded-sm p-4 flex flex-col sm:flex-row justify-between sm:items-center gap-4 text-xs md:text-sm font-mono">
     <div class="flex justify-between items-center w-full sm:w-auto gap-3">
       <a href="#hero" class="text-ph-300 font-bold tracking-wider uppercase hover:text-ph-amber transition-colors" id="nav-system-status" aria-label="Go to home section">IHSAN@PORTFOLIO:~$</a>
       <button id="theme-switch" class="crt-power-switch on" title="Toggle theme" aria-label="Toggle light/dark mode">
@@ -66,7 +66,14 @@
 
     <div class="h-16"></div>
 
-    <section id="hero" class="window-chrome glow-border rounded-sm mb-10 section-fade">
+    <div id="hud-frame" class="hud-frame opacity-0">
+      <span class="hud-corner tl"></span>
+      <span class="hud-corner tr"></span>
+      <span class="hud-corner bl"></span>
+      <span class="hud-corner br"></span>
+    </div>
+
+    <section id="hero" class="window-chrome rounded-sm mb-10 section-fade">
       <div class="window-title-bar px-3 py-2 flex items-center justify-between text-xs uppercase tracking-wider text-ph-400/70">
         <span>user@ihsan:~</span>
         <span class="flex gap-2 items-center">
@@ -77,7 +84,7 @@
       </div>
       <div class="p-6 md:p-10">
         <div class="ascii-rule mb-3 hidden md:block">/* ==================================================== */</div>
-        <h1 class="hero-name glow-text uppercase tracking-tight text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl" id="hero-name-container">
+        <h1 class="hero-name uppercase tracking-tight text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl" id="hero-name-container">
           <span class="glitch-pass">M. Ihsan</span><br class="hidden md:block"><span class="md:hidden"> </span><span class="glitch-pass">Ramadhan</span>
         </h1>
         <div class="ascii-rule mt-3 mb-1 hidden md:block">/* ==================================================== */</div>
@@ -94,7 +101,7 @@
       </div>
     </section>
 
-    <section id="about" class="window-chrome glow-border rounded-sm mb-10 section-fade">
+    <section id="about" class="window-chrome rounded-sm mb-10 section-fade">
       <div class="window-title-bar px-3 py-2 flex items-center justify-between text-xs uppercase tracking-wider text-ph-400/70">
         <span>about.txt</span>
         <span class="text-[10px]">utf-8</span>
@@ -107,14 +114,14 @@
           <div class="md:w-2/3 space-y-4 text-sm md:text-base text-ph-100/80 leading-relaxed" id="about-whoami">
           </div>
           <div class="md:w-1/3 mt-6 md:mt-0">
-            <div class="border border-ph-500/20 bg-ph-900/10 p-4 text-xs font-mono space-y-2" id="about-info-grid">
+            <div class="border border-ph-500/20 bg-ph-900/10 p-4 rounded-sm text-xs font-mono space-y-2" id="about-info-grid">
             </div>
           </div>
         </div>
       </div>
     </section>
 
-    <section id="stack" class="window-chrome glow-border rounded-sm mb-10 section-fade">
+    <section id="stack" class="window-chrome rounded-sm mb-10 section-fade">
       <div class="window-title-bar px-3 py-2 flex items-center justify-between text-xs uppercase tracking-wider text-ph-400/70">
         <span>stack.sys</span>
         <span class="text-[10px]">readonly</span>
@@ -128,7 +135,7 @@
       </div>
     </section>
 
-    <section id="projects" class="window-chrome glow-border rounded-sm mb-10 section-fade">
+    <section id="projects" class="window-chrome rounded-sm mb-10 section-fade">
       <div class="window-title-bar px-3 py-2 flex items-center justify-between text-xs uppercase tracking-wider text-ph-400/70">
         <span>projects.git</span>
         <span class="text-[10px]" id="project-count-title">0 OBJECTS</span>
@@ -152,7 +159,7 @@
             </table>
           </div>
           <div class="lg:w-2/5 mt-6 lg:mt-0">
-            <div id="repo-detail" class="border border-ph-500/20 bg-ph-900/10 rounded-sm p-4 text-xs font-mono h-full min-h-52.5 flex flex-col justify-center transition-colors">
+            <div id="repo-detail" class="border-l-2 border-ph-amber/40 p-4 text-xs font-mono h-full min-h-52.5 flex flex-col justify-center transition-colors">
               <div>
                 <div class="text-ph-amber/70 mb-2">$ cat README.md</div>
                 <p class="text-ph-500/70 leading-relaxed">Hover any project to view its details<span class="typing-cursor"></span></p>
@@ -168,7 +175,7 @@
       </div>
     </section>
 
-    <section id="contact" class="window-chrome glow-border rounded-sm mb-12 section-fade">
+    <section id="contact" class="window-chrome rounded-sm mb-12 section-fade">
       <div class="window-title-bar px-3 py-2 flex items-center justify-between text-xs uppercase tracking-wider text-ph-400/70">
         <span>contact.sh</span>
         <span class="text-[10px]">executable</span>
@@ -177,7 +184,7 @@
         <div class="mb-4 text-ph-amber/80 text-sm">
           &gt; $ ssh ihsan@portfolio
         </div>
-        <p class="text-sm md:text-base text-ph-100/70 mb-6">
+        <p class="text-sm md:text-base text-ph-100/70 mb-6 max-w-prose">
           Open for collaborations, freelance projects, or just a friendly chat about tech and open source. Every message is read.
         </p>
         <div class="flex flex-col md:flex-row gap-4 md:items-center">
