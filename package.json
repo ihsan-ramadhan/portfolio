@@ -1,0 +1,16 @@
+{
+  "name": "ihsan-portfolio",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Retro CRT terminal portfolio built with Tailwind CSS and vanilla JavaScript.",
+  "type": "module",
+  "scripts": {
+    "build:css": "tailwindcss -i css/input.css -o css/tailwind.css --minify",
+    "watch:css": "tailwindcss -i css/input.css -o css/tailwind.css --watch",
+    "build": "npm run build:css"
+  },
+  "devDependencies": {
+    "@tailwindcss/cli": "^4.3.3",
+    "tailwindcss": "^4.3.3"
+  }
+}

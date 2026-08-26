@@ -2,7 +2,7 @@ import { initDataRain } from './matrix.js';
 import { startBootSequence } from './boot.js';
 import { initNavbarStatus } from './navbar.js';
 import { renderProjects, syncGitHubStars } from './projects.js';
-import { setupSubtitleGlitch, revealSections } from './ui.js';
+import { setupSubtitleGlitch, revealSections, initHudTargetTracker } from './ui.js';
 import { initThemeToggle } from './theme.js';
 
 let portfolioData = null;
@@ -66,7 +66,7 @@ function setupStack(stack) {
   if (!stack) return;
   const stackGrid = document.getElementById('stack-grid');
   stackGrid.innerHTML = stack.map(item => `
-    <div class="border border-ph-500/20 bg-ph-500/5 px-3 py-2 text-ph-200 flex items-center gap-2">
+    <div class="border border-ph-500/20 bg-ph-500/5 px-3 py-2 text-ph-200 flex items-center gap-2 rounded-sm hover:bg-ph-500/10 transition-colors">
       <span class="text-ph-600">⬡</span> ${esc(item)}
     </div>
   `).join('');
@@ -128,5 +128,8 @@ window.addEventListener('DOMContentLoaded', () => {
   initDataRain();
   initNavbarStatus();
   loadData();
-  startBootSequence(revealSections);
+  startBootSequence(() => {
+    revealSections();
+    initHudTargetTracker();
+  });
 });
