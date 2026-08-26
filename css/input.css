@@ -1,0 +1,26 @@
+@import "tailwindcss";
+
+/* Custom theme colors.
+ *
+ * The ph-* palette (and amber) are defined as raw "R G B" channel triplets in
+ * css/style.css (e.g. --ph-300, --crt-amber). They are redefined per-theme via
+ * the :root[data-theme="light"] block there, so the generated utilities must
+ * reference those variables rather than hard-coding colors. Wrapping them in
+ * rgb() keeps <alpha-value> opacity modifiers (e.g. text-ph-500/60) working
+ * through Tailwind v4's color-mix-based opacity handling. */
+@theme {
+  --color-ph-100: rgb(var(--ph-100));
+  --color-ph-200: rgb(var(--ph-200));
+  --color-ph-300: rgb(var(--ph-300));
+  --color-ph-400: rgb(var(--ph-400));
+  --color-ph-500: rgb(var(--ph-500));
+  --color-ph-600: rgb(var(--ph-600));
+  --color-ph-900: rgb(var(--ph-900));
+  --color-ph-amber: rgb(var(--crt-amber));
+}
+
+/* Custom retro display fonts (loaded from Google Fonts in index.html). */
+@theme {
+  --font-display: "VT323", "Courier New", monospace;
+  --font-mono: "Share Tech Mono", "Courier New", monospace;
+}

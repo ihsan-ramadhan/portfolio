@@ -17,29 +17,8 @@
   <title>M. Ihsan Ramadhan</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="dns-prefetch" href="https://cdn.tailwindcss.com">
   <link rel="dns-prefetch" href="https://api.github.com">
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            ph: {
-              100: 'rgba(var(--ph-100), <alpha-value>)',
-              200: 'rgba(var(--ph-200), <alpha-value>)',
-              300: 'rgba(var(--ph-300), <alpha-value>)',
-              400: 'rgba(var(--ph-400), <alpha-value>)',
-              500: 'rgba(var(--ph-500), <alpha-value>)',
-              600: 'rgba(var(--ph-600), <alpha-value>)',
-              900: 'rgba(var(--ph-900), <alpha-value>)',
-              amber: 'rgba(var(--crt-amber), <alpha-value>)'
-            }
-          }
-        }
-      }
-    }
-  </script>
+  <link rel="stylesheet" href="css/tailwind.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=VT323&family=Share+Tech+Mono&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
@@ -60,7 +39,7 @@
   <div class="crt-flicker" aria-hidden="true"></div>
   <div class="theme-sweep" aria-hidden="true"></div>
 
-  <div id="boot-overlay" class="fixed inset-0 z-[100] flex flex-col items-start justify-start p-8 md:p-16 text-sm md:text-base font-mono" style="background-color: var(--crt-bg); color: var(--crt-phosphor);">
+  <div id="boot-overlay" class="fixed inset-0 z-100 flex flex-col items-start justify-start p-8 md:p-16 text-sm md:text-base font-mono" style="background-color: var(--crt-bg); color: var(--crt-phosphor);">
     <div id="boot-content"></div>
   </div>
 
@@ -173,7 +152,7 @@
             </table>
           </div>
           <div class="lg:w-2/5 mt-6 lg:mt-0">
-            <div id="repo-detail" class="border border-ph-500/20 bg-ph-900/10 rounded-sm p-4 text-xs font-mono h-full min-h-[210px] flex flex-col justify-center transition-colors">
+            <div id="repo-detail" class="border border-ph-500/20 bg-ph-900/10 rounded-sm p-4 text-xs font-mono h-full min-h-52.5 flex flex-col justify-center transition-colors">
               <div>
                 <div class="text-ph-amber/70 mb-2">$ cat README.md</div>
                 <p class="text-ph-500/70 leading-relaxed">Hover any project to view its details<span class="typing-cursor"></span></p>
