@@ -10,8 +10,8 @@ Embraces a **retro terminal** aesthetic.
 
 Key principles:
 - **CRT Phosphor Effect:** Simulated scanlines and screen flicker overlay with hardware acceleration.
-- **Monospaced Typography:**VT323 for retro headers and Share Tech Mono for the layout text.
-- **Dynamic Terminal HUD:** Brackets, ascii lines, and interactive boot sequence on initial load.
+- **Monospaced Typography:** VT323 for retro headers and Share Tech Mono for the layout text.
+- **Dynamic Terminal HUD:** Brackets, ascii lines, and corner targeting that tracks the section you are reading.
 - **Matrix Background:** Falling data-rain rendered in canvas.
 
 ## Technologies

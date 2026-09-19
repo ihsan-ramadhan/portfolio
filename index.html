@@ -8,11 +8,11 @@
   <meta name="description" content="Muhammad Ihsan Ramadhan's software engineering portfolio. A clean retro CRT terminal style website built with Tailwind CSS and vanilla Javascript." />
   <meta property="og:type" content="website" />
   <meta property="og:title" content="M. Ihsan Ramadhan" />
-  <meta property="og:description" content="Fullstack developer & open source enthusiast. Retro CRT terminal portfolio." />
+  <meta property="og:description" content="Software engineer & open source enthusiast. Retro CRT terminal portfolio." />
   <meta property="og:url" content="https://ihsan.is-a.dev" />
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:title" content="M. Ihsan Ramadhan" />
-  <meta name="twitter:description" content="Fullstack developer & open source enthusiast." />
+  <meta name="twitter:description" content="Software engineer & open source enthusiast." />
   <link rel="icon" href="/favicon.ico" sizes="any" />
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
@@ -21,13 +21,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="dns-prefetch" href="https://api.github.com">
+  <link href="https://fonts.googleapis.com/css2?family=VT323&family=Share+Tech+Mono&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/tailwind.css">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=VT323&family=Share+Tech+Mono&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
-  <noscript>
-    <link href="https://fonts.googleapis.com/css2?family=VT323&family=Share+Tech+Mono&display=swap" rel="stylesheet">
-  </noscript>
   <link rel="stylesheet" href="css/style.css">
   <script>
     if (localStorage.getItem('theme') === 'light') {
@@ -42,10 +37,6 @@
   <div class="crt-flicker" aria-hidden="true"></div>
   <div class="theme-sweep" aria-hidden="true"></div>
 
-  <div id="boot-overlay" class="fixed inset-0 z-100 flex flex-col items-start justify-start p-8 md:p-16 text-sm md:text-base font-mono" style="background-color: var(--crt-bg); color: var(--crt-phosphor);">
-    <div id="boot-content"></div>
-  </div>
-
   <nav class="navbar-scroll window-chrome rounded-sm p-4 flex flex-col sm:flex-row justify-between sm:items-center gap-4 text-xs md:text-sm font-mono">
     <div class="flex justify-between items-center w-full sm:w-auto gap-3">
       <a href="#hero" class="text-ph-300 font-bold tracking-wider uppercase hover:text-ph-amber transition-colors" id="nav-system-status" aria-label="Go to home section">IHSAN@PORTFOLIO:~$</a>
@@ -56,18 +47,20 @@
         [MENU]
       </button>
     </div>
-    <div id="nav-links" class="hidden sm:flex flex-col sm:flex-row items-center justify-center gap-x-4 gap-y-2 text-ph-200 w-full sm:w-auto border-t border-ph-500/10 sm:border-t-0 pt-4 sm:pt-0">
-      <a href="#hero" class="hover:text-ph-amber transition-colors" data-scroll>[HOME]</a>
-      <a href="#about" class="hover:text-ph-amber transition-colors" data-scroll>[ABOUT]</a>
-      <a href="#stack" class="hover:text-ph-amber transition-colors" data-scroll>[STACK]</a>
-      <a href="#projects" class="hover:text-ph-amber transition-colors" data-scroll>[PROJECTS]</a>
-      <a href="#contact" class="hover:text-ph-amber transition-colors" data-scroll>[CONTACT]</a>
+    <div id="nav-links" class="hidden sm:flex flex-col sm:flex-row items-center justify-center gap-x-4 gap-y-1 text-ph-200 w-full sm:w-auto border-t border-ph-500/10 sm:border-t-0 pt-2 sm:pt-0">
+      <a href="#hero" class="nav-link hover:text-ph-amber transition-colors" data-scroll>[HOME]</a>
+      <a href="#about" class="nav-link hover:text-ph-amber transition-colors" data-scroll>[ABOUT]</a>
+      <a href="#stack" class="nav-link hover:text-ph-amber transition-colors" data-scroll>[STACK]</a>
+      <a href="#projects" class="nav-link hover:text-ph-amber transition-colors" data-scroll>[PROJECTS]</a>
+      <a href="#contact" class="nav-link hover:text-ph-amber transition-colors" data-scroll>[CONTACT]</a>
     </div>
   </nav>
 
-  <main id="main-site" class="relative z-10 max-w-5xl mx-auto px-4 py-8 md:py-12 hidden">
+  <main id="main-site" class="relative z-10 max-w-5xl mx-auto px-4 py-8 md:py-12">
 
     <div class="h-16"></div>
+
+    <div id="data-status" class="window-chrome rounded-sm mb-10 p-5 md:p-6 font-mono text-sm hidden" role="status" aria-live="polite"></div>
 
     <div id="hud-frame" class="hud-frame opacity-0">
       <span class="hud-corner tl"></span>
@@ -77,9 +70,9 @@
     </div>
 
     <section id="hero" class="window-chrome rounded-sm mb-10 section-fade">
-      <div class="window-title-bar px-3 py-2 flex items-center justify-between text-xs uppercase tracking-wider text-ph-400/70">
+      <div class="window-title-bar px-3 py-2 flex items-center justify-between text-xs uppercase tracking-wider text-ph-400">
         <span>user@ihsan:~</span>
-        <span class="flex gap-2 items-center">
+        <span class="flex gap-2 items-center" aria-hidden="true">
           <span class="w-3 h-3 border border-ph-400/40 bg-ph-400/10 inline-block"></span>
           <span class="w-3 h-3 border border-ph-400/40 bg-ph-400/10 inline-block"></span>
           <span class="w-3 h-3 border border-ph-400/40 bg-ph-400/10 inline-block"></span>
@@ -94,7 +87,7 @@
         <div class="flex items-baseline gap-4 mt-2 mb-4 flex-wrap">
           <span class="text-ph-amber text-lg md:text-xl glow-accent">▶</span>
           <h2 class="text-xl md:text-2xl text-ph-300 font-bold tracking-wide typing-cursor" id="hero-subtitle">
-            LOADING_SUBTITLE...
+            CONNECTING...
           </h2>
         </div>
         <p class="text-sm md:text-base text-ph-100/70 max-w-2xl leading-relaxed mb-6 hidden" id="hero-description">
@@ -105,12 +98,12 @@
     </section>
 
     <section id="about" class="window-chrome rounded-sm mb-10 section-fade">
-      <div class="window-title-bar px-3 py-2 flex items-center justify-between text-xs uppercase tracking-wider text-ph-400/70">
+      <div class="window-title-bar px-3 py-2 flex items-center justify-between text-xs uppercase tracking-wider text-ph-400">
         <span>about.txt</span>
         <span class="text-[10px]">utf-8</span>
       </div>
       <div class="p-6 md:p-10">
-        <div class="mb-4 text-ph-amber/80 text-sm">
+        <div class="mb-4 text-ph-amber text-sm">
           &gt; $ whoami
         </div>
         <div class="md:flex gap-8">
@@ -125,12 +118,12 @@
     </section>
 
     <section id="stack" class="window-chrome rounded-sm mb-10 section-fade">
-      <div class="window-title-bar px-3 py-2 flex items-center justify-between text-xs uppercase tracking-wider text-ph-400/70">
+      <div class="window-title-bar px-3 py-2 flex items-center justify-between text-xs uppercase tracking-wider text-ph-400">
         <span>stack.sys</span>
         <span class="text-[10px]">readonly</span>
       </div>
       <div class="p-6 md:p-10">
-        <div class="mb-4 text-ph-amber/80 text-sm">
+        <div class="mb-4 text-ph-amber text-sm">
           &gt; $ ls /usr/local/stack/
         </div>
         <div class="grid grid-cols-2 md:grid-cols-4 gap-3 text-sm" id="stack-grid">
@@ -139,19 +132,19 @@
     </section>
 
     <section id="projects" class="window-chrome rounded-sm mb-10 section-fade">
-      <div class="window-title-bar px-3 py-2 flex items-center justify-between text-xs uppercase tracking-wider text-ph-400/70">
+      <div class="window-title-bar px-3 py-2 flex items-center justify-between text-xs uppercase tracking-wider text-ph-400">
         <span>projects.git</span>
         <span class="text-[10px]" id="project-count-title">0 OBJECTS</span>
       </div>
       <div class="p-6 md:p-10">
-        <div class="mb-4 text-ph-amber/80 text-sm">
+        <div class="mb-4 text-ph-amber text-sm">
           &gt; $ git ls-tree --name-only HEAD
         </div>
         <div class="lg:flex lg:gap-6 lg:items-stretch">
           <div class="lg:w-3/5 overflow-x-auto">
             <table class="w-full text-left text-sm border-collapse">
               <thead>
-                <tr class="border-b border-ph-400/20 text-ph-500/60 text-xs uppercase tracking-wider">
+                <tr class="border-b border-ph-400/20 text-ph-400 text-xs uppercase tracking-wider">
                   <th class="py-2 pr-4">Name</th>
                   <th class="py-2 pr-4">Lang / Stack</th>
                   <th class="py-2 text-right">★ Stars</th>
@@ -164,8 +157,8 @@
           <div class="lg:w-2/5 mt-6 lg:mt-0">
             <div id="repo-detail" class="border-l-2 border-ph-amber/40 p-4 text-xs font-mono h-full min-h-52.5 flex flex-col justify-center transition-colors">
               <div>
-                <div class="text-ph-amber/70 mb-2">$ cat README.md</div>
-                <p class="text-ph-500/70 leading-relaxed">Hover any project to view its details<span class="typing-cursor"></span></p>
+                <div class="text-ph-amber mb-2">$ cat README.md</div>
+                <p class="text-ph-400 leading-relaxed">Select a project to read its details<span class="typing-cursor"></span></p>
               </div>
             </div>
           </div>
@@ -179,12 +172,12 @@
     </section>
 
     <section id="contact" class="window-chrome rounded-sm mb-12 section-fade">
-      <div class="window-title-bar px-3 py-2 flex items-center justify-between text-xs uppercase tracking-wider text-ph-400/70">
+      <div class="window-title-bar px-3 py-2 flex items-center justify-between text-xs uppercase tracking-wider text-ph-400">
         <span>contact.sh</span>
         <span class="text-[10px]">executable</span>
       </div>
       <div class="p-6 md:p-10">
-        <div class="mb-4 text-ph-amber/80 text-sm">
+        <div class="mb-4 text-ph-amber text-sm">
           &gt; $ ssh ihsan@portfolio
         </div>
         <p class="text-sm md:text-base text-ph-100/70 mb-6 max-w-prose">
@@ -194,12 +187,12 @@
           <a href="mailto:m.ihsan.r30@gmail.com" class="retro-btn px-5 py-3 rounded-sm text-ph-300 font-bold text-sm flex items-center gap-2" id="contact-email-btn">
             <span>✉</span> m.ihsan.r30@gmail.com
           </a>
-          <span class="text-ph-500/40 text-xs uppercase tracking-widest hidden md:inline">// or ping me on socials above</span>
+          <span class="text-ph-400 text-xs uppercase tracking-widest hidden md:inline">// or ping me on socials above</span>
         </div>
       </div>
     </section>
 
-    <footer class="text-center text-ph-400/80 text-xs font-mono pb-8">
+    <footer class="text-center text-ph-400 text-xs font-mono pb-8">
       <p>© <span id="year"></span> <span id="footer-name">M. Ihsan Ramadhan</span></p>
     </footer>
 

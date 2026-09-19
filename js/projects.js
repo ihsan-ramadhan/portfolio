@@ -2,7 +2,7 @@ const esc = (s) => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;
 const BLANK_REL = 'noopener noreferrer';
 
 const CACHE_KEY = 'gh_stars_cache';
-const CACHE_TTL = 1000 * 60 * 60; // 1 jam
+const CACHE_TTL = 1000 * 60 * 60;
 const CACHE_VERSION = 1;
 
 function loadStarsCache() {
@@ -26,10 +26,23 @@ function saveStarsCache(data) {
 export function renderProjects(portfolioData) {
   if (!portfolioData?.projects) return;
 
+  // Sort on every render, not just on the data.json order: syncGitHubStars()
+  // rewrites the counts afterwards and re-renders, and a list labelled by stars
+  // that is not actually ordered by them reads as a bug.
   const projects = portfolioData.projects;
+  projects.sort((a, b) => (b.stars ?? -1) - (a.stars ?? -1));
+
   document.getElementById('project-count-title').textContent = `${projects.length} OBJECTS`;
 
   const tbody = document.getElementById('repo-table-body');
+  if (!projects.length) {
+    tbody.innerHTML = `
+      <tr><td colspan="3" class="py-6 text-ph-300">
+        No repositories listed yet.
+        <a href="https://github.com/ihsan-ramadhan?tab=repositories" target="_blank" rel="${BLANK_REL}" class="retro-link">Browse them on GitHub</a>.
+      </td></tr>`;
+    return;
+  }
   tbody.innerHTML = projects.map((p, idx) => `
     <tr class="repo-row border-b border-ph-500/10 transition-colors" data-index="${idx}">
       <td class="py-3 pr-4 font-bold text-ph-300">
@@ -65,7 +78,7 @@ export function setupProjectInteractivity(portfolioData) {
       <div class="flex flex-wrap gap-1.5 mb-4">
         ${stackHtml}
       </div>
-      <div class="flex items-center justify-between text-[10px] text-ph-600 border-t border-ph-500/10 pt-3 mt-auto">
+      <div class="flex items-center justify-between text-[10px] text-ph-400 border-t border-ph-500/10 pt-3 mt-auto">
         <span class="text-ph-amber">★ ${project.stars !== undefined ? esc(project.stars) : '--'} stars</span>
         <a href="${esc(project.url)}" target="_blank" rel="${BLANK_REL}" class="retro-link" aria-label="Open ${esc(project.name)} repository on GitHub">open repo -></a>
       </div>
@@ -81,6 +94,7 @@ export function setupProjectInteractivity(portfolioData) {
         renderDetail(idx);
       }
     });
+    row.querySelector('a')?.addEventListener('focus', () => renderDetail(idx));
   });
 }
 
@@ -115,7 +129,7 @@ export async function syncGitHubStars(portfolioData, onUpdate) {
         }
         changed = true;
       } else if (res.status === 404) {
-        console.warn(`Repo not found for ${project.githubRepo} (404) — check data.json githubRepo`);
+        console.warn(`Repo not found for ${project.githubRepo} (404): check data.json githubRepo`);
       }
     } catch (err) {
       console.warn(`Failed to fetch stars for ${project.githubRepo}:`, err);

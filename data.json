@@ -4,7 +4,7 @@
   },
   "hero": {
     "name": "M. Ihsan Ramadhan",
-    "subtitle": "FULLSTACK_DEVELOPER",
+    "subtitle": "SOFTWARE_ENGINEER",
     "socials": {
       "github": "https://github.com/ihsan-ramadhan",
       "linkedin": "https://www.linkedin.com/in/m-ihsan-r/",
@@ -13,7 +13,7 @@
   },
   "about": {
     "whoami": [
-      "I'm Ihsan, a fullstack developer from Indonesia currently studying Informatics Engineering at Bandung State Polytechnic.",
+      "I'm Ihsan, a software engineer from Indonesia currently studying Informatics Engineering at Bandung State Polytechnic.",
       "An open source enthusiast and a builder at heart. I like exploring where code meets real-world problems.",
       "When I'm not debugging, I'm probably learning new tech, tweaking my linux setup, or touching grass."
     ],
@@ -22,7 +22,7 @@
       "SHELL": "fish",
       "EDITOR": "Zed",
       "LOCATION": "Bandung, ID",
-      "REPOS": "33"
+      "REPOS": "34"
     }
   },
   "stack": [
@@ -41,6 +41,22 @@
   ],
   "projects": [
     {
+      "name": "bansos-router",
+      "description": "Free, keyless coding models routed to every coding harness through one local endpoint. No accounts, no keys, no cost.",
+      "stack": ["TypeScript"],
+      "url": "https://github.com/ihsan-ramadhan/bansos-router",
+      "githubRepo": "ihsan-ramadhan/bansos-router",
+      "stars": 97
+    },
+    {
+      "name": "ReksaTani-App",
+      "description": "Offline-First mobile platform for agricultural transactions and supply chain management designed for remote areas.",
+      "stack": ["Flutter", "Dart"],
+      "url": "https://github.com/Umeem26/ReksaTani-App",
+      "githubRepo": "Umeem26/ReksaTani-App",
+      "stars": 2
+    },
+    {
       "name": "polban-dataview",
       "description": "Cloud-native dashboard that visualizes Polban's institutional data through interactive, live-updating charts.",
       "stack": ["Vue", "JavaScript"],
@@ -50,27 +66,11 @@
     },
     {
       "name": "tuckify",
-      "description": "Automatically organize your file/folder by extension, name, size, etc. Define rules in TOML, run once or schedule it.",
+      "description": "Automatically organize your folder by type, name, size, and more. Define rules in TOML, run once or schedule it.",
       "stack": ["Go", "Wails", "JavaScript"],
       "url": "https://github.com/ihsan-ramadhan/tuckify",
       "githubRepo": "ihsan-ramadhan/tuckify",
       "stars": 0
-    },
-    {
-      "name": "bansos-router",
-      "description": "Free, keyless coding models routed to every coding harness through one local endpoint. No accounts, no keys, no cost.",
-      "stack": ["Typescript"],
-      "url": "https://github.com/ihsan-ramadhan/bansos-router",
-      "githubRepo": "ihsan-ramadhan/bansos-router",
-      "stars": 48
-    },
-    {
-      "name": "ReksaTani-App",
-      "description": "Offline-First mobile platform for agricultural transactions and supply chain management designed for remote areas.",
-      "stack": ["Flutter", "Dart"],
-      "url": "https://github.com/Umeem26/ReksaTani-App",
-      "githubRepo": "Umeem26/ReksaTani-App",
-      "stars": 2
     }
   ],
   "contact": {
