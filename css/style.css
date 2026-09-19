@@ -393,10 +393,25 @@ button:focus-visible {
 }
 
 @media (max-width: 639px), (pointer: coarse) {
-  .retro-btn,
-  .crt-power-switch,
-  #nav-toggle,
   #nav-system-status,
+  .crt-power-switch,
+  #nav-toggle {
+    position: relative;
+  }
+  #nav-system-status::after,
+  .crt-power-switch::after,
+  #nav-toggle::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    min-width: 44px;
+    height: 44px;
+  }
+
+  .retro-btn,
   #nav-links .nav-link,
   .repo-row .retro-link {
     min-height: 44px;
@@ -405,9 +420,10 @@ button:focus-visible {
     justify-content: center;
   }
   #nav-links .nav-link {
-    width: 100%;
+    padding-inline: 0.75rem;
   }
-  .repo-row .retro-link {
-    align-items: center;
+  .repo-row td {
+    padding-top: 0.25rem;
+    padding-bottom: 0.25rem;
   }
 }
