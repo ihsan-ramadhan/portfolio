@@ -25,6 +25,14 @@ export function initDataRain() {
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     cols = Math.ceil(window.innerWidth / fontSize);
     drops = new Array(cols).fill(0).map(() => Math.floor(getRandom() * -40));
+    paintBackdrop();
+  }
+
+  function paintBackdrop() {
+    ctx.fillStyle = document.documentElement.dataset.theme === 'light'
+      ? 'rgb(232, 228, 216)'
+      : 'rgb(5, 6, 13)';
+    ctx.fillRect(0, 0, window.innerWidth, window.innerHeight);
   }
 
   function frame(timestamp) {
@@ -34,9 +42,7 @@ export function initDataRain() {
     if (elapsed < fpsInterval) return;
     lastTime = timestamp - (elapsed % fpsInterval);
 
-    if (document.hidden || document.getElementById('main-site').classList.contains('hidden')) {
-      return;
-    }
+    if (document.hidden) return;
 
     ctx.fillStyle = document.documentElement.dataset.theme === 'light'
       ? 'rgba(232, 228, 216, 0.18)'
@@ -76,13 +82,7 @@ export function initDataRain() {
     resizeTimer = setTimeout(resize, 100);
   });
 
-  const clearCanvasOnTheme = () => {
-    ctx.fillStyle = document.documentElement.dataset.theme === 'light'
-      ? 'rgb(232, 228, 216)'
-      : 'rgb(5, 6, 13)';
-    ctx.fillRect(0, 0, window.innerWidth, window.innerHeight);
-  };
-  document.addEventListener('themechange', clearCanvasOnTheme);
+  document.addEventListener('themechange', paintBackdrop);
 
   const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   if (!prefersReduced) {
@@ -97,7 +97,5 @@ export function initDataRain() {
         animationFrameId = requestAnimationFrame(frame);
       }
     });
-  } else {
-    clearCanvasOnTheme();
   }
 }

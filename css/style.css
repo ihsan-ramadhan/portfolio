@@ -5,7 +5,7 @@
   --crt-bright: #dbe6ff;
   --crt-dim: #6b7fb0;
   --crt-amber: 255, 184, 108;
-  --crt-window-bg: rgba(5, 6, 13, 0.85);
+  --crt-window-bg: rgba(5, 6, 13, 0.94);
   --crt-window-border: rgba(159, 184, 232, 0.3);
   --crt-titlebar-bg: rgba(159, 184, 232, 0.08);
   --crt-titlebar-border: rgba(159, 184, 232, 0.2);
@@ -33,7 +33,7 @@
   --crt-bright: #151522;
   --crt-dim: #636058;
   --crt-amber: 148, 82, 0;
-  --crt-window-bg: rgba(232, 228, 216, 0.92);
+  --crt-window-bg: rgba(232, 228, 216, 0.96);
   --crt-window-border: rgba(80, 75, 65, 0.28);
   --crt-titlebar-bg: rgba(80, 75, 65, 0.06);
   --crt-titlebar-border: rgba(80, 75, 65, 0.18);
@@ -119,6 +119,10 @@ h1, h2, h3, .retro-title {
     animation: none;
     opacity: 0.015;
   }
+  .hero-name .glitch-pass,
+  .typing-cursor::after {
+    animation: none;
+  }
 }
 .glow-text {
   text-shadow: var(--crt-glow-text);
@@ -135,9 +139,11 @@ h1, h2, h3, .retro-title {
 #hero.window-chrome {
   box-shadow: var(--crt-glow-border);
 }
-.window-chrome:focus-visible {
-  box-shadow: var(--crt-glow-interact);
-  outline: none;
+a:focus-visible,
+button:focus-visible {
+  outline: 2px solid rgb(var(--crt-amber));
+  outline-offset: 3px;
+  border-radius: 1px;
 }
 .glow-accent {
   text-shadow: var(--crt-glow-accent);
@@ -155,9 +161,11 @@ h1, h2, h3, .retro-title {
 .window-chrome {
   border: 1.5px solid var(--crt-window-border);
   background: var(--crt-window-bg);
-  backdrop-filter: blur(4px);
   box-shadow: var(--crt-glow-border);
   position: relative;
+}
+.navbar-scroll.window-chrome {
+  backdrop-filter: blur(4px);
 }
 .window-title-bar {
   background: var(--crt-titlebar-bg);
@@ -206,14 +214,6 @@ h1, h2, h3, .retro-title {
 }
 .scroll-retro::-webkit-scrollbar-thumb:hover {
   background: var(--crt-selection-bg);
-}
-@keyframes bootReveal {
-  from { opacity: 0; transform: translateY(4px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-.boot-line {
-  opacity: 0;
-  animation: bootReveal 0.3s forwards;
 }
 .section-fade {
   opacity: 0;
@@ -281,6 +281,19 @@ h1, h2, h3, .retro-title {
   97% { opacity: 0.9; filter: blur(0.3px); transform: translateX(-1px); }
   98% { opacity: 1; filter: none; transform: none; }
 }
+/* The menu is opened by removing `hidden`, and the markup only carries
+   `sm:flex`, so below that breakpoint an open menu would fall back to
+   `display: block` and drop `flex-col`. Give it the display it needs here
+   instead of putting a second display utility in the class list. */
+#nav-links:not(.hidden) {
+  display: flex;
+}
+
+/* <output> defaults to display: inline, which would drop the padding and margin
+   this banner needs. Same reasoning as #nav-links above: one display source. */
+#data-status:not(.hidden) {
+  display: block;
+}
 .navbar-scroll {
   position: fixed;
   top: 1rem;
@@ -289,7 +302,6 @@ h1, h2, h3, .retro-title {
   width: calc(100% - 2rem);
   max-width: calc(64rem - 2rem);
   z-index: 90;
-  display: none;
   transition: transform 0.3s ease, opacity 0.3s ease, background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
 }
 .navbar-scroll.navbar-hidden {
@@ -377,5 +389,41 @@ h1, h2, h3, .retro-title {
 @media (prefers-reduced-motion: reduce) {
   .theme-sweep {
     display: none;
+  }
+}
+
+@media (max-width: 639px), (pointer: coarse) {
+  #nav-system-status,
+  .crt-power-switch,
+  #nav-toggle {
+    position: relative;
+  }
+  #nav-system-status::after,
+  .crt-power-switch::after,
+  #nav-toggle::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    min-width: 44px;
+    height: 44px;
+  }
+
+  .retro-btn,
+  #nav-links .nav-link,
+  .repo-row .retro-link {
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+  #nav-links .nav-link {
+    padding-inline: 0.75rem;
+  }
+  .repo-row td {
+    padding-top: 0.25rem;
+    padding-bottom: 0.25rem;
   }
 }

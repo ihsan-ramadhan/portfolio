@@ -1,10 +1,14 @@
 const getRandom = () => window.crypto.getRandomValues(new Uint32Array(1))[0] / 4294967296;
 
+let glitchTimer = null;
+
 export function setupSubtitleGlitch(originalText) {
   const subtitle = document.getElementById('hero-subtitle');
   if (!subtitle) return;
   const chars = "!@#$%^&*()_+-=[]{}|;':\",./<>?";
-  setInterval(() => {
+  clearInterval(glitchTimer);
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  glitchTimer = setInterval(() => {
     if (getRandom() > 0.92) {
       const pos = Math.floor(getRandom() * originalText.length);
       const char = chars[Math.floor(getRandom() * chars.length)];
@@ -58,23 +62,22 @@ export function initHudTargetTracker() {
     frame.classList.remove('opacity-0');
   }
 
-  // Hover tracking
   sections.forEach(sec => {
     sec.addEventListener('mouseenter', () => updateFrame(sec));
   });
 
+  const onScreen = new Set();
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
-      if (entry.isIntersecting && !mainSite.matches(':hover')) {
-        updateFrame(entry.target);
-      }
+      if (entry.isIntersecting) onScreen.add(entry.target);
+      else onScreen.delete(entry.target);
     });
+    if (mainSite.matches(':hover')) return;
+    const topmost = sections.find(sec => onScreen.has(sec));
+    if (topmost) updateFrame(topmost);
   }, { threshold: 0.3 });
 
   sections.forEach(sec => observer.observe(sec));
-
-  const initial = sections.find(s => s.id === 'hero') || sections[0];
-  requestAnimationFrame(() => updateFrame(initial));
 
   window.addEventListener('resize', () => {
     if (activeSection) updateFrame(activeSection);
