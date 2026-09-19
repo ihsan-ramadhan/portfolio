@@ -288,6 +288,12 @@ button:focus-visible {
 #nav-links:not(.hidden) {
   display: flex;
 }
+
+/* <output> defaults to display: inline, which would drop the padding and margin
+   this banner needs. Same reasoning as #nav-links above: one display source. */
+#data-status:not(.hidden) {
+  display: block;
+}
 .navbar-scroll {
   position: fixed;
   top: 1rem;

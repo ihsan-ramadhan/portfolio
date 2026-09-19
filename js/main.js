@@ -74,8 +74,6 @@ function setupStack(stack) {
 function populateDOM() {
   if (!portfolioData) return;
 
-  document.getElementById('year').textContent = new Date().getFullYear();
-
   setupHero(portfolioData.hero);
   setupAbout(portfolioData.about);
   setupStack(portfolioData.stack);
@@ -122,7 +120,7 @@ async function fetchGistOverrides(gistId) {
 async function syncRepoCount() {
   const profileUrl = portfolioData.hero?.socials?.github;
   if (!profileUrl || !portfolioData.about?.info?.REPOS) return;
-  const login = profileUrl.split('/').filter(Boolean).pop();
+  const login = profileUrl.split('/').findLast(Boolean);
   try {
     const res = await fetch(`https://api.github.com/users/${login}`);
     if (!res.ok) return;
@@ -185,6 +183,7 @@ async function loadData() {
 }
 
 window.addEventListener('DOMContentLoaded', () => {
+  document.getElementById('year').textContent = new Date().getFullYear();
   initThemeToggle();
   initDataRain();
   initNavbarStatus();
