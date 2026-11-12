@@ -332,6 +332,8 @@ button:focus-visible {
   width: calc(100% - 2rem);
   max-width: calc(64rem - 2rem);
   z-index: 90;
+}
+.navbar-scroll.navbar-transitions {
   transition: transform 0.3s ease, opacity 0.3s ease, background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
 }
 .navbar-scroll.navbar-hidden {
@@ -456,4 +458,8 @@ button:focus-visible {
     padding-top: 0.25rem;
     padding-bottom: 0.25rem;
   }
+}
+
+html.restoring body {
+  visibility: hidden;
 }

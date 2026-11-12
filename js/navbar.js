@@ -5,15 +5,26 @@ export function initNavbarStatus() {
   const navbar = document.querySelector('.navbar-scroll');
 
   let lastScrollY = window.scrollY;
+
+  const rememberHidden = (hidden) => {
+    try {
+      sessionStorage.setItem('navHidden', hidden ? '1' : '0');
+    } catch { /* storage blocked, navbar just re-syncs on scroll */ }
+    document.documentElement.classList.toggle('nav-hidden', hidden);
+  };
+
   const handleScroll = () => {
     if (!navbar) return;
+    if (document.documentElement.classList.contains('restoring')) return;
     const currentScrollY = window.scrollY;
     const scrollingDown = currentScrollY > lastScrollY;
 
     if (currentScrollY <= 50 || !scrollingDown) {
       navbar.classList.remove('navbar-hidden');
+      rememberHidden(false);
     } else if (currentScrollY > 50 && scrollingDown) {
       navbar.classList.add('navbar-hidden');
+      rememberHidden(true);
       if (navLinks && window.innerWidth < 640) {
         navLinks.classList.add('hidden');
         navToggle.textContent = '[MENU]';
@@ -23,10 +34,24 @@ export function initNavbarStatus() {
   };
   window.addEventListener('scroll', handleScroll, { passive: true });
 
+  const restoreNavbarState = () => {
+    if (!navbar) return;
+    lastScrollY = window.scrollY;
+    const hidden = sessionStorage.getItem('navHidden') === '1';
+    navbar.classList.toggle('navbar-hidden', hidden);
+    document.documentElement.classList.toggle('nav-hidden', hidden);
+  };
+  restoreNavbarState();
+  requestAnimationFrame(() => navbar?.classList.add('navbar-transitions'));
+
+  document.addEventListener('scrollrestored', () => {
+    lastScrollY = window.scrollY;
+  }, { once: true });
+
   function handleScrollClick(e) {
     const href = e.currentTarget.getAttribute('href');
     if (!href?.startsWith('#')) return;
-    
+
     e.preventDefault();
     const target = document.querySelector(href);
     if (target) {

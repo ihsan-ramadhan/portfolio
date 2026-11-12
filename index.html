@@ -27,10 +27,24 @@
     if (localStorage.getItem('theme') === 'light') {
       document.documentElement.dataset.theme = 'light';
     }
+    if (!location.hash && Number(sessionStorage.getItem('scrollY') || 0) > 0) {
+      document.documentElement.classList.add('restoring');
+    }
+    if (Number(sessionStorage.getItem('scrollY') || 0) > 50 && sessionStorage.getItem('navHidden') === '1') {
+      document.documentElement.classList.add('nav-hidden');
+    }
   </script>
+  <style>
+    html.nav-hidden .navbar-scroll {
+      transform: translateX(-50%) translateY(-120%) !important;
+      opacity: 0 !important;
+      pointer-events: none !important;
+      transition: none !important;
+    }
+    html.restoring body { visibility: hidden; }
+  </style>
 </head>
 <body class="scroll-retro min-h-screen relative overflow-x-hidden">
-
   <canvas id="terrain-field" aria-hidden="true"></canvas>
   <div class="scanlines" aria-hidden="true"></div>
   <div class="crt-flicker" aria-hidden="true"></div>
@@ -97,30 +111,30 @@
           <a href="https://www.instagram.com/ihsanmadhan" target="_blank" rel="noopener noreferrer" class="retro-btn px-4 py-2 rounded-sm text-ph-300 font-bold" aria-label="Instagram Profile">[INSTAGRAM]</a>
         </div>
         </div>
-        <pre id="ascii-portrait" class="ascii-portrait hidden lg:block" role="img" aria-label="ASCII portrait of Muhammad Ihsan Ramadhan">                      .:-=+++=+=---:.                     
-                   :=+*#########**#*+*-                   
-                 -*##*******####*###*#%=                  
-                +%#######################.                
-               :%##%%%#**##*+*%######*%##*.               
-               +#=++=-::----::-::=++*+-%*#*               
-              .%-:==+==-:::::::--:-:...-*#%               
-              -#.=====+*=-::-=+=--:--...-#%:              
-              :#:-==++==+=:::=+++:-:....=#%.              
-              ==-:-=====*:.-=-===-:--:::+#+.              
-             -=:::::::--:...-:.:.......::. =.             
-             ------:-====-:-:--::.. ...:.-.-.             
-             .-:-----:-==-:::..:......:.::-.              
-              :----=+=++==------.:....:::..               
-                =--==+++===----=:....: .                  
-                :+=----===-:....::::-.                    
-                 .==----::......:---.                     
-                   -+=++===----==-:.:                     
-                  .===++**+==---::.:%=                    
-                 -%+-==+=---:::::: *%#*:                  
-             .:-+@+=======-:::::..=@####+=-.              
-       ..:-+*%##%*:#======---::::-#%#####%@#*+-:.         
-   .-+**##%%%**#%--**+=====-----==*%######%%##%##*=-.     
- :*######%%#*##@*:-+++=--------==+#%#######%#########*=:. 
+        <pre id="ascii-portrait" class="ascii-portrait hidden lg:block" role="img" aria-label="ASCII portrait of Muhammad Ihsan Ramadhan">                      .:-=+++=+=---:.
+                   :=+*#########**#*+*-
+                 -*##*******####*###*#%=
+                +%#######################.
+               :%##%%%#**##*+*%######*%##*.
+               +#=++=-::----::-::=++*+-%*#*
+              .%-:==+==-:::::::--:-:...-*#%
+              -#.=====+*=-::-=+=--:--...-#%:
+              :#:-==++==+=:::=+++:-:....=#%.
+              ==-:-=====*:.-=-===-:--:::+#+.
+             -=:::::::--:...-:.:.......::. =.
+             ------:-====-:-:--::.. ...:.-.-.
+             .-:-----:-==-:::..:......:.::-.
+              :----=+=++==------.:....:::..
+                =--==+++===----=:....: .
+                :+=----===-:....::::-.
+                 .==----::......:---.
+                   -+=++===----==-:.:
+                  .===++**+==---::.:%=
+                 -%+-==+=---:::::: *%#*:
+             .:-+@+=======-:::::..=@####+=-.
+       ..:-+*%##%*:#======---::::-#%#####%@#*+-:.
+   .-+**##%%%**#%--**+=====-----==*%######%%##%##*=-.
+ :*######%%#*##@*:-+++=--------==+#%#######%#########*=:.
 =%%###%#%%####%%=-:==.:::--:--===*%########%%##%########*=
 %###%%%%%####%%*##=-=:..:#*#*+-=+#%########%%%%###########
 %%#%%%#######%%***#+-=:.+**+***+*%#%#######%%%##%########*

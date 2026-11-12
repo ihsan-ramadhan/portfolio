@@ -4,6 +4,7 @@ import { renderProjects, syncGitHubStars } from './projects.js';
 import { setupSubtitleGlitch, initHudTargetTracker } from './ui.js';
 import { initThemeToggle } from './theme.js';
 import { initAsciiPortrait } from './portrait.js';
+import { initScrollRestore } from './scroll-restore.js';
 
 let portfolioData = null;
 
@@ -209,6 +210,7 @@ async function loadData() {
 
 window.addEventListener('DOMContentLoaded', () => {
   document.getElementById('year').textContent = new Date().getFullYear();
+  initScrollRestore();
   initThemeToggle();
   initAsciiPortrait();
   initTerrainField();
