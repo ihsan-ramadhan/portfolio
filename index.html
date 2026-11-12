@@ -18,10 +18,9 @@
   <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
   <link rel="manifest" href="/site.webmanifest" />
   <title>M. Ihsan Ramadhan</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preload" href="/fonts/vt323-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/fonts/share-tech-mono-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="dns-prefetch" href="https://api.github.com">
-  <link href="https://fonts.googleapis.com/css2?family=VT323&family=Share+Tech+Mono&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/tailwind.css">
   <link rel="stylesheet" href="css/style.css">
   <script>
@@ -32,15 +31,15 @@
 </head>
 <body class="scroll-retro min-h-screen relative overflow-x-hidden">
 
-  <canvas id="data-rain" aria-hidden="true"></canvas>
+  <canvas id="terrain-field" aria-hidden="true"></canvas>
   <div class="scanlines" aria-hidden="true"></div>
   <div class="crt-flicker" aria-hidden="true"></div>
   <div class="theme-sweep" aria-hidden="true"></div>
 
   <nav class="navbar-scroll window-chrome rounded-sm p-4 flex flex-col sm:flex-row justify-between sm:items-center gap-4 text-xs md:text-sm font-mono">
     <div class="flex items-center w-full sm:w-auto gap-3">
-      <a href="#hero" class="text-ph-300 font-bold tracking-wider uppercase hover:text-ph-amber transition-colors" id="nav-system-status" aria-label="Go to home section">IHSAN@PORTFOLIO:~$</a>
-      <button id="theme-switch" class="crt-power-switch on" title="Toggle theme" aria-label="Toggle light/dark mode">
+      <a href="#hero" class="text-ph-300 font-bold tracking-wider uppercase hover:text-ph-amber transition-colors" id="nav-system-status">IHSAN@PORTFOLIO:~$</a>
+      <button id="theme-switch" class="crt-power-switch on" title="Toggle theme" aria-label="Power: toggle light/dark mode">
         <span class="ps-led"></span>POWER
       </button>
       <button id="nav-toggle" class="sm:hidden ml-auto text-ph-amber border border-ph-amber/30 bg-ph-amber/5 px-2 py-1 rounded-sm hover:bg-ph-amber/20 active:bg-ph-amber/30 transition-colors font-bold" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="nav-links">
@@ -50,6 +49,7 @@
     <div id="nav-links" class="hidden sm:flex flex-wrap items-center justify-start sm:justify-center gap-x-2 sm:gap-x-4 gap-y-1 text-ph-200 w-full sm:w-auto border-t border-ph-500/10 sm:border-t-0 pt-2 sm:pt-0">
       <a href="#hero" class="nav-link hover:text-ph-amber transition-colors" data-scroll>[HOME]</a>
       <a href="#about" class="nav-link hover:text-ph-amber transition-colors" data-scroll>[ABOUT]</a>
+      <a href="#experience" class="nav-link hover:text-ph-amber transition-colors" data-scroll>[EXPERIENCE]</a>
       <a href="#stack" class="nav-link hover:text-ph-amber transition-colors" data-scroll>[STACK]</a>
       <a href="#projects" class="nav-link hover:text-ph-amber transition-colors" data-scroll>[PROJECTS]</a>
       <a href="#contact" class="nav-link hover:text-ph-amber transition-colors" data-scroll>[CONTACT]</a>
@@ -69,7 +69,7 @@
       <span class="hud-corner br"></span>
     </div>
 
-    <section id="hero" class="window-chrome rounded-sm mb-10 section-fade">
+    <section id="hero" class="window-chrome rounded-sm mb-10">
       <div class="window-title-bar px-3 py-2 flex items-center justify-between text-xs uppercase tracking-wider text-ph-400">
         <span>user@ihsan:~</span>
         <span class="flex gap-2 items-center" aria-hidden="true">
@@ -78,7 +78,8 @@
           <span class="w-3 h-3 border border-ph-400/40 bg-ph-400/10 inline-block"></span>
         </span>
       </div>
-      <div class="p-6 md:p-10">
+      <div class="p-6 md:p-10 lg:flex lg:items-center lg:gap-10">
+        <div class="lg:flex-1 lg:min-w-0">
         <div class="ascii-rule mb-3 hidden md:block">/* ==================================================== */</div>
         <h1 class="hero-name uppercase tracking-tight text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl" id="hero-name-container">
           <span class="glitch-pass">M. Ihsan</span><br class="hidden md:block"><span class="md:hidden"> </span><span class="glitch-pass">Ramadhan</span>
@@ -86,21 +87,50 @@
         <div class="ascii-rule mt-3 mb-1 hidden md:block">/* ==================================================== */</div>
         <div class="flex items-baseline gap-4 mt-2 mb-4 flex-wrap">
           <span class="text-ph-amber text-lg md:text-xl glow-accent">▶</span>
-          <h2 class="text-xl md:text-2xl text-ph-300 font-bold tracking-wide typing-cursor" id="hero-subtitle">
-            CONNECTING...
-          </h2>
+          <h2 class="text-xl md:text-2xl text-ph-300 font-bold tracking-wide typing-cursor" id="hero-subtitle">SOFTWARE_ENGINEER</h2>
         </div>
         <p class="text-sm md:text-base text-ph-100/70 max-w-2xl leading-relaxed mb-6 hidden" id="hero-description">
         </p>
         <div class="flex flex-wrap gap-3 text-xs md:text-sm" id="hero-socials">
+          <a href="https://github.com/ihsan-ramadhan" target="_blank" rel="noopener noreferrer" class="retro-btn px-4 py-2 rounded-sm text-ph-300 font-bold" aria-label="Github Profile">[GITHUB]</a>
+          <a href="https://www.linkedin.com/in/m-ihsan-r/" target="_blank" rel="noopener noreferrer" class="retro-btn px-4 py-2 rounded-sm text-ph-300 font-bold" aria-label="Linkedin Profile">[LINKEDIN]</a>
+          <a href="https://www.instagram.com/ihsanmadhan" target="_blank" rel="noopener noreferrer" class="retro-btn px-4 py-2 rounded-sm text-ph-300 font-bold" aria-label="Instagram Profile">[INSTAGRAM]</a>
         </div>
+        </div>
+        <pre id="ascii-portrait" class="ascii-portrait hidden lg:block" role="img" aria-label="ASCII portrait of Muhammad Ihsan Ramadhan">                      .:-=+++=+=---:.                     
+                   :=+*#########**#*+*-                   
+                 -*##*******####*###*#%=                  
+                +%#######################.                
+               :%##%%%#**##*+*%######*%##*.               
+               +#=++=-::----::-::=++*+-%*#*               
+              .%-:==+==-:::::::--:-:...-*#%               
+              -#.=====+*=-::-=+=--:--...-#%:              
+              :#:-==++==+=:::=+++:-:....=#%.              
+              ==-:-=====*:.-=-===-:--:::+#+.              
+             -=:::::::--:...-:.:.......::. =.             
+             ------:-====-:-:--::.. ...:.-.-.             
+             .-:-----:-==-:::..:......:.::-.              
+              :----=+=++==------.:....:::..               
+                =--==+++===----=:....: .                  
+                :+=----===-:....::::-.                    
+                 .==----::......:---.                     
+                   -+=++===----==-:.:                     
+                  .===++**+==---::.:%=                    
+                 -%+-==+=---:::::: *%#*:                  
+             .:-+@+=======-:::::..=@####+=-.              
+       ..:-+*%##%*:#======---::::-#%#####%@#*+-:.         
+   .-+**##%%%**#%--**+=====-----==*%######%%##%##*=-.     
+ :*######%%#*##@*:-+++=--------==+#%#######%#########*=:. 
+=%%###%#%%####%%=-:==.:::--:--===*%########%%##%########*=
+%###%%%%%####%%*##=-=:..:#*#*+-=+#%########%%%%###########
+%%#%%%#######%%***#+-=:.+**+***+*%#%#######%%%##%########*
+%%%%@%######%%%==++#+=--*+++++++%%#%#######%%%*%%%######*#</pre>
       </div>
     </section>
 
-    <section id="about" class="window-chrome rounded-sm mb-10 section-fade">
+    <section id="about" class="window-chrome rounded-sm mb-10">
       <div class="window-title-bar px-3 py-2 flex items-center justify-between text-xs uppercase tracking-wider text-ph-400">
         <span>about.txt</span>
-        <span class="text-[10px]">utf-8</span>
       </div>
       <div class="p-6 md:p-10">
         <div class="mb-4 text-ph-amber text-sm">
@@ -108,33 +138,92 @@
         </div>
         <div class="md:flex gap-8">
           <div class="md:w-2/3 space-y-4 text-sm md:text-base text-ph-100/80 leading-relaxed" id="about-whoami">
+            <p>I'm Ihsan, a software engineer from Indonesia currently studying Informatics Engineering at Bandung State Polytechnic.</p>
+            <p>An open source enthusiast and a builder at heart. I like exploring where code meets real-world problems.</p>
+            <p>When I'm not debugging, I'm probably learning new tech, tweaking my linux setup, or touching grass.</p>
           </div>
           <div class="md:w-1/3 mt-6 md:mt-0">
             <div class="border border-ph-500/20 bg-ph-900/10 p-4 rounded-sm text-xs font-mono space-y-2" id="about-info-grid">
+              <div class="flex justify-between border-b border-ph-500/10 pb-1"><span class="text-ph-400 font-bold">OS</span><span class="text-ph-300">Linux</span></div>
+              <div class="flex justify-between border-b border-ph-500/10 pb-1"><span class="text-ph-400 font-bold">SHELL</span><span class="text-ph-300">fish</span></div>
+              <div class="flex justify-between border-b border-ph-500/10 pb-1"><span class="text-ph-400 font-bold">EDITOR</span><span class="text-ph-300">Zed</span></div>
+              <div class="flex justify-between border-b border-ph-500/10 pb-1"><span class="text-ph-400 font-bold">LOCATION</span><span class="text-ph-300">Bandung, ID</span></div>
+              <div class="flex justify-between border-b border-ph-500/10 pb-1"><span class="text-ph-400 font-bold">REPOS</span><span class="text-ph-300">33</span></div>
             </div>
           </div>
         </div>
       </div>
     </section>
 
-    <section id="stack" class="window-chrome rounded-sm mb-10 section-fade">
+    <section id="experience" class="window-chrome rounded-sm mb-10">
+      <div class="window-title-bar px-3 py-2 flex items-center justify-between text-xs uppercase tracking-wider text-ph-400">
+        <span>experience.log</span>
+      </div>
+      <div class="p-6 md:p-10">
+        <div class="mb-4 text-ph-amber text-sm">
+          &gt; $ cat /var/log/experience.log
+        </div>
+        <div class="exp-timeline space-y-6" id="experience-list">
+          <div class="exp-item border-b border-ph-500/10 pb-6">
+            <span class="exp-node is-active" aria-hidden="true"></span>
+            <div class="flex flex-col sm:flex-row justify-between gap-1">
+              <div>
+                <span class="text-ph-200 font-bold text-base">Founder</span>
+                <span class="text-ph-400 text-sm"> · Teladan Store · Part-time</span>
+              </div>
+              <span class="text-ph-amber text-xs uppercase tracking-wider">Sep 2021 - Present</span>
+            </div>
+            <div class="text-ph-400 text-xs mt-1">Indonesia · Remote</div>
+            <p class="text-ph-100/80 text-sm leading-relaxed mt-2">Digital storefront founder on Itemku for Roblox assets and gaming services, fulfilling 375+ verified orders.</p>
+          </div>
+          <div class="exp-item">
+            <span class="exp-node" aria-hidden="true"></span>
+            <div class="flex flex-col sm:flex-row justify-between gap-1">
+              <div>
+                <span class="text-ph-200 font-bold text-base">Information Technology Officer</span>
+                <span class="text-ph-400 text-sm"> · PT Stargate Pasific Resources · Internship</span>
+              </div>
+              <span class="text-ph-amber text-xs uppercase tracking-wider">Jul 2026 - Oct 2026</span>
+            </div>
+            <div class="text-ph-400 text-xs mt-1">North Konawe, Southeast Sulawesi · On-site</div>
+            <p class="text-ph-100/80 text-sm leading-relaxed mt-2">Software Developer, IT hardware and infrastructure support.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="stack" class="window-chrome rounded-sm mb-10">
       <div class="window-title-bar px-3 py-2 flex items-center justify-between text-xs uppercase tracking-wider text-ph-400">
         <span>stack.sys</span>
-        <span class="text-[10px]">readonly</span>
       </div>
       <div class="p-6 md:p-10">
         <div class="mb-4 text-ph-amber text-sm">
           &gt; $ ls /usr/local/stack/
         </div>
         <div class="grid grid-cols-2 md:grid-cols-4 gap-3 text-sm" id="stack-grid">
+          <div class="border border-ph-500/20 bg-ph-500/5 px-3 py-2 text-ph-200 flex items-center gap-2 rounded-sm hover:bg-ph-500/10 transition-colors"><span class="text-ph-500" aria-hidden="true">⬡</span> JavaScript</div>
+          <div class="border border-ph-500/20 bg-ph-500/5 px-3 py-2 text-ph-200 flex items-center gap-2 rounded-sm hover:bg-ph-500/10 transition-colors"><span class="text-ph-500" aria-hidden="true">⬡</span> TypeScript</div>
+          <div class="border border-ph-500/20 bg-ph-500/5 px-3 py-2 text-ph-200 flex items-center gap-2 rounded-sm hover:bg-ph-500/10 transition-colors"><span class="text-ph-500" aria-hidden="true">⬡</span> Go</div>
+          <div class="border border-ph-500/20 bg-ph-500/5 px-3 py-2 text-ph-200 flex items-center gap-2 rounded-sm hover:bg-ph-500/10 transition-colors"><span class="text-ph-500" aria-hidden="true">⬡</span> Rust</div>
+          <div class="border border-ph-500/20 bg-ph-500/5 px-3 py-2 text-ph-200 flex items-center gap-2 rounded-sm hover:bg-ph-500/10 transition-colors"><span class="text-ph-500" aria-hidden="true">⬡</span> Dart</div>
+          <div class="border border-ph-500/20 bg-ph-500/5 px-3 py-2 text-ph-200 flex items-center gap-2 rounded-sm hover:bg-ph-500/10 transition-colors"><span class="text-ph-500" aria-hidden="true">⬡</span> PHP</div>
+          <div class="border border-ph-500/20 bg-ph-500/5 px-3 py-2 text-ph-200 flex items-center gap-2 rounded-sm hover:bg-ph-500/10 transition-colors"><span class="text-ph-500" aria-hidden="true">⬡</span> SQL</div>
+          <div class="border border-ph-500/20 bg-ph-500/5 px-3 py-2 text-ph-200 flex items-center gap-2 rounded-sm hover:bg-ph-500/10 transition-colors"><span class="text-ph-500" aria-hidden="true">⬡</span> React</div>
+          <div class="border border-ph-500/20 bg-ph-500/5 px-3 py-2 text-ph-200 flex items-center gap-2 rounded-sm hover:bg-ph-500/10 transition-colors"><span class="text-ph-500" aria-hidden="true">⬡</span> Vue</div>
+          <div class="border border-ph-500/20 bg-ph-500/5 px-3 py-2 text-ph-200 flex items-center gap-2 rounded-sm hover:bg-ph-500/10 transition-colors"><span class="text-ph-500" aria-hidden="true">⬡</span> Node.js</div>
+          <div class="border border-ph-500/20 bg-ph-500/5 px-3 py-2 text-ph-200 flex items-center gap-2 rounded-sm hover:bg-ph-500/10 transition-colors"><span class="text-ph-500" aria-hidden="true">⬡</span> Tauri</div>
+          <div class="border border-ph-500/20 bg-ph-500/5 px-3 py-2 text-ph-200 flex items-center gap-2 rounded-sm hover:bg-ph-500/10 transition-colors"><span class="text-ph-500" aria-hidden="true">⬡</span> Flutter</div>
+          <div class="border border-ph-500/20 bg-ph-500/5 px-3 py-2 text-ph-200 flex items-center gap-2 rounded-sm hover:bg-ph-500/10 transition-colors"><span class="text-ph-500" aria-hidden="true">⬡</span> Laravel</div>
+          <div class="border border-ph-500/20 bg-ph-500/5 px-3 py-2 text-ph-200 flex items-center gap-2 rounded-sm hover:bg-ph-500/10 transition-colors"><span class="text-ph-500" aria-hidden="true">⬡</span> Docker</div>
+          <div class="border border-ph-500/20 bg-ph-500/5 px-3 py-2 text-ph-200 flex items-center gap-2 rounded-sm hover:bg-ph-500/10 transition-colors"><span class="text-ph-500" aria-hidden="true">⬡</span> Git</div>
+          <div class="border border-ph-500/20 bg-ph-500/5 px-3 py-2 text-ph-200 flex items-center gap-2 rounded-sm hover:bg-ph-500/10 transition-colors"><span class="text-ph-500" aria-hidden="true">⬡</span> TailwindCSS</div>
         </div>
       </div>
     </section>
 
-    <section id="projects" class="window-chrome rounded-sm mb-10 section-fade">
+    <section id="projects" class="window-chrome rounded-sm mb-10">
       <div class="window-title-bar px-3 py-2 flex items-center justify-between text-xs uppercase tracking-wider text-ph-400">
         <span>projects.git</span>
-        <span class="text-[10px]" id="project-count-title">0 OBJECTS</span>
       </div>
       <div class="p-6 md:p-10">
         <div class="mb-4 text-ph-amber text-sm">
@@ -151,6 +240,21 @@
                 </tr>
               </thead>
               <tbody class="text-ph-100/90" id="repo-table-body">
+                <tr class="repo-row border-b border-ph-500/10 transition-colors" data-index="0">
+                  <td class="py-3 pr-4 font-bold text-ph-300"><a href="https://github.com/gnoviawan/troupe" target="_blank" rel="noopener noreferrer" class="retro-link" aria-label="Visit troupe repository on GitHub">troupe</a></td>
+                  <td class="py-3 pr-4 text-ph-amber">Rust, Tauri, React</td>
+                  <td class="py-3 text-right text-ph-amber">306</td>
+                </tr>
+                <tr class="repo-row border-b border-ph-500/10 transition-colors" data-index="1">
+                  <td class="py-3 pr-4 font-bold text-ph-300"><a href="https://github.com/ihsan-ramadhan/bansos-router" target="_blank" rel="noopener noreferrer" class="retro-link" aria-label="Visit bansos-router repository on GitHub">bansos-router</a></td>
+                  <td class="py-3 pr-4 text-ph-amber">TypeScript</td>
+                  <td class="py-3 text-right text-ph-amber">240</td>
+                </tr>
+                <tr class="repo-row border-b border-ph-500/10 transition-colors" data-index="2">
+                  <td class="py-3 pr-4 font-bold text-ph-300"><a href="https://github.com/ihsan-ramadhan/polban-dataview" target="_blank" rel="noopener noreferrer" class="retro-link" aria-label="Visit polban-dataview repository on GitHub">polban-dataview</a></td>
+                  <td class="py-3 pr-4 text-ph-amber">Vue, JavaScript</td>
+                  <td class="py-3 text-right text-ph-amber">1</td>
+                </tr>
               </tbody>
             </table>
           </div>
@@ -171,17 +275,16 @@
       </div>
     </section>
 
-    <section id="contact" class="window-chrome rounded-sm mb-12 section-fade">
+    <section id="contact" class="window-chrome rounded-sm mb-12">
       <div class="window-title-bar px-3 py-2 flex items-center justify-between text-xs uppercase tracking-wider text-ph-400">
         <span>contact.sh</span>
-        <span class="text-[10px]">executable</span>
       </div>
       <div class="p-6 md:p-10">
         <div class="mb-4 text-ph-amber text-sm">
           &gt; $ ssh ihsan@portfolio
         </div>
         <p class="text-sm md:text-base text-ph-100/70 mb-6 max-w-prose">
-          Open for collaborations, freelance projects, or just a friendly chat about tech and open source. Every message is read.
+          Open for collaborations, projects, or just a friendly chat about tech or anything. Every message is read.
         </p>
         <div class="flex flex-col md:flex-row gap-4 md:items-center">
           <a href="mailto:m.ihsan.r30@gmail.com" class="retro-btn px-5 py-3 rounded-sm text-ph-300 font-bold text-sm flex items-center gap-2" id="contact-email-btn">

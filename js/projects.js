@@ -32,8 +32,6 @@ export function renderProjects(portfolioData) {
   const projects = portfolioData.projects;
   projects.sort((a, b) => (b.stars ?? -1) - (a.stars ?? -1));
 
-  document.getElementById('project-count-title').textContent = `${projects.length} OBJECTS`;
-
   const tbody = document.getElementById('repo-table-body');
   if (!projects.length) {
     tbody.innerHTML = `

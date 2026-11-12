@@ -1,8 +1,9 @@
-import { initDataRain } from './matrix.js';
+import { initTerrainField } from './terrain.js';
 import { initNavbarStatus } from './navbar.js';
 import { renderProjects, syncGitHubStars } from './projects.js';
-import { setupSubtitleGlitch, revealSections, initHudTargetTracker } from './ui.js';
+import { setupSubtitleGlitch, initHudTargetTracker } from './ui.js';
 import { initThemeToggle } from './theme.js';
+import { initAsciiPortrait } from './portrait.js';
 
 let portfolioData = null;
 
@@ -61,6 +62,29 @@ function setupAbout(about) {
   }
 }
 
+function setupExperience(experience) {
+  if (!Array.isArray(experience)) return;
+  const container = document.getElementById('experience-list');
+  if (!container) return;
+  container.innerHTML = experience.map((item, idx) => {
+    const isActive = /present/i.test(item.period || '');
+    return `
+    <div class="exp-item ${idx < experience.length - 1 ? 'border-b border-ph-500/10 pb-6' : ''}">
+      <span class="exp-node${isActive ? ' is-active' : ''}" aria-hidden="true"></span>
+      <div class="flex flex-col sm:flex-row justify-between gap-1">
+        <div>
+          <span class="text-ph-200 font-bold text-base">${esc(item.role || '')}</span>
+          <span class="text-ph-400 text-sm"> · ${esc(item.company || '')}${item.type ? ` · ${esc(item.type)}` : ''}</span>
+        </div>
+        <span class="text-ph-amber text-xs uppercase tracking-wider">${esc(item.period || '')}</span>
+      </div>
+      ${item.location ? `<div class="text-ph-400 text-xs mt-1">${esc(item.location)}</div>` : ''}
+      ${item.description ? `<p class="text-ph-100/80 text-sm leading-relaxed mt-2">${esc(item.description)}</p>` : ''}
+    </div>
+  `;
+  }).join('');
+}
+
 function setupStack(stack) {
   if (!stack) return;
   const stackGrid = document.getElementById('stack-grid');
@@ -76,6 +100,7 @@ function populateDOM() {
 
   setupHero(portfolioData.hero);
   setupAbout(portfolioData.about);
+  setupExperience(portfolioData.experience);
   setupStack(portfolioData.stack);
 
   renderProjects(portfolioData);
@@ -185,8 +210,8 @@ async function loadData() {
 window.addEventListener('DOMContentLoaded', () => {
   document.getElementById('year').textContent = new Date().getFullYear();
   initThemeToggle();
-  initDataRain();
+  initAsciiPortrait();
+  initTerrainField();
   initNavbarStatus();
-  revealSections();
   loadData();
 });

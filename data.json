@@ -22,18 +22,40 @@
       "SHELL": "fish",
       "EDITOR": "Zed",
       "LOCATION": "Bandung, ID",
-      "REPOS": "34"
+      "REPOS": "33"
     }
   },
+  "experience": [
+    {
+      "role": "Founder",
+      "company": "Teladan Store",
+      "type": "Part-time",
+      "period": "Sep 2021 - Present",
+      "location": "Indonesia · Remote",
+      "description": "Digital storefront founder on Itemku for Roblox assets and gaming services, fulfilling 375+ verified orders."
+    },
+    {
+      "role": "Information Technology Officer",
+      "company": "PT Stargate Pasific Resources",
+      "type": "Internship",
+      "period": "Jul 2026 - Oct 2026",
+      "location": "North Konawe, Southeast Sulawesi · On-site",
+      "description": "Software Developer, IT hardware and infrastructure support."
+    }
+  ],
   "stack": [
     "JavaScript",
     "TypeScript",
     "Go",
+    "Rust",
+    "Dart",
     "PHP",
     "SQL",
     "React",
     "Vue",
     "Node.js",
+    "Tauri",
+    "Flutter",
     "Laravel",
     "Docker",
     "Git",
@@ -41,20 +63,20 @@
   ],
   "projects": [
     {
+      "name": "troupe",
+      "description": "Cross-platform desktop terminal manager built with Tauri and React. Organize terminals by workspace with persistent sessions, split panes, embedded browser tabs, and a built-in editor.",
+      "stack": ["Rust", "Tauri", "React"],
+      "url": "https://github.com/gnoviawan/troupe",
+      "githubRepo": "gnoviawan/troupe",
+      "stars": 306
+    },
+    {
       "name": "bansos-router",
       "description": "Free, keyless coding models routed to every coding harness through one local endpoint. No accounts, no keys, no cost.",
       "stack": ["TypeScript"],
       "url": "https://github.com/ihsan-ramadhan/bansos-router",
       "githubRepo": "ihsan-ramadhan/bansos-router",
-      "stars": 97
-    },
-    {
-      "name": "ReksaTani-App",
-      "description": "Offline-First mobile platform for agricultural transactions and supply chain management designed for remote areas.",
-      "stack": ["Flutter", "Dart"],
-      "url": "https://github.com/Umeem26/ReksaTani-App",
-      "githubRepo": "Umeem26/ReksaTani-App",
-      "stars": 2
+      "stars": 240
     },
     {
       "name": "polban-dataview",
@@ -63,14 +85,6 @@
       "url": "https://github.com/ihsan-ramadhan/polban-dataview",
       "githubRepo": "ihsan-ramadhan/polban-dataview",
       "stars": 1
-    },
-    {
-      "name": "tuckify",
-      "description": "Automatically organize your folder by type, name, size, and more. Define rules in TOML, run once or schedule it.",
-      "stack": ["Go", "Wails", "JavaScript"],
-      "url": "https://github.com/ihsan-ramadhan/tuckify",
-      "githubRepo": "ihsan-ramadhan/tuckify",
-      "stars": 0
     }
   ],
   "contact": {

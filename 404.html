@@ -10,13 +10,28 @@
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
   <link rel="manifest" href="/site.webmanifest" />
-  <link href="https://fonts.googleapis.com/css2?family=VT323&family=Share+Tech+Mono&display=swap" rel="stylesheet" />
+  <link rel="preload" href="/fonts/vt323-latin.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="/fonts/share-tech-mono-latin.woff2" as="font" type="font/woff2" crossorigin />
   <script>
     if (localStorage.getItem('theme') === 'light') {
       document.documentElement.dataset.theme = 'light';
     }
   </script>
   <style>
+    @font-face {
+      font-family: 'VT323';
+      font-style: normal;
+      font-weight: 400;
+      font-display: block;
+      src: url('/fonts/vt323-latin.woff2') format('woff2');
+    }
+    @font-face {
+      font-family: 'Share Tech Mono';
+      font-style: normal;
+      font-weight: 400;
+      font-display: block;
+      src: url('/fonts/share-tech-mono-latin.woff2') format('woff2');
+    }
     :root {
       --bg: #05060d;
       --ph: #9fb8e8;
@@ -31,14 +46,14 @@
     }
     :root[data-theme="light"] {
       --bg: #e8e4d8;
-      --ph: #2d2d38;
+      --ph: #575248;
       --amber: #945200;
       --dim: #5c594f;
-      --btn-border: rgba(148, 82, 0, 0.3);
-      --btn-bg: rgba(148, 82, 0, 0.04);
+      --btn-border: rgba(80, 75, 65, 0.28);
+      --btn-bg: rgba(80, 75, 65, 0.06);
       --btn-hover-bg: rgba(148, 82, 0, 0.12);
-      --btn-hover-text: #151522;
-      --btn-hover-shadow: 0 0 8px rgba(148, 82, 0, 0.2);
+      --btn-hover-text: #48443c;
+      --btn-hover-shadow: 0 0 8px rgba(148, 82, 0, 0.18);
       --scanline-dark: rgba(0, 0, 0, 0.05);
     }
     * { box-sizing: border-box; }
@@ -46,7 +61,7 @@
     body {
       background: var(--bg);
       color: var(--ph);
-      font-family: 'Share Tech Mono', 'Courier New', monospace;
+      font-family: 'Share Tech Mono', ui-monospace, monospace;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -61,7 +76,7 @@
     }
     .wrap { position: relative; z-index: 3; max-width: 560px; }
     .code {
-      font-family: 'VT323', 'Courier New', monospace;
+      font-family: 'VT323', ui-monospace, monospace;
       font-size: clamp(5rem, 22vw, 11rem);
       line-height: 0.9;
       color: var(--amber);

@@ -20,17 +20,6 @@ export function setupSubtitleGlitch(originalText) {
   }, 2000);
 }
 
-export function revealSections() {
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('visible');
-      }
-    });
-  }, { threshold: 0.05 });
-  document.querySelectorAll('.section-fade').forEach(el => observer.observe(el));
-}
-
 export function initHudTargetTracker() {
   const frame = document.getElementById('hud-frame');
   const mainSite = document.getElementById('main-site');
@@ -40,6 +29,8 @@ export function initHudTargetTracker() {
   if (!sections.length) return;
 
   let activeSection = null;
+  let lastScrollY = window.scrollY;
+  let scrollRaf = 0;
 
   function updateFrame(target) {
     if (!target) {
@@ -50,36 +41,71 @@ export function initHudTargetTracker() {
     const parentRect = mainSite.getBoundingClientRect();
     const targetRect = target.getBoundingClientRect();
 
-    const top = targetRect.top - parentRect.top;
-    const left = targetRect.left - parentRect.left;
-    const width = targetRect.width;
-    const height = targetRect.height;
-
-    frame.style.top = top + 'px';
-    frame.style.left = left + 'px';
-    frame.style.width = width + 'px';
-    frame.style.height = height + 'px';
+    frame.style.top = (targetRect.top - parentRect.top) + 'px';
+    frame.style.left = (targetRect.left - parentRect.left) + 'px';
+    frame.style.width = targetRect.width + 'px';
+    frame.style.height = targetRect.height + 'px';
     frame.classList.remove('opacity-0');
   }
 
+  function pickVisibleSection() {
+    if (window.scrollY <= 24) return sections[0];
+    const viewH = window.innerHeight;
+    if (viewH + window.scrollY >= document.documentElement.scrollHeight - 24) {
+      return sections[sections.length - 1];
+    }
+    const anchorY = viewH * 0.3;
+    let best = null;
+    let bestDist = Infinity;
+
+    for (let i = 0; i < sections.length; i++) {
+      const sec = sections[i];
+      const rect = sec.getBoundingClientRect();
+      if (rect.bottom <= 0 || rect.top >= viewH) continue;
+      if (rect.top <= anchorY && rect.bottom >= anchorY) {
+        return sec;
+      }
+      const center = (Math.max(0, rect.top) + Math.min(viewH, rect.bottom)) * 0.5;
+      const dist = Math.abs(center - anchorY);
+      if (dist < bestDist) {
+        bestDist = dist;
+        best = sec;
+      }
+    }
+    return best || activeSection || sections[0];
+  }
+
   sections.forEach(sec => {
-    sec.addEventListener('mouseenter', () => updateFrame(sec));
+    sec.addEventListener('pointerenter', (e) => {
+      if (e.pointerType === 'mouse') updateFrame(sec);
+    });
+    sec.addEventListener('pointerdown', () => {
+      lastScrollY = window.scrollY;
+      updateFrame(sec);
+    }, { passive: true });
   });
 
-  const onScreen = new Set();
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) onScreen.add(entry.target);
-      else onScreen.delete(entry.target);
+  window.addEventListener('scroll', () => {
+    if (Math.abs(window.scrollY - lastScrollY) < 4) return;
+    lastScrollY = window.scrollY;
+    if (scrollRaf) return;
+    scrollRaf = requestAnimationFrame(() => {
+      scrollRaf = 0;
+      const visible = pickVisibleSection();
+      if (visible) updateFrame(visible);
     });
-    if (mainSite.matches(':hover')) return;
-    const topmost = sections.find(sec => onScreen.has(sec));
-    if (topmost) updateFrame(topmost);
-  }, { threshold: 0.3 });
-
-  sections.forEach(sec => observer.observe(sec));
+  }, { passive: true });
 
   window.addEventListener('resize', () => {
     if (activeSection) updateFrame(activeSection);
   });
+
+  if ('ResizeObserver' in window) {
+    const ro = new ResizeObserver(() => {
+      if (activeSection) updateFrame(activeSection);
+    });
+    sections.forEach(sec => ro.observe(sec));
+  }
+
+  updateFrame(pickVisibleSection());
 }
