@@ -22,14 +22,14 @@
       font-family: 'VT323';
       font-style: normal;
       font-weight: 400;
-      font-display: block;
+      font-display: swap;
       src: url('/fonts/vt323-latin.woff2') format('woff2');
     }
     @font-face {
       font-family: 'Share Tech Mono';
       font-style: normal;
       font-weight: 400;
-      font-display: block;
+      font-display: swap;
       src: url('/fonts/share-tech-mono-latin.woff2') format('woff2');
     }
     :root {
@@ -86,7 +86,6 @@
     :root[data-theme="light"] .code {
       text-shadow: none;
     }
-    .rule { color: var(--dim); letter-spacing: 2px; user-select: none; }
     .msg { font-size: 1rem; margin: 1rem 0 2rem; color: var(--ph); }
     .blink { animation: blink 1s step-end infinite; }
     @keyframes blink { 0%,100% { opacity: 1; } 50% { opacity: 0; } }
@@ -120,9 +119,7 @@
 <body>
   <div class="scanlines" aria-hidden="true"></div>
   <div class="wrap">
-    <p class="rule">/* ==================================================== */</p>
     <h1 class="code">404</h1>
-    <div class="rule">/* ==================================================== */</div>
     <p class="msg">&gt; $ cat /requested/path<span class="blink">█</span><br>ERROR: file not found on host [ihsan.is-a.dev]</p>
     <a class="btn" href="/">[ RETURN_HOME -&gt; ]</a>
   </div>

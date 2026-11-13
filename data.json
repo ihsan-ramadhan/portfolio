@@ -68,7 +68,7 @@
       "stack": ["Rust", "Tauri", "React"],
       "url": "https://github.com/gnoviawan/troupe",
       "githubRepo": "gnoviawan/troupe",
-      "stars": 306
+      "stars": 307
     },
     {
       "name": "bansos-router",
@@ -84,7 +84,7 @@
       "stack": ["Vue", "JavaScript"],
       "url": "https://github.com/ihsan-ramadhan/polban-dataview",
       "githubRepo": "ihsan-ramadhan/polban-dataview",
-      "stars": 1
+      "stars": 2
     }
   ],
   "contact": {

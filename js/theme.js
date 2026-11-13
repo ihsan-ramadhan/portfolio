@@ -6,8 +6,8 @@ export function initThemeToggle() {
   const stored = localStorage.getItem('theme');
   if (stored === 'light') {
     document.documentElement.dataset.theme = 'light';
-    btn.classList.remove('on');
   }
+  btn.classList.toggle('on', stored !== 'light');
 
   function playSweep(targetTheme) {
     if (!sweep || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;

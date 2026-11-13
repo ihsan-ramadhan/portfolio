@@ -41,6 +41,10 @@
       pointer-events: none !important;
       transition: none !important;
     }
+    html[data-theme="light"] .crt-power-switch .ps-led {
+      background: transparent !important;
+      box-shadow: none !important;
+    }
     html.restoring body { visibility: hidden; }
   </style>
 </head>
@@ -73,8 +77,6 @@
   <main id="main-site" class="relative z-10 max-w-5xl mx-auto px-4 py-8 md:py-12">
 
     <div class="h-16"></div>
-
-    <output id="data-status" class="window-chrome rounded-sm mb-10 p-5 md:p-6 font-mono text-sm hidden" aria-live="polite"></output>
 
     <div id="hud-frame" class="hud-frame opacity-0">
       <span class="hud-corner tl"></span>

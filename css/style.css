@@ -2,14 +2,14 @@
   font-family: 'VT323';
   font-style: normal;
   font-weight: 400;
-  font-display: block;
+  font-display: swap;
   src: url('../fonts/vt323-latin.woff2') format('woff2');
 }
 @font-face {
   font-family: 'Share Tech Mono';
   font-style: normal;
   font-weight: 400;
-  font-display: block;
+  font-display: swap;
   src: url('../fonts/share-tech-mono-latin.woff2') format('woff2');
 }
 :root {
@@ -317,12 +317,6 @@ button:focus-visible {
    instead of putting a second display utility in the class list. */
 #nav-links:not(.hidden) {
   display: flex;
-}
-
-/* <output> defaults to display: inline, which would drop the padding and margin
-   this banner needs. Same reasoning as #nav-links above: one display source. */
-#data-status:not(.hidden) {
-  display: block;
 }
 .navbar-scroll {
   position: fixed;

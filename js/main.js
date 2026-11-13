@@ -114,20 +114,6 @@ function populateDOM() {
   }
 }
 
-const statusEl = () => document.getElementById('data-status');
-
-function showStatus(html) {
-  const el = statusEl();
-  if (!el) return;
-  el.innerHTML = html;
-  el.classList.remove('hidden');
-}
-
-function hideStatus() {
-  const el = statusEl();
-  if (el) el.classList.add('hidden');
-}
-
 async function fetchGistOverrides(gistId) {
   try {
     const res = await fetch(`https://api.github.com/gists/${gistId}`);
@@ -141,8 +127,6 @@ async function fetchGistOverrides(gistId) {
   }
 }
 
-// The star counts refresh from the API on every load, so the repo count should
-// too: a hand-maintained number goes stale silently while looking just as sure.
 async function syncRepoCount() {
   const profileUrl = portfolioData.hero?.socials?.github;
   if (!profileUrl || !portfolioData.about?.info?.REPOS) return;
@@ -161,35 +145,24 @@ async function syncRepoCount() {
 }
 
 async function loadData() {
-  // Only announce loading once it is slow enough to notice, so a local fetch
-  // does not flash a banner on every visit.
-  const slowLoad = setTimeout(
-    () => showStatus('<span class="text-ph-amber">&gt; $ fetch data.json</span><br><span class="text-ph-300">Still waiting on the profile data...</span>'),
-    400
-  );
-
   try {
     const localResponse = await fetch('data.json');
     if (!localResponse.ok) throw new Error(`data.json responded ${localResponse.status}`);
     portfolioData = await localResponse.json();
   } catch (err) {
     console.error('Error loading portfolio data:', err);
-    document.getElementById('hero-subtitle').textContent = 'OFFLINE_MODE';
-    showStatus(
-      '<span class="text-ph-amber">&gt; $ cat data.json</span><br>' +
-      `<span class="text-ph-100">ERROR: could not read the profile data (${esc(err.message)}).</span><br>` +
-      '<span class="text-ph-300">Nothing below this line could be filled in. ' +
-      'Reload to retry, or reach me at <a class="retro-link" href="mailto:m.ihsan.r30@gmail.com">m.ihsan.r30@gmail.com</a>.</span>'
-    );
+    const subtitle = document.getElementById('hero-subtitle');
+    if (subtitle) subtitle.textContent = 'OFFLINE_MODE';
+    const hero = document.getElementById('hero');
+    if (hero) {
+      const note = document.createElement('p');
+      note.className = 'text-ph-amber text-sm mt-6';
+      note.textContent = 'profile data unavailable. Reload to retry, or reach me at m.ihsan.r30@gmail.com.';
+      hero.appendChild(note);
+    }
     return;
-  } finally {
-    clearTimeout(slowLoad);
   }
 
-  hideStatus();
-
-  // Paint what we already have on disk; the GitHub round-trips below can be
-  // slow or rate-limited, and nothing on screen should wait on them.
   populateDOM();
   initHudTargetTracker();
 
