@@ -22,7 +22,7 @@
       "SHELL": "fish",
       "EDITOR": "Zed",
       "LOCATION": "Bandung, ID",
-      "REPOS": "33"
+      "REPOS": "34"
     }
   },
   "experience": [
@@ -68,7 +68,7 @@
       "stack": ["Rust", "Tauri", "React"],
       "url": "https://github.com/gnoviawan/troupe",
       "githubRepo": "gnoviawan/troupe",
-      "stars": 307
+      "stars": 321
     },
     {
       "name": "bansos-router",
@@ -76,7 +76,15 @@
       "stack": ["TypeScript"],
       "url": "https://github.com/ihsan-ramadhan/bansos-router",
       "githubRepo": "ihsan-ramadhan/bansos-router",
-      "stars": 240
+      "stars": 241
+    },
+    {
+      "name": "freepi-bridge",
+      "description": "An OpenAI-compatible HTTP API for a freepi account: one static Rust binary, no runtime, no extra services.",
+      "stack": ["Rust"],
+      "url": "https://github.com/ihsan-ramadhan/freepi-bridge",
+      "githubRepo": "ihsan-ramadhan/freepi-bridge",
+      "stars": 12
     },
     {
       "name": "polban-dataview",
